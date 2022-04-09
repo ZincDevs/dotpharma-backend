@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "heroku-postbuild": "npm install --production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec babel-node src/app.js",
     "db:migrate": "babel-node src/database/migration/createTables.js",
@@ -11,6 +12,10 @@
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/App.js",
     "db:seeds": "babel-node src/database/seeds/Users.js"
+  },
+  "engines": {
+    "npm": "7.11.1",
+    "node": "14.16.0"
   },
   "author": "",
   "license": "ISC",
