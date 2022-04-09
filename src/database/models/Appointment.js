@@ -1,6 +1,6 @@
 /* eslint-disable require-jsdoc */
 import db from '../connection/_query';
-import { createAppointment } from '../queries/appointment';
+import { createAppointment, } from '../queries/appointment';
 import { STATUSES } from '../../constants/ResponseStatuses';
 import { MESSAGES } from '../../constants/ResponceMessages';
 

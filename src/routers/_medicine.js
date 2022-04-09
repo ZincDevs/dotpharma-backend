@@ -10,7 +10,7 @@ router.post(
   '/createnew',
   Validator('medicine'),
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   MedicineController.createMedicine
 );
 
@@ -18,7 +18,7 @@ router.put(
   '/updatemedicine/:mid',
   Validator('medicine'),
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   MedicineController.updateMedicine
 );
 router.get(
@@ -29,7 +29,7 @@ router.get(
 router.delete(
   '/deletemedicine/:mid',
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   MedicineController.deleteMedicine
 );
 

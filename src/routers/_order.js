@@ -8,8 +8,8 @@ const router = express.Router();
 router.post(
   '/createorder',
   Validator('patient'),
-  DataExistsChecks[0],
-  DataExistsChecks[1],
+  DataExistsChecks.checkPharmacyExists,
+  DataExistsChecks.checkPatientExists,
   OrderController.createNewOrder
 );
 
