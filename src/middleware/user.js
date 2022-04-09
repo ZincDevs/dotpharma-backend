@@ -2,11 +2,11 @@
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
-import { getByEmail } from '../database/queries/User';
+import { getByEmail,checkExist } from '../database/queries/User';
 
-export default [
+export default {
   // Supper user
-  async (req, res, next) => {
+  checkISAdmin: async (req, res, next) => {
     const { u_email } = req.user;
     db.query(getByEmail, [u_email])
       .then(({ rows }) => {
@@ -26,16 +26,17 @@ export default [
       });
   },
   // check if user exists
-  async (req, res, next) => {
-    const { u_email } = req.user;
-    db.query(getByEmail, [u_email])
+  checkUserExists: async (req, res, next) => {
+    const { email,phone } = req.body;
+    db.query(checkExist, [email,phone])
       .then(({ rows }) => {
-        if (rows[0].u_role === 'SUPER_ADMIN') {
+        if (rows.length==0) {
+          console.log(rows)
           next();
         } else {
-          res.status(STATUSES.UNAUTHORIZED).send({
-            status: STATUSES.UNAUTHORIZED,
-            message: MESSAGES.UNAUTHORIZED,
+          res.status(STATUSES.BAD_REQUEST).send({
+            status: STATUSES.BAD_REQUEST,
+            message: MESSAGES.ALREDY_EXISTS,
           });
         }
       })
@@ -46,4 +47,4 @@ export default [
       });
   },
 
-];
+};

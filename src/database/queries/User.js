@@ -22,7 +22,7 @@ export const hideuser = `UPDATE users
 	WHERE userid = $1`;
 export const deleteuser = 'delete from users where userid =$1';
 
-export const checkExist = 'select * from users where email = $2 ';
+export const checkExist = 'select * from users where u_email = $1 OR u_phone=$2';
 
 export const searchUser = `select userid,names, email, phonenumber, role, password, status
 	 from users where position(LOWER($1) in LOWER(names))>0 and status = '1'`;

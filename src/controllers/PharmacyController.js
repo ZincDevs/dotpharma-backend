@@ -7,7 +7,6 @@ import Pharmacy from '../database/models/Pharmacy';
 
 const PharmacyController = {
   CreatePharmacy: async (req, res) => {
-    // ph_id,ph_name,ph_email,ph_phone,ph_website,ph_address,ph_status,done_on,user_id
     const payload = [
       uuid(),
       req.body.name,

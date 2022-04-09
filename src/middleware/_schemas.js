@@ -66,9 +66,25 @@ const mid = Joi.string().min(3).required().label('Medicine id is required');
 const phid = Joi.string().min(3).required().label('Pharmacy id is required');
 const district = Joi.string().min(3).required().label('District is required');
 const prescription = Joi.string().min(3).label('Prescription is required');
+const role = Joi.string().min(3).required().label('Role is required');
+
+
 schemas.login = Joi.object().keys({
   email,
   password,
+});
+schemas.createuser=Joi.object().keys({
+  email,
+  name,
+  phone,
+  role,
+});
+schemas.signup=Joi.object().keys({
+  email,
+  name,
+  phone,
+  role,
+  password
 });
 schemas.resetPassword = Joi.object().keys({
   userid: Joi.any().required().label('User id is required'),
@@ -114,4 +130,7 @@ schemas.patient = Joi.object().keys({
   district,
   prescription
 });
+schemas.appointment=Joi.object().keys({
+  
+})
 export default schemas;
