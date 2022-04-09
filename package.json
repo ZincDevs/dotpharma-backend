@@ -10,7 +10,7 @@
     "db:migrate": "babel-node src/database/migration/createTables.js",
     "db:migrate:reset": "babel-node src/database/migration/dropTables.js",
     "build": "babel src --out-dir dist",
-    "start": "npm run build && node dist/App.js",
+    "start": "npm run build && node dist/app.js",
     "db:seeds": "babel-node src/database/seeds/Users.js"
   },
   "engines": {
