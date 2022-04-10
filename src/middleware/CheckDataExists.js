@@ -3,7 +3,7 @@ import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
 import { getOneById } from '../database/queries/pharmacy';
 import { getById } from '../database/queries/medicine';
-import { getById as getPatientById } from '../database/queries/patient';
+import { getById as getPatientById,getByEmailOrPhone } from '../database/queries/patient';
 import { getDoctorById } from '../database/queries/doctor';
 
 export default {
@@ -75,6 +75,24 @@ export default {
           res.status(STATUSES.NOTFOUND).send({
             status: STATUSES.NOTFOUND,
             message: `Patient ${MESSAGES.NOT_FOUND}`,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(STATUSES.SERVERERROR).send({
+          error: err.message,
+        });
+      });
+  },
+  checkPatientExistsForCreate:async (req, res, next) => {
+    db.query(getByEmailOrPhone, [req.body.email,req.body.phone])
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          next();
+        } else {
+          res.status(STATUSES.BAD_REQUEST).send({
+            status: STATUSES.BAD_REQUEST,
+            message: `Patient ${MESSAGES.ALREDY_EXISTS}`,
           });
         }
       })
