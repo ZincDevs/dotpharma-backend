@@ -71,7 +71,7 @@ const type = Joi.string().min(3).required().label('Medicine type is required');
 const country = Joi.string().min(3).required().label('Country is required');
 const town = Joi.string().min(3).required().label('Town is required');
 const street = Joi.string().min(3).required().label('Street number is required');
-const nid = Joi.string().min(16).required().label('National id is required, It must be 16 digits');
+const nid = Joi.string().min(16);
 const mid = Joi.string().min(3).required().label('Medicine id is required');
 const phid = Joi.string().min(3).required().label('Pharmacy id is required');
 const district = Joi.string().min(3).required().label('District is required');
@@ -142,6 +142,7 @@ schemas.medicine = Joi.object().keys({
   price,
   type,
 });
+
 schemas.patient = Joi.object().keys({
   name,
   email,
@@ -150,12 +151,16 @@ schemas.patient = Joi.object().keys({
   country,
   town,
   street,
-  nid,
+  nid
+});
+
+schemas.order = Joi.object().keys({
   mid,
   phid,
   district,
   prescription
 });
+
 schemas.appointment=Joi.object().keys({
   
 })
