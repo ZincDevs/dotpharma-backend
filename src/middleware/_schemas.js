@@ -12,6 +12,16 @@ const password = Joi.string()
   .min(3)
   .required()
   .label('Password is required,  it must have at least 5 letters');
+
+const oldpassword = Joi.string()
+  .min(3)
+  .required()
+  .label('Old password is required,  it must have at least 5 letters');
+
+const newpassword = Joi.string()
+  .min(3)
+  .required()
+  .label('New Password is required,  it must have at least 5 letters');
 const name = Joi.string()
   .min(3)
   .required()
@@ -67,6 +77,7 @@ const phid = Joi.string().min(3).required().label('Pharmacy id is required');
 const district = Joi.string().min(3).required().label('District is required');
 const prescription = Joi.string().min(3).label('Prescription is required');
 const role = Joi.string().min(3).required().label('Role is required');
+const uid = Joi.string().min(3).required().label('User id is required');
 
 
 schemas.login = Joi.object().keys({
@@ -86,6 +97,21 @@ schemas.signup=Joi.object().keys({
   role,
   password
 });
+
+schemas.updateuser=Joi.object().keys({
+  email,
+  name,
+  phone,
+  role,
+});
+
+schemas.resetpass=Joi.object().keys({
+  newpassword,
+  oldpassword,
+  uid
+});
+
+
 schemas.resetPassword = Joi.object().keys({
   userid: Joi.any().required().label('User id is required'),
   password,

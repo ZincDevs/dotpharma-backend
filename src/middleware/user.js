@@ -2,7 +2,7 @@
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
-import { getByEmail,checkExist } from '../database/queries/User';
+import { getByEmail,checkExist ,getById} from '../database/queries/User';
 
 export default {
   // Supper user
@@ -31,7 +31,6 @@ export default {
     db.query(checkExist, [email,phone])
       .then(({ rows }) => {
         if (rows.length==0) {
-          console.log(rows)
           next();
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
@@ -46,5 +45,24 @@ export default {
         });
       });
   },
+  checkIsValidUser: async (req, res, next) => {
+    const { u_id } = req.user;
+    db.query(getById, [u_id])
+      .then(({ rows }) => {
+        if (rows[0].length>0) {
+          next();
+        } else {
+          res.status(STATUSES.UNAUTHORIZED).send({
+            status: STATUSES.UNAUTHORIZED,
+            message: MESSAGES.UNAUTHORIZED,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(STATUSES.SERVERERROR).send({
+          error: err.message,
+        });
+      });
+  }
 
 };

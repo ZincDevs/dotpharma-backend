@@ -35,15 +35,23 @@ export const sendEmail = async (emailTo, sender, message, subject) => {
 };
 
 export const genPass = (autoGen = true, pass = null) => {
+  let passN=autoGen?  generate({
+    length: 10,
+    numbers: true,
+  }):pass;
+  console.log(passN);
   return autoGen
     ? bcrypt.hashSync(
-        generate({
-          length: 10,
-          numbers: true,
-        }),
+      passN,
         10
       )
-    : bcrypt.hashSync(pass, 10);
+    : bcrypt.hashSync(passN, 10);
+};
+
+export const getPagination = (page, size) => {
+  const limit = size ? size : 20;
+  const offset = page ? (page-1) * limit : 0;
+  return { limit, offset };
 };
 
 export const createOrder = async (patientRes, dataOrder, db, ...queries) => {
