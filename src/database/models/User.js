@@ -1,9 +1,18 @@
 import bcrypt from "bcrypt";
 import db from "../connection/_query";
 import { generateToken } from "../../utils/_auth";
-import { getByEmail, create ,getAll} from "../queries/User";
+import {
+  getByEmail,
+  create,
+  getAll,
+  update,
+  getById,
+  deleteuser,
+  updatePassword
+} from "../queries/User";
 import { STATUSES } from "../../constants/ResponseStatuses";
 import { MESSAGES } from "../../constants/ResponceMessages";
+import { getPagination,genPass } from "../../utils/appUtils";
 
 const User = {
   login: async (data) => {
@@ -36,21 +45,18 @@ const User = {
       return error;
     }
   },
-  findAll: async () => {
-    try {
-      const users = await db.query(getAll);
-      if (users.rows.length>0) {
-        return {
-          user: users.rows,
-          message: "Data found",
-        };
-      }
+  findAll: async (data) => {
+    const { limit, offset } = getPagination(data[0], data[1]);
+    const users = await db.query(getAll, [limit, offset]);
+    if (users.rows.length > 0) {
       return {
-        message: "No data found",
+        users: users.rows,
+        message: "Data found",
       };
-    } catch (error) {
-      return error;
     }
+    return {
+      message: "No data found",
+    };
   },
   create: async (data) => {
     try {
@@ -62,28 +68,75 @@ const User = {
       };
       const token = await generateToken(payload);
       const user = await db.query(create, data);
-      if(user.rows.length>0){
-       delete user.rows[0].u_password;
+      if (user.rows.length > 0) {
+        delete user.rows[0].u_password;
         return {
           user,
           token,
-          message:`User ${MESSAGES.CREATED}`,
+          message: `User ${MESSAGES.CREATED}`,
         };
-      }else {
+      } else {
         return {
-          message:`User not ${MESSAGES.NOT_CREATED}`,
+          message: `User not ${MESSAGES.NOT_CREATED}`,
         };
       }
-      
     } catch (e) {
       return {
-        message:e.message,
-        status:STATUSES.SERVERERROR
+        message: e.message,
+        status: STATUSES.SERVERERROR,
       };
     }
   },
-  update: async () => {},
-  destroy: async () => {},
+  update: async (data) => {
+    const user = await db.query(update, data);
+    if (user.rows.length > 0) {
+      return {
+        user,
+        message: `User ${MESSAGES.UPDATED}`,
+      };
+    } else {
+      return {
+        message: `User not ${MESSAGES.NOT_UPDATED}`,
+      };
+    }
+  },
+  destroy: async (uid) => {
+    const user = await db.query(deleteuser, [uid]);
+    if (user.rows.length > 0) {
+      return {
+        user,
+        message: `User ${MESSAGES.DELETED}`,
+      };
+    } else {
+      return {
+        message: `User not ${MESSAGES.DELETED}`,
+      };
+    }
+  },
+  resetPassword: async (data) => {
+    const user = await db.query(getById, [data[0]]);
+    if (user.rows.length>0) {
+      if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
+        const user=await db.query(updatePassword,[data[0],genPass(false,data[2])])
+        if(user.rows.length>0){
+          return {
+            user: user.rows,
+            message: "Password resed sussesfully",
+          };
+        }else {
+          return {
+            message: "Password not reset",
+          };
+        }
+      }
+      return {
+        message: "password mismach",
+      };
+    }
+    return {
+      message: "User not found",
+    };
+  },
 };
 
 export default User;

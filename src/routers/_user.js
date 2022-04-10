@@ -21,6 +21,31 @@ router.post(
   User.createUser
 );
 
+router.put(
+  "/updateuser/:uid",
+  Validator("updateuser"),
+  Auth.verifyToken,
+  User.update
+);
+
+router.put(
+  "/resetpassword",
+  Validator("resetpass"),
+  Auth.verifyToken,
+  User.resetPassword
+);
+
+router.delete(
+  "/deleteuser/:uid",
+  Auth.verifyToken,
+  User.destroy
+);
+
+router.get(
+  "/allusers",
+  Auth.verifyToken,
+  User.findAll
+);
 router.post("/login", Validator("login"), User.login);
 
 export default router;
