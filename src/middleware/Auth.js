@@ -22,7 +22,6 @@ const Auth = {
       const { email } = await decodeToken(token);
       try {
         const user = await db.query(getByEmail, [email]);
-
         if (!user.rows[0]) {
           return res.status(400).json({
             status: 400,

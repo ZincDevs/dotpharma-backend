@@ -6,9 +6,9 @@ import { getById } from '../database/queries/medicine';
 import { getById as getPatientById } from '../database/queries/patient';
 import { getDoctorById } from '../database/queries/doctor';
 
-export default [
+export default {
   // Pharmacy exists
-  async (req, res, next) => {
+  checkPharmacyExists:async (req, res, next) => {
     db.query(getOneById, [req.body.phid])
       .then(({ rows }) => {
         if (rows.length > 0) {
@@ -27,7 +27,7 @@ export default [
       });
   },
   // Medicine exists
-  async (req, res, next) => {
+  checkMedicineExists:async (req, res, next) => {
     db.query(getById, [req.body.mid])
       .then(({ rows }) => {
         if (rows.length > 0) {
@@ -47,7 +47,7 @@ export default [
   },
 
   // Doctor exists
-  async (req, res, next) => {
+  checkDoctorExists:async (req, res, next) => {
     db.query(getDoctorById, [req.body.docid])
       .then(({ rows }) => {
         if (rows.length > 0) {
@@ -66,7 +66,7 @@ export default [
       });
   },
   // Patient exists
-  async (req, res, next) => {
+  checkPatientExists:async (req, res, next) => {
     db.query(getPatientById, [req.body.patid])
       .then(({ rows }) => {
         if (rows.length > 0) {
@@ -84,4 +84,4 @@ export default [
         });
       });
   },
-];
+};

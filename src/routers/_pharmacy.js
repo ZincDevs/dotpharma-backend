@@ -11,29 +11,29 @@ router.post(
   '/createnew',
   Validator('pharmacy'),
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   Pharmacy.CreatePharmacy
 );
 router.put(
   '/updatepharmacy/:phid',
   Validator('pharmacy'),
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   Pharmacy.updatePharmacy
 );
 router.delete(
   '/deletepharmacy/:pid',
   Auth.verifyToken,
-  AccessLevel[0],
+  AccessLevel.checkISAdmin,
   Pharmacy.deletePharmacy
 );
 router.get('/findall', Pharmacy.findAll);
 router.post(
   '/addmedtopharma',
   Auth.verifyToken,
-  AccessLevel[0],
-  DataExistsChecks[0],
-  DataExistsChecks[1],
+  AccessLevel.checkISAdmin,
+  DataExistsChecks.checkPharmacyExists,
+  DataExistsChecks.checkPatientExists,
   Pharmacy.addMedicineToPharma
 );
 

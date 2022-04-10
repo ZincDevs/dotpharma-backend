@@ -7,6 +7,7 @@ import { sendEmail } from '../utils/appUtils';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
+
     const patientPayload = [
       uuid(),
       req.body.name,
@@ -20,6 +21,7 @@ const OrderController = {
       req.body.nid,
       moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     ];
+    
     const orderPayload = [
       uuid(),
       req.body.phid,
