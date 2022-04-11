@@ -81,11 +81,11 @@ const nid = Joi.string().min(16);
 const mid = Joi.string().min(3).required().label('Medicine id is required');
 const phid = Joi.string().min(3).required().label('Pharmacy id is required');
 const patid = Joi.string().min(3).required().label('Patient id is required');
-const district = Joi.string().min(3).required().label('District is required');
 const prescription = Joi.string().min(3).label('Prescription is required');
 const role = Joi.string().min(3).required().label('Role is required');
 const uid = Joi.string().min(3).required().label('User id is required');
-
+const docid = Joi.string().min(3).required().label('Doctor id is required');
+const deasese  = Joi.string().min(3).required().label('Disease id is required');
 
 schemas.login = Joi.object().keys({
   email,
@@ -170,6 +170,8 @@ schemas.order = Joi.object().keys({
 });
 
 schemas.appointment=Joi.object().keys({
-  
+  patid,
+  docid,
+  deasese,
 })
 export default schemas;
