@@ -5,6 +5,7 @@ import { getOneById } from '../database/queries/pharmacy';
 import { getById } from '../database/queries/medicine';
 import { getById as getPatientById,getByEmailOrPhone } from '../database/queries/patient';
 import { getDoctorById } from '../database/queries/doctor';
+import { getById as getUserById } from '../database/queries/User';
 
 export default {
   // Pharmacy exists
@@ -93,6 +94,24 @@ export default {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
             message: `Patient ${MESSAGES.ALREDY_EXISTS}`,
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(STATUSES.SERVERERROR).send({
+          error: err.message,
+        });
+      });
+  },
+  checkUserExists:async (req, res, next) => {
+    db.query(getUserById, [req.body.uid])
+      .then(({ rows }) => {
+        if (rows.length > 0) {
+          next();
+        } else {
+          res.status(STATUSES.NOTFOUND).send({
+            status: STATUSES.NOTFOUND,
+            message: `User ${MESSAGES.NOT_FOUND}`,
           });
         }
       })
