@@ -19,6 +19,7 @@ const User = {
     try {
       const user = await db.query(getByEmail, [data[0]]);
       if (user.rowCount) {
+        
         if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
           const payload = {
             names: user.rows[0].u_name,

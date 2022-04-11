@@ -25,7 +25,13 @@ const newpassword = Joi.string()
 const name = Joi.string()
   .min(3)
   .required()
-  .label('Name is required,  it must have at least 5 letters');
+  .label('Name is required,  it must have at least 3 letters');
+
+
+  const pname = Joi.string()
+  .min(3)
+  .required()
+  .label('Patient Name is required,  it must have at least 3 letters');
 
 const phone = Joi.string()
   .min(10)
@@ -74,11 +80,12 @@ const street = Joi.string().min(3).required().label('Street number is required')
 const nid = Joi.string().min(16);
 const mid = Joi.string().min(3).required().label('Medicine id is required');
 const phid = Joi.string().min(3).required().label('Pharmacy id is required');
-const district = Joi.string().min(3).required().label('District is required');
+const patid = Joi.string().min(3).required().label('Patient id is required');
 const prescription = Joi.string().min(3).label('Prescription is required');
 const role = Joi.string().min(3).required().label('Role is required');
 const uid = Joi.string().min(3).required().label('User id is required');
-
+const docid = Joi.string().min(3).required().label('Doctor id is required');
+const deasese  = Joi.string().min(3).required().label('Disease id is required');
 
 schemas.login = Joi.object().keys({
   email,
@@ -157,11 +164,14 @@ schemas.patient = Joi.object().keys({
 schemas.order = Joi.object().keys({
   mid,
   phid,
-  district,
-  prescription
+  prescription,
+  pname,
+  patid
 });
 
 schemas.appointment=Joi.object().keys({
-  
+  patid,
+  docid,
+  deasese,
 })
 export default schemas;

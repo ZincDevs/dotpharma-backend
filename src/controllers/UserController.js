@@ -20,8 +20,8 @@ const UserController = {
             user: results.user.rows,
           });
         } else {
-          res.status(400).send({
-            status: 400,
+          res.status(401).send({
+            status: 401,
             message: results,
           });
         }

@@ -53,28 +53,3 @@ export const getPagination = (page, size) => {
   const offset = page ? (page-1) * limit : 0;
   return { limit, offset };
 };
-
-export const createOrder = async (patientRes, dataOrder, db, ...queries) => {
-  const mDataOrder = [
-    ...dataOrder.slice(0, 1),
-    patientRes.rows[0].p_id,
-    ...dataOrder.slice(1),
-  ];
-  const orderRes = await db.query(queries[0], mDataOrder);
-  if (orderRes.rows.length > 0) {
-    const pharmaRes = await db.query(queries[1], [orderRes.rows[0].o_pharmacy]);
-    const resData = patientRes.rows[0];
-    resData.order = orderRes.rows[0];
-    resData.pharmacyEmail = pharmaRes.rows[0].ph_email;
-    return {
-      status: STATUSES.CREATED,
-      message: `Order ${MESSAGES.CREATED}`,
-      data: resData,
-    };
-  }
-  return {
-    status: STATUSES.BAD_REQUEST,
-    message: `Order ${MESSAGES.NOT_CREATED}`,
-    data: [],
-  };
-};
