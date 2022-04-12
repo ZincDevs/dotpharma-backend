@@ -8,18 +8,17 @@ import {
   update,
   getById,
   deleteuser,
-  updatePassword
+  updatePassword,
 } from "../queries/User";
 import { STATUSES } from "../../constants/ResponseStatuses";
 import { MESSAGES } from "../../constants/ResponceMessages";
-import { getPagination,genPass } from "../../utils/appUtils";
+import { getPagination, genPass } from "../../utils/appUtils";
 
 const User = {
   login: async (data) => {
     try {
       const user = await db.query(getByEmail, [data[0]]);
       if (user.rowCount) {
-        
         if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
           const payload = {
             names: user.rows[0].u_name,
@@ -36,11 +35,11 @@ const User = {
           };
         }
         return {
-          message: "password is incorrect",
+          password: { message: "password is incorrect" },
         };
       }
       return {
-        message: "Invalid email",
+        email: { message: ["Invalid email"] },
       };
     } catch (error) {
       return error;
@@ -116,15 +115,18 @@ const User = {
   },
   resetPassword: async (data) => {
     const user = await db.query(getById, [data[0]]);
-    if (user.rows.length>0) {
+    if (user.rows.length > 0) {
       if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
-        const user=await db.query(updatePassword,[data[0],genPass(false,data[2])])
-        if(user.rows.length>0){
+        const user = await db.query(updatePassword, [
+          data[0],
+          genPass(false, data[2]),
+        ]);
+        if (user.rows.length > 0) {
           return {
             user: user.rows,
             message: "Password resed sussesfully",
           };
-        }else {
+        } else {
           return {
             message: "Password not reset",
           };
