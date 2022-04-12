@@ -22,7 +22,7 @@ const UserController = {
         } else {
           res.status(401).send({
             status: 401,
-            message: results,
+            ...results
           });
         }
       })
