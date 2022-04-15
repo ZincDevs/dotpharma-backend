@@ -65,8 +65,8 @@ export default {
   },
   // check if user exists
   checkUserExists: async (req, res, next) => {
-    const { email,phone } = req.body;
-    db.query(checkExist, [email,phone])
+    const { email } = req.body;
+    db.query(checkExist, [email])
       .then(({ rows }) => {
         if (rows.length==0) {
           next();

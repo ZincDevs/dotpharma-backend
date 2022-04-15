@@ -22,7 +22,7 @@ const UserController = {
         } else {
           res.status(401).send({
             status: 401,
-            ...results
+            ...results,
           });
         }
       })
@@ -34,25 +34,38 @@ const UserController = {
       });
   },
   createUser: async (req, res) => {
-    const pass= genPass();
-    console.log(pass)
+    const pass = genPass();
+    console.log(pass);
     const data = [
+      uuid(),
+      req.body.email,
+      pass,
+      req.body.role,
+      moment(new Date()),
+      'valid'
+    ];
+    const doctorData = [
       uuid(),
       req.body.name,
       req.body.email,
       req.body.phone,
-     pass,
-      req.body.role,
+      req.body.speciality,
+      req.body.clinic,
+      req.body.image,
+      '1',
       moment(new Date()),
+      req.user.u_id,
     ];
 
-    User.create(data)
+    User.create(data,doctorData)
       .then((results) => {
+        console.log(results)
         if (results.user) {
           res.status(STATUSES.CREATED).send({
             token: results.token,
             status: STATUSES.CREATED,
             user: results.user.rows,
+            doctor:results.doctor.data,
           });
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
@@ -62,6 +75,7 @@ const UserController = {
         }
       })
       .catch((e) => {
+        console.log(e);
         res.status(STATUSES.SERVERERROR).send({
           status: STATUSES.SERVERERROR,
           message: e.message,
@@ -71,12 +85,11 @@ const UserController = {
   signup: async (req, res) => {
     const data = [
       uuid(),
-      req.body.name,
       req.body.email,
-      req.body.phone,
       genPass(false, req.body.password),
       req.body.role,
       moment(new Date()),
+      'invalid'
     ];
     User.create(data)
       .then((results) => {
@@ -96,7 +109,7 @@ const UserController = {
       .catch((e) => {
         res.status(STATUSES.SERVERERROR).send({
           status: STATUSES.SERVERERROR,
-          message: e.message,
+          message: e,
         });
       });
   },

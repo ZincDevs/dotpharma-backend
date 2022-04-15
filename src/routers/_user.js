@@ -18,7 +18,7 @@ router.post(
   "/signup",
   Validator("signup"),
   UserMiddle.checkUserExists,
-  User.createUser
+  User.signup
 );
 
 router.put(

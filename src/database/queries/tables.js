@@ -1,12 +1,11 @@
 export const createUserTable = `CREATE TABLE IF NOT EXISTS users
 (
     u_id text COLLATE pg_catalog."default" NOT NULL,
-    u_name text COLLATE pg_catalog."default",
     u_email text COLLATE pg_catalog."default",
-    u_phone text COLLATE pg_catalog."default",
     u_password text COLLATE pg_catalog."default",
     u_role text COLLATE pg_catalog."default",
     doneon text COLLATE pg_catalog."default",
+    status text COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (u_id)
 )`;
 export const CreatePatientTable = `CREATE TABLE IF NOT EXISTS patients
@@ -21,8 +20,13 @@ export const CreatePatientTable = `CREATE TABLE IF NOT EXISTS patients
     p_district text COLLATE pg_catalog."default",
     p_streetnumber text COLLATE pg_catalog."default",
     p_national_id text COLLATE pg_catalog."default",
+    user_ref text  COLLATE pg_catalog."default" NOT NULL,
     doneon text COLLATE pg_catalog."default",
-    CONSTRAINT patient_pkey PRIMARY KEY (p_id)
+    CONSTRAINT patient_pkey PRIMARY KEY (p_id),
+    CONSTRAINT user_fk FOREIGN KEY (user_ref)
+        REFERENCES users (u_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 )`;
 export const createDoctorTable = `CREATE TABLE IF NOT EXISTS doctors
 (
@@ -36,8 +40,13 @@ export const createDoctorTable = `CREATE TABLE IF NOT EXISTS doctors
     d_status text COLLATE pg_catalog."default",
     d_doneon text COLLATE pg_catalog."default",
     user_id text COLLATE pg_catalog."default",
+    user_ref text COLLATE pg_catalog."default",
     CONSTRAINT doctors_pkey PRIMARY KEY (do_id),
     CONSTRAINT user_fk FOREIGN KEY (user_id)
+        REFERENCES users (u_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT user_foreign_key FOREIGN KEY (user_ref)
         REFERENCES users (u_id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE

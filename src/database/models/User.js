@@ -13,6 +13,7 @@ import {
 import { STATUSES } from "../../constants/ResponseStatuses";
 import { MESSAGES } from "../../constants/ResponceMessages";
 import { getPagination, genPass } from "../../utils/appUtils";
+import Doctor from "./Doctor";
 
 const User = {
   login: async (data) => {
@@ -21,9 +22,7 @@ const User = {
       if (user.rowCount) {
         if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
           const payload = {
-            names: user.rows[0].u_name,
             email: user.rows[0].u_email,
-            phonenumber: user.rows[0].u_phone,
             role: user.rows[0].u_name,
             userid: user.rows[0].u_id,
           };
@@ -58,23 +57,27 @@ const User = {
       message: "No data found",
     };
   },
-  create: async (data) => {
+  create: async (data,doctorData) => {
     try {
       const payload = {
-        names: data[0],
         email: data[1],
-        phonenumber: data[2],
         role: data[3],
       };
-      const token = await generateToken(payload);
       const user = await db.query(create, data);
       if (user.rows.length > 0) {
         delete user.rows[0].u_password;
-        return {
-          user,
-          token,
-          message: `User ${MESSAGES.CREATED}`,
-        };
+
+        const docData=doctorData.push(user.rows[0].u_id);
+        const doctor=await Doctor.create(doctorData);
+        console.log(doctor)
+        if(doctor.data){
+          return {
+            user,
+            doctor,
+            message: `Doctor ${MESSAGES.CREATED}`,
+          };
+        }
+      
       } else {
         return {
           message: `User not ${MESSAGES.NOT_CREATED}`,
