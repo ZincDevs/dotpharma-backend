@@ -35,7 +35,6 @@ const Doctor = {
   },
   find: async () => {},
   create: async (data) => {
-    try {
       let doctorRes = await query.query(getByEmailOrPhone, [data[2], data[3]]);
       if (doctorRes.rows.length > 0) {
         return {
@@ -55,12 +54,7 @@ const Doctor = {
         status: STATUSES.BAD_REQUEST,
         message: MESSAGES.NOT_CREATED,
       };
-    } catch (error) {
-      return {
-        status: STATUSES.SERVERERROR,
-        message: error.message,
-      };
-    }
+   
   },
   update: async (data) => {
     try {

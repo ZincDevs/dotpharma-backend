@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 export const createDoctor = `INSERT INTO doctors
-(do_id,d_name,d_email,d_phone,d_speciality,d_clinic,d_image,d_status,d_doneon,user_id)
-VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`;
+(do_id,d_name,d_email,d_phone,d_speciality,d_clinic,d_image,d_status,d_doneon,user_id,user_ref)
+VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`;
 export const updateDoctor = `UPDATE doctors
 SET d_name=$1,d_email=$2,d_speciality=$3,d_clinic=$4,d_image=$5,d_doneon=$6,user_id=$7,d_phone=$8 WHERE do_id=$9
 RETURNING *`;

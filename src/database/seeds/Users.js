@@ -10,12 +10,11 @@ import { create } from '../queries/User';
 dotenv.config();
 const user = [
   uuidv4(),
-  'Danny Benshi',
   process.env.ADMIN_EMAIL,
-  '0784871958',
   bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10),
   'SUPER_ADMIN',
-  moment(new Date())
+  moment(new Date()),
+  'valid'
 ];
 
 db.query(create, user).then((userResponse) => {
