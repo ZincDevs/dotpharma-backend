@@ -104,6 +104,12 @@ schemas.login = Joi.object().keys({
 schemas.createuser = Joi.object().keys({
   email,
   role,
+  name,
+  email,
+  phone,
+  speciality,
+  clinic,
+  image,
 });
 schemas.signup = Joi.object().keys({
   email,

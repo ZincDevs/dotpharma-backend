@@ -69,12 +69,15 @@ const User = {
 
         const docData=doctorData.push(user.rows[0].u_id);
         const doctor=await Doctor.create(doctorData);
-        console.log(doctor)
         if(doctor.data){
           return {
             user,
             doctor,
             message: `Doctor ${MESSAGES.CREATED}`,
+          };
+        }else {
+          return {
+            message: `Doctor not created due to ${doctor.message}`,
           };
         }
       
