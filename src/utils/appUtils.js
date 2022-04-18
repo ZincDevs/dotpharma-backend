@@ -36,7 +36,6 @@ export const genPass = (autoGen = true, pass = null) => {
     length: 10,
     numbers: true,
   }) : pass;
-  console.log(passN);
   return autoGen
     ? bcrypt.hashSync(
       passN,

@@ -86,14 +86,13 @@ const User = {
   // },
   create: async (data) => {
     const user = await db.query(create, data);
-    const payload = {
-      email: user.rows[0].u_email,
-      role: user.rows[0].u_role,
-      userid: user.rows[0].u_id,
-    };
-    const token = await generateToken(payload);
     if (user.rows.length > 0) {
-      delete user.rows[0].u_password;
+      const payload = {
+        email: user.rows[0].u_email,
+        role: user.rows[0].u_role,
+        userid: user.rows[0].u_id,
+      };
+      const token = await generateToken(payload);
       return {
         token,
         user,
