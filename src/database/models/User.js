@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import db from "../connection/_query";
-import { generateToken } from "../../utils/_auth";
+import bcrypt from 'bcrypt';
+import db from '../connection/_query';
+import { generateToken } from '../../utils/_auth';
 import {
   getByEmail,
   create,
@@ -9,11 +9,10 @@ import {
   getById,
   deleteuser,
   updatePassword,
-} from "../queries/User";
-import { STATUSES } from "../../constants/ResponseStatuses";
-import { MESSAGES } from "../../constants/ResponceMessages";
-import { getPagination, genPass } from "../../utils/appUtils";
-import Doctor from "./Doctor";
+  actvateUser,
+} from '../queries/User';
+import { MESSAGES } from '../../constants/ResponceMessages';
+import { getPagination, genPass } from '../../utils/appUtils';
 
 const User = {
   login: async (data) => {
@@ -30,15 +29,15 @@ const User = {
           return {
             token,
             user: user.rows,
-            message: "sussesfully logged in",
+            message: 'sussesfully logged in',
           };
         }
         return {
-          password: { message: "password is incorrect" },
+          password: { message: 'password is incorrect' },
         };
       }
       return {
-        email: { message: ["Invalid email"] },
+        email: { message: ['Invalid email'] },
       };
     } catch (error) {
       return error;
@@ -50,48 +49,72 @@ const User = {
     if (users.rows.length > 0) {
       return {
         users: users.rows,
-        message: "Data found",
+        message: 'Data found',
       };
     }
     return {
-      message: "No data found",
+      message: 'No data found',
     };
   },
-  create: async (data,doctorData) => {
-    try {
-      const payload = {
-        email: data[1],
-        role: data[3],
-      };
-      const user = await db.query(create, data);
-      if (user.rows.length > 0) {
-        delete user.rows[0].u_password;
+  // create: async (data, doctorData) => {
+  //   try {
+  //     const user = await db.query(create, data);
+  //     if (user.rows.length > 0) {
+  //       delete user.rows[0].u_password;
 
-        const docData=doctorData.push(user.rows[0].u_id);
-        const doctor=await Doctor.create(doctorData);
-        if(doctor.data){
-          return {
-            user,
-            doctor,
-            message: `Doctor ${MESSAGES.CREATED}`,
-          };
-        }else {
-          return {
-            message: `Doctor not created due to ${doctor.message}`,
-          };
-        }
-      
-      } else {
-        return {
-          message: `User not ${MESSAGES.NOT_CREATED}`,
-        };
-      }
-    } catch (e) {
+  //       const doctor = await Doctor.create(doctorData);
+  //       if (doctor.data) {
+  //         return {
+  //           user,
+  //           doctor,
+  //           message: `Doctor ${MESSAGES.CREATED}`,
+  //         };
+  //       }
+  //       return {
+  //         message: `Doctor not created due to ${doctor.message}`,
+  //       };
+  //     }
+  //     return {
+  //       message: `User not ${MESSAGES.NOT_CREATED}`,
+  //     };
+  //   } catch (e) {
+  //     return {
+  //       message: e.message,
+  //       status: STATUSES.SERVERERROR,
+  //     };
+  //   }
+  // },
+  create: async (data) => {
+    const user = await db.query(create, data);
+    const payload = {
+      email: user.rows[0].u_email,
+      role: user.rows[0].u_role,
+      userid: user.rows[0].u_id,
+    };
+    const token = await generateToken(payload);
+    if (user.rows.length > 0) {
+      delete user.rows[0].u_password;
       return {
-        message: e.message,
-        status: STATUSES.SERVERERROR,
+        token,
+        user,
+        message: `User ${MESSAGES.CREATED}`,
       };
     }
+    return {
+      message: `User not ${MESSAGES.NOT_CREATED}`,
+    };
+  },
+  activateUser: async () => {
+    const userActivate = await db.query(actvateUser);
+    if (userActivate.rows.length > 0) {
+      return {
+        user: userActivate.rows,
+        message: 'User is activated',
+      };
+    }
+    return {
+      message: 'User is not activated',
+    };
   },
   update: async (data) => {
     const user = await db.query(update, data);
@@ -100,11 +123,10 @@ const User = {
         user,
         message: `User ${MESSAGES.UPDATED}`,
       };
-    } else {
-      return {
-        message: `User not ${MESSAGES.NOT_UPDATED}`,
-      };
     }
+    return {
+      message: `User not ${MESSAGES.NOT_UPDATED}`,
+    };
   },
   destroy: async (uid) => {
     const user = await db.query(deleteuser, [uid]);
@@ -113,37 +135,35 @@ const User = {
         user,
         message: `User ${MESSAGES.DELETED}`,
       };
-    } else {
-      return {
-        message: `User not ${MESSAGES.DELETED}`,
-      };
     }
+    return {
+      message: `User not ${MESSAGES.DELETED}`,
+    };
   },
   resetPassword: async (data) => {
     const user = await db.query(getById, [data[0]]);
     if (user.rows.length > 0) {
       if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
-        const user = await db.query(updatePassword, [
+        const userReset = await db.query(updatePassword, [
           data[0],
           genPass(false, data[2]),
         ]);
-        if (user.rows.length > 0) {
+        if (userReset.rows.length > 0) {
           return {
-            user: user.rows,
-            message: "Password resed sussesfully",
-          };
-        } else {
-          return {
-            message: "Password not reset",
+            user: userReset.rows,
+            message: 'Password resed sussesfully',
           };
         }
+        return {
+          message: 'Password not reset',
+        };
       }
       return {
-        message: "password mismach",
+        message: 'password mismach',
       };
     }
     return {
-      message: "User not found",
+      message: 'User not found',
     };
   },
 };

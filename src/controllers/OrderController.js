@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import moment from "moment";
-import { v4 as uuid } from "uuid";
-import { MESSAGES } from "../constants/ResponceMessages";
-import { STATUSES } from "../constants/ResponseStatuses";
-import Order from "../database/models/Order";
-import { sendEmail, getPagination } from "../utils/appUtils";
+import moment from 'moment';
+import { v4 as uuid } from 'uuid';
+import { MESSAGES } from '../constants/ResponceMessages';
+import { STATUSES } from '../constants/ResponseStatuses';
+import Order from '../database/models/Order';
+import { sendEmail, getPagination } from '../utils/appUtils';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
@@ -15,8 +15,8 @@ const OrderController = {
         req.body.phid,
         req.body.mid,
         req.body.prescription,
-        moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-        "Pending",
+        moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+        'Pending',
       ];
       const response = await Order.create(orderPayload);
       res.status(STATUSES.CREATED).send({
@@ -28,9 +28,9 @@ const OrderController = {
         const [emailSent] = await Promise.all([
           sendEmail(
             response.pharmacyEmail,
-            "Dotpharma",
+            'Dotpharma',
             `A patient named ${req.body.pname} made an order!`,
-            "Medicine order from DotPharma"
+            'Medicine order from DotPharma'
           ),
         ]);
       }
@@ -47,7 +47,7 @@ const OrderController = {
       req.body.phid,
       req.body.mid,
       req.body.prescription,
-      moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
+      moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       req.params.oid,
     ];
     Order.update(orderPayload)

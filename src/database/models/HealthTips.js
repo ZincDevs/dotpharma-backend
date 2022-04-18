@@ -1,12 +1,13 @@
-import db from "../connection/_query";
+import db from '../connection/_query';
 import {
   createHealthTip,
   deleteTip,
   findAllTip,
   findById,
   upadateHealthTip,
-} from "../queries/healthtips";
-import { MESSAGES } from "../../constants/ResponceMessages";
+} from '../queries/healthtips';
+import { MESSAGES } from '../../constants/ResponceMessages';
+
 const HealthTips = {
   create: async (data) => {
     const tip = await db.query(createHealthTip, data);
@@ -15,11 +16,10 @@ const HealthTips = {
         message: `Health tip ${MESSAGES.CREATED}`,
         tip: tip.rows,
       };
-    } else {
-      return {
-        message: `Health not created`,
-      };
     }
+    return {
+      message: 'Health not created',
+    };
   },
   update: async (data) => {
     const tip = await db.query(upadateHealthTip, data);
@@ -28,11 +28,10 @@ const HealthTips = {
         message: `Health tip ${MESSAGES.UPDATED}`,
         tip: tip.rows,
       };
-    } else {
-      return {
-        message: `Health not updated`,
-      };
     }
+    return {
+      message: 'Health not updated',
+    };
   },
   findAll: async (data) => {
     const tip = await db.query(findAllTip, data);
@@ -41,11 +40,10 @@ const HealthTips = {
         message: `Health tip ${MESSAGES.FOUND}`,
         tip: tip.rows,
       };
-    } else {
-      return {
-        message: `${MESSAGES.NOT_CONTENT}`,
-      };
     }
+    return {
+      message: `${MESSAGES.NOT_CONTENT}`,
+    };
   },
   destroy: async (hid) => {
     const tip = await db.query(deleteTip, [hid]);
@@ -54,11 +52,10 @@ const HealthTips = {
         message: `Health tip ${MESSAGES.FOUND}`,
         tip: tip.rows,
       };
-    } else {
-      return {
-        message: `Not deleted`,
-      };
     }
+    return {
+      message: 'Not deleted',
+    };
   },
   findById: async (hid) => {
     const tip = await db.query(findById, [hid]);
@@ -67,11 +64,10 @@ const HealthTips = {
         message: `Health tip ${MESSAGES.FOUND}`,
         tip: tip.rows,
       };
-    } else {
-      return {
-        message: `${MESSAGES.NOT_CONTENT}`,
-      };
     }
+    return {
+      message: `${MESSAGES.NOT_CONTENT}`,
+    };
   },
 };
 
