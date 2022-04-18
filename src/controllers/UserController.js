@@ -1,11 +1,11 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
-import moment from "moment";
-import { v4 as uuid } from "uuid";
-import User from "../database/models/User";
-import { STATUSES } from "../constants/ResponseStatuses";
-import { genPass } from "../utils/appUtils";
-import { MESSAGES } from "../constants/ResponceMessages";
-import { sendEmail } from "../utils/appUtils";
+import moment from 'moment';
+import { v4 as uuid } from 'uuid';
+import User from '../database/models/User';
+import { STATUSES } from '../constants/ResponseStatuses';
+import { genPass, sendEmail } from '../utils/appUtils';
+import { MESSAGES } from '../constants/ResponceMessages';
 
 const UserController = {
   login: async (req, res) => {
@@ -35,14 +35,13 @@ const UserController = {
   },
   createUser: async (req, res) => {
     const pass = genPass();
-    console.log(pass);
     const data = [
       uuid(),
       req.body.email,
       pass,
       req.body.role,
       moment(new Date()),
-      'valid'
+      'valid',
     ];
     const doctorData = [
       uuid(),
@@ -57,15 +56,14 @@ const UserController = {
       req.user.u_id,
     ];
 
-    User.create(data,doctorData)
+    User.create(data, doctorData)
       .then((results) => {
-        console.log(results)
         if (results.user) {
           res.status(STATUSES.CREATED).send({
             token: results.token,
             status: STATUSES.CREATED,
             user: results.user.rows,
-            doctor:results.doctor.data,
+            doctor: results.doctor.data,
           });
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
@@ -75,29 +73,31 @@ const UserController = {
         }
       })
       .catch((e) => {
-        console.log(e);
         res.status(STATUSES.SERVERERROR).send({
           status: STATUSES.SERVERERROR,
           message: e.message,
         });
       });
   },
-  signup: async (req, res) => {
+  signup: async (req, res, next) => {
     const data = [
       uuid(),
       req.body.email,
       genPass(false, req.body.password),
-      req.body.role,
+      req.body.role.toUpperCase(),
       moment(new Date()),
-      'invalid'
+      'invalid',
     ];
     User.create(data)
       .then((results) => {
         if (results.user) {
+          // req.user = results.user.rows[0];
+          // req.token = results.token;
+          // next();
           res.status(STATUSES.CREATED).send({
-            token: results.token,
             status: STATUSES.CREATED,
-            user: results.user.rows,
+            message: results.message,
+            token: results.token
           });
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
@@ -211,6 +211,21 @@ const UserController = {
           message: e.message,
         });
       });
+  },
+  sendMail: async (req, res) => {
+    try {
+      const mailRes = await sendEmail(
+        req.user.u_email,
+        'Dotpharma notification',
+        'Dear patient, please click <a href="">here</a> to activate your account your account',
+        'Dotpharma signup'
+      );
+    } catch (error) {
+      res.status(STATUSES.SERVERERROR).send({
+        status: STATUSES.SERVERERROR,
+        message: error.message,
+      });
+    }
   },
 };
 
