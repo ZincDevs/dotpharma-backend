@@ -2,10 +2,12 @@
 /* eslint-disable no-unused-vars */
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
+import workerfarm from 'worker-farm';
 import User from '../database/models/User';
 import { STATUSES } from '../constants/ResponseStatuses';
 import { genPass, sendEmail } from '../utils/appUtils';
 import { MESSAGES } from '../constants/ResponceMessages';
+import { sendVerification } from '../workers';
 
 const UserController = {
   login: async (req, res) => {
@@ -89,20 +91,20 @@ const UserController = {
       'invalid',
     ];
     User.create(data)
-      .then((results) => {
-        if (results.user) {
-          // req.user = results.user.rows[0];
-          // req.token = results.token;
-          // next();
+      .then(({ user, token, message }) => {
+        if (user) {
+          sendVerification({ email: req.body.email, token }, () => {
+            workerfarm.end(sendVerification);
+          });
           res.status(STATUSES.CREATED).send({
             status: STATUSES.CREATED,
-            message: results.message,
-            token: results.token
+            message,
+            token
           });
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
-            message: results.message,
+            message,
           });
         }
       })
