@@ -12,7 +12,7 @@ export default async (emailTo, subject, template) => {
     const transporter = mailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      secure: false,
+      secure: true,
       tls: {
         ciphers: 'SSLv3'
       },
