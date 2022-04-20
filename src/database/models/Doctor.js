@@ -35,26 +35,25 @@ const Doctor = {
   },
   find: async () => {},
   create: async (data) => {
-      let doctorRes = await query.query(getByEmailOrPhone, [data[2], data[3]]);
-      if (doctorRes.rows.length > 0) {
-        return {
-          status: STATUSES.BAD_REQUEST,
-          message: MESSAGES.ALREDY_EXISTS,
-        };
-      }
-      doctorRes = await query.query(createDoctor, data);
-      if (doctorRes.rows.length > 0) {
-        return {
-          status: STATUSES.CREATED,
-          message: `Doctor ${MESSAGES.CREATED}`,
-          data: doctorRes.rows[0],
-        };
-      }
+    let doctorRes = await query.query(getByEmailOrPhone, [data[2], data[3]]);
+    if (doctorRes.rows.length > 0) {
       return {
         status: STATUSES.BAD_REQUEST,
-        message: MESSAGES.NOT_CREATED,
+        message: MESSAGES.ALREDY_EXISTS,
       };
-   
+    }
+    doctorRes = await query.query(createDoctor, data);
+    if (doctorRes.rows.length > 0) {
+      return {
+        status: STATUSES.CREATED,
+        message: `Doctor ${MESSAGES.CREATED}`,
+        data: doctorRes.rows[0],
+      };
+    }
+    return {
+      status: STATUSES.BAD_REQUEST,
+      message: MESSAGES.NOT_CREATED,
+    };
   },
   update: async (data) => {
     try {
