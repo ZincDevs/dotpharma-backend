@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 import moment from 'moment';
@@ -214,21 +215,28 @@ const UserController = {
         });
       });
   },
-  sendMail: async (req, res) => {
-    try {
-      const mailRes = await sendEmail(
-        req.user.u_email,
-        'Dotpharma notification',
-        'Dear patient, please click <a href="">here</a> to activate your account your account',
-        'Dotpharma signup'
-      );
-    } catch (error) {
+  validateUserAccount: async (req, res) => {
+    const { u_id } = req.user;
+    User.activateUser(u_id).then((results) => {
+      if (results.user) {
+        res.status(STATUSES.OK).send({
+          status: STATUSES.OK,
+          message: 'Account has been activated',
+        });
+      } else {
+        res.status(STATUSES.BAD_REQUEST).send({
+          status: STATUSES.BAD_REQUEST,
+          message: 'Account not activated',
+        });
+      }
+    }).catch((e) => {
       res.status(STATUSES.SERVERERROR).send({
         status: STATUSES.SERVERERROR,
-        message: error.message,
+        message: e.message,
       });
-    }
-  },
+    });
+  }
+
 };
 
 export default UserController;
