@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import 'regenerator-runtime';
 export const MESSAGES = {
   CREATED: 'Created successfully!',
   FOUND: 'Data found successfully!',

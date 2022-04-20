@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import db from '../connection/_query';
 import {
   createHealthTip,

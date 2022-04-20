@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable prefer-destructuring */
+import 'regenerator-runtime';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { generate } from 'generate-password';

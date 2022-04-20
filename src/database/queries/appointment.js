@@ -1,3 +1,5 @@
+import 'regenerator-runtime';
+
 export const createAppointment = `INSERT INTO appointments(a_id,patient_id,doctor_id,a_desease,a_date,a_status)
                                 VALUES($1,$2,$3,$4,$5,$6) RETURNING *`;
 export const getAllAppointments = `SELECT * FROM appointments INNER JOIN patients on appointments.patient_id=patients.p_id 

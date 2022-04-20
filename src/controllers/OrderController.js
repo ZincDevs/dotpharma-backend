@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import 'regenerator-runtime';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import { MESSAGES } from '../constants/ResponceMessages';

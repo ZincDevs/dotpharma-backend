@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import 'regenerator-runtime';
+
 export const createDoctor = `INSERT INTO doctors
 (do_id,d_name,d_email,d_phone,d_speciality,d_clinic,d_image,d_status,d_doneon,user_id,user_ref)
 VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`;

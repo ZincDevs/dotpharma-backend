@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+import 'regenerator-runtime';
 import {
   createPharmacy,
   deletePharmacy,

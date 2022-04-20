@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
+import 'regenerator-runtime';
 import mailer from 'nodemailer';
 import dotenv from 'dotenv';
 
@@ -11,7 +12,7 @@ export default async (emailTo, subject, template) => {
     const transporter = mailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
-      secure: f,
+      secure: false,
       tls: {
         ciphers: 'SSLv3'
       },

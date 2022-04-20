@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import express from "express";
 import Validator from "../middleware/_validator";
 import Auth from "../middleware/Auth";
