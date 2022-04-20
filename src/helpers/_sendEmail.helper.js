@@ -1,10 +1,12 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-console */
+/* eslint-disable no-unused-expressions */
 import mailer from 'nodemailer';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const sendEmail = async (emailTo, subject, template) => {
+export default async (emailTo, subject, template) => {
+  console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
   try {
     const transporter = mailer.createTransport({
       host: 'smtp.gmail.com',
@@ -27,10 +29,12 @@ const sendEmail = async (emailTo, subject, template) => {
       text: 'Hello',
       html: template
     });
+
+    res.accepted ? console.log(`PID: ${process.pid} === EMAIL SENT ===`)
+      : console.log(`PID: ${process.pid} === EMAIL NOT SENT ===`);
+
     return res;
   } catch (error) {
     return error;
   }
 };
-
-export { sendEmail };
