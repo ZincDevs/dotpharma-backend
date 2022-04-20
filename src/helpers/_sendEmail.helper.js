@@ -8,6 +8,7 @@ dotenv.config();
 
 export default async (emailTo, subject, template) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
+  console.log(process.env.EMAIL_SENDER, process.env.PASSWORD_EMAIL_SENDER);
   try {
     const transporter = mailer.createTransport({
       host: 'smtp.gmail.com',
