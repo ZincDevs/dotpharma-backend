@@ -27,12 +27,16 @@ export default async (emailTo, subject, template) => {
       html: template,
     };
 
-    mailer.sendMail(email_option, (err, info) => {
-      if (err) {
-        console.log(err, `PID: ${process.pid} === EMAIL NOT SENT ===`);
-      } else {
-        console.log(info, `PID: ${process.pid} === EMAIL SENT ===`);
-      }
+    await new Promise((resolve, reject) => {
+      mailer.sendMail(email_option, (err, info) => {
+        if (err) {
+          console.log(err, `PID: ${process.pid} === EMAIL NOT SENT ===`);
+          reject(err);
+        } else {
+          console.log(info, `PID: ${process.pid} === EMAIL SENT ===`);
+          resolve(info);
+        }
+      });
     });
 
     // const transporter = mailer.createTransport({
@@ -53,18 +57,6 @@ export default async (emailTo, subject, template) => {
     //     },
     //   })
     // );
-
-    // await new Promise((resolve, reject) => {
-    //   transporter.verify((error, success) => {
-    //     if (error) {
-    //       console.log(error);
-    //       reject(error);
-    //     } else {
-    //       console.log('=== SERVER IS READY TO SEND EMAIL ===');
-    //       resolve(success);
-    //     }
-    //   });
-    // });
 
     // const mailData = {
     //   from: {
