@@ -2,46 +2,34 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
 import 'regenerator-runtime';
-import nodemailer from 'nodemailer';
+// import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import transport from 'nodemailer-sendgrid-transport';
+// import transport from 'nodemailer-sendgrid-transport';
+import sgMail from '@sendgrid/mail';
 
 dotenv.config();
 export default async (emailTo, subject, template, finish) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
-  try {
-    const mailer = nodemailer.createTransport(
-      transport({
-        auth: {
-          api_key: process.env.SENDGRID_API_KEY,
-        },
-      })
-    );
-
-    const email_option = {
-      to: emailTo,
-      replyTo: process.env.EMAIL_SENDER,
-      from: `DotPharma <${process.env.EMAIL_SENDER}>`,
-      subject,
-      text: subject,
-      html: template,
-    };
-
-    await new Promise((resolve, reject) => {
-      mailer.sendMail(email_option, (err, info) => {
-        if (err) {
-          console.log(err, `PID: ${process.pid} === EMAIL NOT SENT ===`);
-          reject(err);
-        } else {
-          console.log(info, `PID: ${process.pid} === EMAIL SENT ===`);
-          resolve(info);
-        }
-        finish(email_option);
-      });
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const email_option = {
+    to: emailTo,
+    replyTo: process.env.EMAIL_SENDER,
+    from: `DotPharma <${process.env.EMAIL_SENDER}>`,
+    subject,
+    text: subject,
+    html: template,
+  };
+  sgMail
+    .send(email_option)
+    .then((info) => {
+      console.log(info, `PID: ${process.pid} === EMAIL SENT ===`);
+      finish(email_option);
+      // resolve(info);
+    })
+    .catch((error) => {
+      console.log(error, `PID: ${process.pid} === EMAIL NOT SENT ===`);
+      finish(email_option);
+      // reject(error);
     });
-
-    return email_option;
-  } catch (error) {
-    return error;
-  }
+  return email_option;
 };
