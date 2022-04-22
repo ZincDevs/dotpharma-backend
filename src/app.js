@@ -8,12 +8,13 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import api from './routers';
 import globlaMiddleWare from './middleware/_global_middle_ware';
-import { corsConfig, serverConfig } from './config';
+import { corsConfig, serverConfig, cloudConfigure } from './config';
 
 dotenv.config();
 
 const app = express();
 const { port, env, host } = serverConfig;
+cloudConfigure();
 globlaMiddleWare(app);
 app
   .use(bodyParser.json())
