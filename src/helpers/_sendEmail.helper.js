@@ -14,6 +14,7 @@ const {
   OAUTH2_REDIRECT_URI,
   OAUTH2_REFRESH_TOKEN
 } = process.env;
+console.log(OAUTH2_USER, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI, OAUTH2_REFRESH_TOKEN);
 // const OAUTH2_USER = 'zincdevs@gmail.com';
 // const OAUTH2_CLIENT_ID = '937522408556-v86n6sgj5t7bnru2tj2tqlrjnrojf9n0.apps.googleusercontent.com';
 // const OAUTH2_CLIENT_SECRET = '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';
