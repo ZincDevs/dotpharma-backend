@@ -74,7 +74,9 @@ export default {
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
-            message: MESSAGES.ALREDY_EXISTS,
+            error: {
+              email: 'Account already exists'
+            }
           });
         }
       })
