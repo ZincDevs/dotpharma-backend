@@ -15,11 +15,6 @@ const {
   OAUTH2_REFRESH_TOKEN
 } = process.env;
 console.log(OAUTH2_USER, OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI, OAUTH2_REFRESH_TOKEN);
-// const OAUTH2_USER = 'zincdevs@gmail.com';
-// const OAUTH2_CLIENT_ID = '937522408556-v86n6sgj5t7bnru2tj2tqlrjnrojf9n0.apps.googleusercontent.com';
-// const OAUTH2_CLIENT_SECRET = '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';
-// const OAUTH2_REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-// const OAUTH2_REFRESH_TOKEN = '1//043eGUCffxiUiCgYIARAAGAQSNwF-L9IrCCoQWuvj68EHCToek45w6k4H3VfgoovQVdSixna_TbRNrFzQ5kvKmi4mIAS5dDZaaEs';
 const oAuth2Client = new google.auth.OAuth2(OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
 
@@ -58,9 +53,3 @@ const sentMail = async (emailTo, subject, template) => {
 };
 
 export default sentMail;
-
-// sentMail('ericrukundo005@gmail.com', 'Greetings', '<H1>Hello There</h1>').then((results) => {
-//   console.log(results);
-// }).catch((error) => {
-//   console.log(error);
-// });
