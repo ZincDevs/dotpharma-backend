@@ -14,7 +14,7 @@ const FileUploader = {
         }));
         return;
       }
-      cloudinary.uploader.upload(files.upload.path).then((result) => {
+      cloudinary.uploader.upload(files.fille.filepath).then((result) => {
         if (result.public_id) {
           res.status(STATUSES.OK).send(({
             status: STATUSES.OK,
