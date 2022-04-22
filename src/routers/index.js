@@ -6,8 +6,9 @@ import Doctor from './_doctor';
 import Medicine from './_medicine';
 import Order from './_order';
 import Appointment from './_appointment';
-import Patient from'./_patient';
-import Tip from'./_healthtips';
+import Patient from './_patient';
+import Tip from './_healthtips';
+import UploadFile from './_fileappload';
 
 const api = express();
 
@@ -19,6 +20,7 @@ api.use('/api/orders', Order);
 api.use('/api/appointments', Appointment);
 api.use('/api/patient', Patient);
 api.use('/api/healthtips', Tip);
+api.use('/api/file', UploadFile);
 api.get('/', (req, res) => {
   res.status(200).send({
     status: 200,
