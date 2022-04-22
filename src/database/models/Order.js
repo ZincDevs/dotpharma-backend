@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import db from "../connection/_query";
+import 'regenerator-runtime';
+import db from '../connection/_query';
 import {
   approveOrder,
   createOrder,
@@ -9,12 +10,11 @@ import {
   getRejectedOrders,
   rejectOrder,
   updateOrder,
-} from "../queries/orders";
-import { createPatient, getByEmail } from "../queries/patient";
-import { getOneById } from "../queries/pharmacy";
-import { STATUSES } from "../../constants/ResponseStatuses";
-import { MESSAGES } from "../../constants/ResponceMessages";
-import { createOrder as orderHandler } from "../../utils/appUtils";
+} from '../queries/orders';
+import { createPatient, getByEmail } from '../queries/patient';
+import { getOneById } from '../queries/pharmacy';
+import { STATUSES } from '../../constants/ResponseStatuses';
+import { MESSAGES } from '../../constants/ResponceMessages';
 
 const Order = {
   findAll: async (data) => {
@@ -30,7 +30,7 @@ const Order = {
     };
   },
   findAprovedOrders: async (data) => {
-    const orderRes = await db.query(getApprovedOrders,data);
+    const orderRes = await db.query(getApprovedOrders, data);
     if (orderRes.rows.length > 0) {
       return {
         message: `Order ${MESSAGES.FOUND}`,
@@ -42,7 +42,7 @@ const Order = {
     };
   },
   findrejectedOrders: async (data) => {
-    const orderRes = await db.query(getRejectedOrders,data);
+    const orderRes = await db.query(getRejectedOrders, data);
     if (orderRes.rows.length > 0) {
       return {
         message: `Order ${MESSAGES.FOUND}`,
@@ -78,7 +78,7 @@ const Order = {
       };
     }
     return {
-      message: `Order not updated`,
+      message: 'Order not updated',
     };
   },
   destroy: async (oid) => {
@@ -90,31 +90,31 @@ const Order = {
       };
     }
     return {
-      message: `Order not deleted`,
+      message: 'Order not deleted',
     };
   },
   approve: async (oid) => {
     const orderRes = await db.query(approveOrder, [oid]);
     if (orderRes.rows.length > 0) {
       return {
-        message: `Order approved successfully`,
+        message: 'Order approved successfully',
         orders: orderRes.rows,
       };
     }
     return {
-      message: `Order not approved`,
+      message: 'Order not approved',
     };
   },
   reject: async (oid) => {
     const orderRes = await db.query(rejectOrder, [oid]);
     if (orderRes.rows.length > 0) {
       return {
-        message: `Order rejected successfully`,
+        message: 'Order rejected successfully',
         orders: orderRes.rows,
       };
     }
     return {
-      message: `Order not rejected`,
+      message: 'Order not rejected',
     };
   },
 };

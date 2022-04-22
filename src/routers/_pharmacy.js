@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import Pharmacy from '../controllers/PharmacyController';
 import Validator from '../middleware/_validator';
 import express from 'express';

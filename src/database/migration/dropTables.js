@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import schema from '../schema';
 
 schema

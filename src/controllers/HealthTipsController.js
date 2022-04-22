@@ -1,8 +1,9 @@
-import HealthTips from "../database/models/HealthTips";
-import { STATUSES } from "../constants/ResponseStatuses";
-import { v4 as uuid } from "uuid";
-import moment from "moment";
-import { getPagination } from "../utils/appUtils";
+import 'regenerator-runtime';
+import { v4 as uuid } from 'uuid';
+import moment from 'moment';
+import HealthTips from '../database/models/HealthTips';
+import { STATUSES } from '../constants/ResponseStatuses';
+import { getPagination } from '../utils/appUtils';
 
 const HealthTipController = {
   create: async (req, res) => {

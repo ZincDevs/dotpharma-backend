@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import bcrypt from 'bcrypt';
 import db from '../connection/_query';
 import { generateToken } from '../../utils/_auth';
@@ -103,8 +104,8 @@ const User = {
       message: `User not ${MESSAGES.NOT_CREATED}`,
     };
   },
-  activateUser: async () => {
-    const userActivate = await db.query(actvateUser);
+  activateUser: async (uid) => {
+    const userActivate = await db.query(actvateUser, [uid]);
     if (userActivate.rows.length > 0) {
       return {
         user: userActivate.rows,

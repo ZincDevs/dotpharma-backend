@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
+import 'regenerator-runtime';
 import connection from '../connection';
 import schemaConfig from './_config';
 

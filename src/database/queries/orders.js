@@ -1,3 +1,5 @@
+import 'regenerator-runtime';
+
 export const createOrder = `INSERT INTO orders
                          (o_id,patient_id,o_pharmacy,o_medicine,o_date,o_status)
                          VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`;

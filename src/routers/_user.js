@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import express from 'express';
 import User from '../controllers/UserController';
 import Auth from '../middleware/Auth';
@@ -47,5 +48,11 @@ router.get(
   User.findAll
 );
 router.post('/login', Validator('login'), User.login);
+
+router.put(
+  '/activateuser/:token',
+  Auth.verifyToken2,
+  User.validateUserAccount
+);
 
 export default router;

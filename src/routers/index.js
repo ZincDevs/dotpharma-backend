@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import express from 'express';
 import User from './_user';
 import Pharmacy from './_pharmacy';
