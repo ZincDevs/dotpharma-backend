@@ -1,35 +1,35 @@
-/* eslint-disable max-len */
-/* eslint-disable camelcase */
-/* eslint-disable no-console */
 /* eslint-disable no-unused-expressions */
-// import 'regenerator-runtime';
-const mailer = require('nodemailer');
-const dotenv = require('dotenv');
-const { google } = require('googleapis');
+/* eslint-disable no-console */
+/* eslint-disable max-len */
+import 'regenerator-runtime';
+import mailer from 'nodemailer';
+import dotenv from 'dotenv';
+import { google } from 'googleapis';
 
 dotenv.config();
-const CLIENT_ID = '937522408556-v86n6sgj5t7bnru2tj2tqlrjnrojf9n0.apps.googleusercontent.com';
-const CLIENT_SECRET = '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';
-const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
-const REFRESH_TOKEN = '1//043eGUCffxiUiCgYIARAAGAQSNwF-L9IrCCoQWuvj68EHCToek45w6k4H3VfgoovQVdSixna_TbRNrFzQ5kvKmi4mIAS5dDZaaEs';
-const USER = 'zincdevs@gmail.com';
-
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+const {
+  OAUTH2_USER,
+  OAUTH2_CLIENT_ID,
+  OAUTH2_CLIENT_SECRET,
+  OAUTH2_REDIRECT_URI,
+  OAUTH2_REFRESH_TOKEN
+} = process.env;
+const oAuth2Client = new google.auth.OAuth2(OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI);
+oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
 
 const sentMail = async (emailTo, subject, template) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
   try {
-    const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+    const OAUTH2_ACCESS_TOKEN = await oAuth2Client.getAccessToken();
     const transport = mailer.createTransport({
       service: 'Gmail',
       auth: {
         type: 'OAuth2',
-        user: USER,
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
-        accessToken: ACCESS_TOKEN,
+        user: OAUTH2_USER,
+        clientId: OAUTH2_CLIENT_ID,
+        clientSecret: OAUTH2_CLIENT_SECRET,
+        refreshToken: OAUTH2_REFRESH_TOKEN,
+        accessToken: OAUTH2_ACCESS_TOKEN,
       }
     });
 
