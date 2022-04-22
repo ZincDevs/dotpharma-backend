@@ -1,5 +1,6 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
+import 'regenerator-runtime';
 import dotenv from 'dotenv';
 import db from '../database/connection/_query';
 import { getByEmail } from '../database/queries/User';

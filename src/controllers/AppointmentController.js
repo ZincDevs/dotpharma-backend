@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import 'regenerator-runtime';
 import { v4 as uuid } from "uuid";
 import moment from "moment";
 import Appointment from "../database/models/Appointment";

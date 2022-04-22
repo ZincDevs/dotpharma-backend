@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 const origins = ['http://localhost:7890/', 'http://localhost:8000/'];
 export default {
   origin: (origin, callback) => {

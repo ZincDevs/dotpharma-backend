@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import 'regenerator-runtime';
 export const STATUSES = {
   CREATED: 201,
   OK: 200,

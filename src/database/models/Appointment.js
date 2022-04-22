@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
-import db from "../connection/_query";
+import 'regenerator-runtime';
+import db from '../connection/_query';
 import {
   createAppointment,
   approveAppointment,
@@ -8,9 +9,9 @@ import {
   deleteAppointment,
   getApprovedAppointments,
   getRejectedAppointments
-} from "../queries/appointment";
-import { STATUSES } from "../../constants/ResponseStatuses";
-import { MESSAGES } from "../../constants/ResponceMessages";
+} from '../queries/appointment';
+import { STATUSES } from '../../constants/ResponseStatuses';
+import { MESSAGES } from '../../constants/ResponceMessages';
 
 const Appointment = {
   findAll: async (data) => {
@@ -20,11 +21,10 @@ const Appointment = {
         message: `Appointment ${MESSAGES.FOUND}`,
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment not found`,
-      };
     }
+    return {
+      message: 'Appointment not found',
+    };
   },
   create: async (data) => {
     const createRes = await db.query(createAppointment, data);
@@ -47,37 +47,34 @@ const Appointment = {
         message: `Appointment ${MESSAGES.DELETED}`,
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment ${MESSAGES.CREATED}`,
-      };
     }
+    return {
+      message: `Appointment ${MESSAGES.CREATED}`,
+    };
   },
   approve: async (aid) => {
     const appointments = await db.query(approveAppointment, [aid]);
     if (appointments.rows.length > 0) {
       return {
-        message: `Appointment approved successfully`,
+        message: 'Appointment approved successfully',
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment not approved`,
-      };
     }
+    return {
+      message: 'Appointment not approved',
+    };
   },
   reject: async (aid) => {
     const appointments = await db.query(rejectAppointment, [aid]);
     if (appointments.rows.length > 0) {
       return {
-        message: `Appointment rejected successfully`,
+        message: 'Appointment rejected successfully',
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment not rejected`,
-      };
     }
+    return {
+      message: 'Appointment not rejected',
+    };
   },
   findApproved: async (data) => {
     const appointments = await db.query(getApprovedAppointments, data);
@@ -86,24 +83,22 @@ const Appointment = {
         message: `Appointment ${MESSAGES.FOUND}`,
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment not found`,
-      };
     }
+    return {
+      message: 'Appointment not found',
+    };
   },
   findRejected: async (data) => {
     const appointments = await db.query(getRejectedAppointments, data);
     if (appointments.rows.length > 0) {
       return {
-        message: `Appointment found`,
+        message: 'Appointment found',
         appointments: appointments.rows,
       };
-    } else {
-      return {
-        message: `Appointment not found`,
-      };
     }
+    return {
+      message: 'Appointment not found',
+    };
   }
 };
 

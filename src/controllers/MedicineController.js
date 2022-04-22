@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import Medicine from '../database/models/Medicine';

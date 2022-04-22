@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import express from 'express';
 import User from '../controllers/UserController';
 import Auth from '../middleware/Auth';

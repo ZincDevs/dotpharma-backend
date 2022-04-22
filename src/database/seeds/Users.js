@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
+import 'regenerator-runtime';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import moment from 'moment';

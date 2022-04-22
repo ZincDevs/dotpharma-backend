@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+import 'regenerator-runtime';
 import Joi from '@hapi/joi';
 import _ from 'lodash';
 import schemas from './_schemas';

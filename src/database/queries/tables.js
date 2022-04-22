@@ -1,3 +1,5 @@
+import 'regenerator-runtime';
+
 export const createUserTable = `CREATE TABLE IF NOT EXISTS users
 (
     u_id text COLLATE pg_catalog."default" NOT NULL,

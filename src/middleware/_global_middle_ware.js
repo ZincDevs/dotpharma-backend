@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';

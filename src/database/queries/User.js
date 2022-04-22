@@ -1,5 +1,7 @@
 /* eslint-disable no-tabs */
 /* eslint-disable max-len */
+import 'regenerator-runtime';
+
 export const getAll = `SELECT u_id, u_email, u_role,doneon
 FROM users LIMIT $1 OFFSET $2`;
 export const getByEmail = 'select u_id, u_email, u_role,u_password,doneon from users where u_email =$1';

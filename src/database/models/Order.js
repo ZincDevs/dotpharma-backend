@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import 'regenerator-runtime';
 import db from '../connection/_query';
 import {
   approveOrder,

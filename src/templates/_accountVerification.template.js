@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import { constants } from '../config';
 
 const { logoUrl } = constants;

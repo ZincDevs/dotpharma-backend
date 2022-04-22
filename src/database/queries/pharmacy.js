@@ -1,4 +1,6 @@
 /* eslint-disable max-len */
+import 'regenerator-runtime';
+
 export const createPharmacy = `INSERT INTO pharmacies 
                                 (ph_id,ph_name,ph_email,ph_phone,ph_website,ph_address,ph_status,done_on,user_id)
                                 VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`;

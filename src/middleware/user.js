@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import 'regenerator-runtime';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';

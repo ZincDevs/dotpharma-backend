@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
+import 'regenerator-runtime';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import User from '../database/models/User';

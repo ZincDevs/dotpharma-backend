@@ -1,3 +1,4 @@
+import 'regenerator-runtime';
 import bcrypt from 'bcrypt';
 import db from '../connection/_query';
 import { generateToken } from '../../utils/_auth';

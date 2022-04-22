@@ -1,8 +1,11 @@
 /* eslint-disable require-jsdoc */
-import { MESSAGES } from "../../constants/ResponceMessages";
-import { STATUSES } from "../../constants/ResponseStatuses";
-import query from "../connection/_query";
-import { createPatient, getAll, getByEmail, getById,updatePatient,deletPatient } from "../queries/patient";
+import 'regenerator-runtime';
+import { MESSAGES } from '../../constants/ResponceMessages';
+import { STATUSES } from '../../constants/ResponseStatuses';
+import query from '../connection/_query';
+import {
+  createPatient, getAll, getByEmail, getById, updatePatient, deletPatient
+} from '../queries/patient';
 
 const Patient = {
   create: async (data) => {
@@ -45,25 +48,25 @@ const Patient = {
     const patient = await query.query(deletPatient, [pid]);
     if (patient.rows.length > 0) {
       return {
-        patient:patient.rows,
+        patient: patient.rows,
         message: `patient ${MESSAGES.DELETED}`,
       };
     }
     return {
-      message: `Patient not deleted`,
-    }; 
+      message: 'Patient not deleted',
+    };
   },
   findById: async (pid) => {
     const patient = await query.query(getById, [pid]);
     if (patient.rows.length > 0) {
       return {
-        patient:patient.rows,
+        patient: patient.rows,
         message: `patient ${MESSAGES.FOUND}`,
       };
     }
     return {
       message: MESSAGES.NOT_CONTENT,
-    };   
+    };
   },
 };
 
