@@ -6,9 +6,10 @@ import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import User from '../database/models/User';
 import { STATUSES } from '../constants/ResponseStatuses';
-import { genPass } from '../utils/appUtils';
+import { genPass, getExpInMinutes } from '../utils/appUtils';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { sendVerification } from '../services';
+import { generateToken } from '../utils/_auth';
 
 const UserController = {
   login: async (req, res) => {
@@ -236,28 +237,22 @@ const UserController = {
         });
       });
   },
-  resendEmail: async (req, res) => {
-    User.resendEmail(req.body.email)
-      .then((result) => {
-        if (result.token) {
-          sendVerification({ email: req.body.email, token: result.token });
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: result.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            email: { message: result.message },
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          email: { message: error.message },
-        });
+  resendVerification: async (req, res) => {
+    try {
+      const token = await generateToken({
+        email: req.body.email
+      }, getExpInMinutes(30));
+      sendVerification({ email: req.body.email, token });
+      res.status(STATUSES.OK).send({
+        status: STATUSES.OK,
+        message: 'Verification is sent',
       });
+    } catch (e) {
+      res.status(STATUSES.SERVERERROR).send({
+        status: STATUSES.SERVERERROR,
+        message: e.message,
+      });
+    }
   },
 };
 

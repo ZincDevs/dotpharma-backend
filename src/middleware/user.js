@@ -3,7 +3,7 @@ import 'regenerator-runtime';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
-import { getByEmail,checkExist ,getById} from '../database/queries/User';
+import { getByEmail, checkExist, getById } from '../database/queries/User';
 
 export default {
   // Supper user
@@ -69,7 +69,7 @@ export default {
     const { email } = req.body;
     db.query(checkExist, [email])
       .then(({ rows }) => {
-        if (rows.length==0) {
+        if (rows.length === 0) {
           next();
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
@@ -84,11 +84,30 @@ export default {
         });
       });
   },
+  checkUserExists2: async (req, res, next) => {
+    const { email } = req.body;
+    db.query(checkExist, [email])
+      .then(({ rows }) => {
+        if (rows.length > 0) {
+          next();
+        } else {
+          res.status(STATUSES.BAD_REQUEST).send({
+            status: STATUSES.BAD_REQUEST,
+            email: { message: 'User not exist' },
+          });
+        }
+      })
+      .catch((err) => {
+        res.status(STATUSES.BAD_REQUEST).send({
+          error: err.message,
+        });
+      });
+  },
   checkIsValidUser: async (req, res, next) => {
     const { u_id } = req.user;
     db.query(getById, [u_id])
       .then(({ rows }) => {
-        if (rows[0].length>0) {
+        if (rows[0].length > 0) {
           next();
         } else {
           res.status(STATUSES.UNAUTHORIZED).send({
@@ -102,6 +121,5 @@ export default {
           error: err.message,
         });
       });
-  }
-
+  },
 };

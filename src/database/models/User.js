@@ -12,7 +12,7 @@ import {
   actvateUser,
 } from '../queries/User';
 import { MESSAGES } from '../../constants/ResponceMessages';
-import { getPagination, genPass, getExpInMinutes } from '../../utils/appUtils';
+import { getPagination, genPass } from '../../utils/appUtils';
 
 const User = {
   login: async (data) => {
@@ -163,24 +163,6 @@ const User = {
     }
     return {
       message: 'User not found',
-    };
-  },
-  resendEmail: async (email) => {
-    const user = await db.query(getByEmail, [email]);
-    if (user.rows.length > 0) {
-      const payload = {
-        email: user.rows[0].u_email,
-        role: user.rows[0].u_role,
-        userid: user.rows[0].u_id,
-      };
-      const token = await generateToken(payload, getExpInMinutes(30));
-      return {
-        token,
-        message: 'Email is resent',
-      };
-    }
-    return {
-      message: 'User is not resent',
     };
   }
 };
