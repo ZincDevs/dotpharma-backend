@@ -36,6 +36,12 @@ router.put(
   User.resetPassword
 );
 
+router.post(
+  '/resendemail',
+  Validator('resendemail'),
+  User.resendEmail
+);
+
 router.delete(
   '/deleteuser/:uid',
   Auth.verifyToken,
