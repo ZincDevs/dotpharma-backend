@@ -37,9 +37,9 @@ router.put(
 );
 
 router.post(
-  '/resendemail',
-  Validator('resendemail'),
-  User.resendEmail
+  '/resendverification',
+  UserMiddle.checkUserExists2,
+  User.resendVerification
 );
 
 router.delete(
