@@ -8,16 +8,13 @@ import { generate } from 'generate-password';
 dotenv.config();
 
 export const genPass = (autoGen = true, pass = null) => {
-  const passN = autoGen ? generate({
-    length: 10,
-    numbers: true,
-  }) : pass;
-  return autoGen
-    ? bcrypt.hashSync(
-      passN,
-      10
-    )
-    : bcrypt.hashSync(passN, 10);
+  const passN = autoGen
+    ? generate({
+      length: 10,
+      numbers: true,
+    })
+    : pass;
+  return autoGen ? bcrypt.hashSync(passN, 10) : bcrypt.hashSync(passN, 10);
 };
 
 export const getPagination = (page, size) => {
@@ -25,3 +22,5 @@ export const getPagination = (page, size) => {
   const offset = page ? (page - 1) * limit : 0;
   return { limit, offset };
 };
+
+export const getExpInMinutes = (minutes = 10) => 3600 * minutes;

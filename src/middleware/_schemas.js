@@ -10,19 +10,20 @@ const email = Joi.string()
   .required()
   .label('Email is required and should look like this : example@email.com!');
 const password = Joi.string()
-  .min(3)
+  .min(8)
+  .alphanum()
   .required()
   .label('Password is required,  it must have at least 5 letters');
 
 const oldpassword = Joi.string()
-  .min(3)
+  .min(8)
   .required()
-  .label('Old password is required,  it must have at least 5 letters');
+  .label('Old password is required,  it must have at least 8 letters');
 
 const newpassword = Joi.string()
-  .min(3)
+  .min(8)
   .required()
-  .label('New Password is required,  it must have at least 5 letters');
+  .label('New Password is required,  it must have at least 8 letters');
 const name = Joi.string()
   .min(3)
   .required()
@@ -106,7 +107,6 @@ schemas.createuser = Joi.object().keys({
   email,
   role,
   name,
-  email,
   phone,
   speciality,
   clinic,
@@ -132,6 +132,10 @@ schemas.resetpass = Joi.object().keys({
 schemas.resetPassword = Joi.object().keys({
   userid: Joi.any().required().label('User id is required'),
   password,
+});
+
+schemas.resendemail = Joi.object().keys({
+  email
 });
 
 schemas.pharmacy = Joi.object().keys({

@@ -5,7 +5,8 @@ import { v4 as uuid } from 'uuid';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import Order from '../database/models/Order';
-import { sendEmail, getPagination } from '../utils/appUtils';
+import { getPagination } from '../utils/appUtils';
+import { sendEmail } from '../helpers/index';
 
 const OrderController = {
   createNewOrder: async (req, res) => {

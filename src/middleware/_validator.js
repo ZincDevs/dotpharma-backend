@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import 'regenerator-runtime';
-import Joi from '@hapi/joi';
 import _ from 'lodash';
 import schemas from './_schemas';
 
@@ -8,7 +7,7 @@ export default (schema) => (req, res, next) => {
   const data = req.body;
   if (_.has(schemas, schema)) {
     const chosenSchema = _.get(schemas, schema);
-    const validationResult = Joi.validate(data, chosenSchema, {
+    const validationResult = chosenSchema.validate(data, {
       abortEarly: false,
     });
     if (!validationResult.error) {
@@ -24,7 +23,7 @@ export default (schema) => (req, res, next) => {
       });
       return res.status(400).send({
         status: 400,
-        error: {message: allErrors},
+        error: { message: allErrors },
       });
     }
   }
