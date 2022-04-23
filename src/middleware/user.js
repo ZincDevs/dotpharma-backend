@@ -97,7 +97,11 @@ export default {
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
-            email: { message: 'User not exist' },
+            error: {
+              email: {
+                message: 'User not exist',
+              }
+            }
           });
         }
       })
