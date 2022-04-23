@@ -53,7 +53,7 @@ router.get(
   Auth.verifyToken,
   User.findAll
 );
-router.post('/login', Validator('login'), User.login);
+router.post('/login', UserMiddle.checkUserExists2, User.login);
 
 router.put(
   '/activateuser/:token',
