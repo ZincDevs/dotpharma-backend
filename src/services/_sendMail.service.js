@@ -6,7 +6,7 @@ import { verificationTemplate } from '../templates';
 
 export const sendVerificationService = (data) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL SERVICE STARTED===`);
-  const link = `https://dotpharma.herokuapp.com/verify?token=${data.token}`;
+  const link = `${process.env.FRONTEND_HOST}/signup/verify?token=${data.token}`;
   sendMailWorker(data, 'Account verifications', verificationTemplate(link), () => {
     workerfarm.end(sendMailWorker);
   });
