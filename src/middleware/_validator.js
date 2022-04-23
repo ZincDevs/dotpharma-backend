@@ -23,7 +23,7 @@ export default (schema) => (req, res, next) => {
       });
       return res.status(400).send({
         status: 400,
-        error: { message: allErrors },
+        error: {message: allErrors},
       });
     }
   }
