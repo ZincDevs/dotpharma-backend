@@ -42,23 +42,24 @@ router.post(
   User.resendVerification
 );
 
-router.delete(
-  '/deleteuser/:uid',
-  Auth.verifyToken,
-  User.destroy
+router.delete('/deleteuser/:uid', Auth.verifyToken, User.destroy);
+
+router.get('/allusers', Auth.verifyToken, User.findAll);
+router.post(
+  '/login',
+  Validator('login'),
+  UserMiddle.checkUserExists2,
+  User.login
 );
 
-router.get(
-  '/allusers',
-  Auth.verifyToken,
-  User.findAll
+router.post(
+  '/admin/login',
+  Validator('login'),
+  UserMiddle.checkUserExists2,
+  UserMiddle.checkISAdmin,
+  User.login
 );
-router.post('/login', UserMiddle.checkUserExists2, User.login);
 
-router.put(
-  '/activateuser/:token',
-  Auth.verifyToken2,
-  User.validateUserAccount
-);
+router.put('/activateuser/:token', Auth.verifyToken2, User.validateUserAccount);
 
 export default router;

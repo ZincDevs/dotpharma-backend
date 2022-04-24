@@ -6,7 +6,7 @@ import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import User from '../database/models/User';
 import { STATUSES } from '../constants/ResponseStatuses';
-import { genPass, getExpInMinutes } from '../utils/appUtils';
+import { genPass, getErrorMessage, getExpInMinutes } from '../utils/appUtils';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { sendVerification } from '../services';
 import { generateToken } from '../utils/_auth';
@@ -226,7 +226,7 @@ const UserController = {
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
-            message: 'Account not activated',
+            error: getErrorMessage('email', 'Account not activated')
           });
         }
       })
@@ -241,7 +241,7 @@ const UserController = {
     try {
       const token = await generateToken({
         email: req.body.email
-      }, getExpInMinutes(30));
+      }, getExpInMinutes(5));
       sendVerification({ email: req.body.email, token });
       res.status(STATUSES.OK).send({
         status: STATUSES.OK,
