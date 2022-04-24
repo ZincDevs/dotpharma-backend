@@ -23,4 +23,10 @@ export const getPagination = (page, size) => {
   return { limit, offset };
 };
 
-export const getExpInMinutes = (minutes = 10) => 3600 * minutes;
+export const getExpInMinutes = (minutes = 10) => 60 * minutes;
+
+export const getErrorMessage = (key, message) => {
+  const error = {};
+  error[key] = { message };
+  return error;
+};

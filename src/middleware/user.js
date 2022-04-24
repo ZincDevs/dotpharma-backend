@@ -4,19 +4,20 @@ import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
 import { getByEmail, checkExist, getById } from '../database/queries/User';
+import { getErrorMessage } from '../utils/appUtils';
 
 export default {
   // Supper user
   checkISAdmin: async (req, res, next) => {
-    const { u_email } = req.user;
-    db.query(getByEmail, [u_email])
+    const { email } = req.body;
+    db.query(getByEmail, [email])
       .then(({ rows }) => {
         if (rows[0].u_role === 'SUPER_ADMIN') {
           next();
         } else {
           res.status(STATUSES.UNAUTHORIZED).send({
             status: STATUSES.UNAUTHORIZED,
-            message: MESSAGES.UNAUTHORIZED,
+            error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
           });
         }
       })
@@ -97,11 +98,7 @@ export default {
         } else {
           res.status(STATUSES.BAD_REQUEST).send({
             status: STATUSES.BAD_REQUEST,
-            error: {
-              email: {
-                message: 'User not exist',
-              }
-            }
+            error: getErrorMessage('email', 'User email not exist'),
           });
         }
       })

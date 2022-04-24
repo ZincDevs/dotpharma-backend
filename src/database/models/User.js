@@ -12,32 +12,27 @@ import {
   actvateUser,
 } from '../queries/User';
 import { MESSAGES } from '../../constants/ResponceMessages';
-import { getPagination, genPass } from '../../utils/appUtils';
+import { getPagination, genPass, getErrorMessage } from '../../utils/appUtils';
 
 const User = {
   login: async (data) => {
     try {
       const user = await db.query(getByEmail, [data[0]]);
-      if (user.rowCount) {
-        if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
-          const payload = {
-            email: user.rows[0].u_email,
-            role: user.rows[0].u_name,
-            userid: user.rows[0].u_id,
-          };
-          const token = await generateToken(payload);
-          return {
-            token,
-            user: user.rows,
-            message: 'sussesfully logged in',
-          };
-        }
+      if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
+        const payload = {
+          email: user.rows[0].u_email,
+          role: user.rows[0].u_name,
+          userid: user.rows[0].u_id,
+        };
+        const token = await generateToken(payload);
         return {
-          password: { message: 'password is incorrect' },
+          token,
+          user: user.rows,
+          message: 'sussesfully logged in',
         };
       }
       return {
-        email: { message: ['Invalid email'] },
+        error: getErrorMessage('password', 'password is incorrect'),
       };
     } catch (error) {
       return error;
