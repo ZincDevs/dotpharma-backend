@@ -21,7 +21,7 @@ const UserController = {
             token: results.token,
             status: 200,
             message: results.message,
-            user: results.user.rows,
+            user: results.user[0],
           });
         } else {
           res.status(401).send({
