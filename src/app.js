@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-extraneous-dependencies */
 import 'regenerator-runtime';
@@ -8,20 +9,40 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import api from './routers';
 import globlaMiddleWare from './middleware/_global_middle_ware';
-import { corsConfig, serverConfig, cloudConfigure } from './config';
+import {
+  corsConfig,
+  serverConfig,
+  cloudConfigure
+} from './config';
+import db from './db/models/index';
 
 dotenv.config();
 
+const {
+  sequelize: dbCon
+} = db;
 const app = express();
-const { port, env, host } = serverConfig;
+const {
+  port,
+} = serverConfig;
 cloudConfigure();
 globlaMiddleWare(app);
 app
   .use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
+  .use(bodyParser.urlencoded({
+    extended: true
+  }))
   .use(cors())
   .use('/', api)
   .use(logger('dev'))
-  .set('port', port)
-  .listen(port, () => console.log(`Primary mis is app and running on PORT ${port} on server ${host} in ${env} mode `),);
+  .set('port', port);
+
+dbCon.sync().then(() => {
+  app.listen(port, () => {
+    console.log(`Database succesfully connected ✅\nPID: ${process.pid} Server listening on port: ${port} in ${process.env.NODE_ENV} mode 😊`);
+  });
+}).catch((error) => {
+  console.log(error);
+});
+
 export default app;
