@@ -37,13 +37,15 @@ app
   .use('/', api)
   .use(logger('dev'))
   .set('port', port);
-
-dbCon.sync().then(() => {
   app.listen(port, () => {
     console.log(`Database succesfully connected ✅\nPID: ${process.pid} Server listening on port: ${port} in ${process.env.NODE_ENV} mode 😊`);
   });
-}).catch((error) => {
-  console.log(error);
-});
+// dbCon.sync().then(() => {
+//   app.listen(port, () => {
+//     console.log(`Database succesfully connected ✅\nPID: ${process.pid} Server listening on port: ${port} in ${process.env.NODE_ENV} mode 😊`);
+//   });
+// }).catch((error) => {
+//   console.log(error);
+// });
 
 export default app;

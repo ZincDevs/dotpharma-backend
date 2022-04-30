@@ -2,18 +2,18 @@ const dotenv = require('dotenv');
 
 const config = {};
 dotenv.config();
-// config.development = {
-//   use_env_variable: 'DEV_DATABASE_URL',
-//   host: '127.0.0.1',
-//   dialect: 'postgres',
-//   logging: false,
-// };
-
 config.development = {
-  host: './data.sqlite',
-  dialect: 'sqlite',
+  use_env_variable: 'DEV_DATABASE_URL',
+  host: '127.0.0.1',
+  dialect: 'postgres',
   logging: false,
 };
+
+// config.development = {
+//   host: './data.sqlite',
+//   dialect: 'sqlite',
+//   logging: false,
+// };
 
 config.staging = {
   use_env_variable: 'DATABASE_URL',
