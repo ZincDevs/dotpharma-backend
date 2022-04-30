@@ -16,7 +16,7 @@ const UserController = {
   login: async (req, res) => {
     const { email, password } = req.bod;
     const user = await User.getOne({ where: { email } });
-    console.log(user);
+    // console.log(user);
 
     // User.login(data)
     //   .then((results) => {
