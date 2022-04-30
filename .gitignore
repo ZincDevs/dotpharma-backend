@@ -4,3 +4,4 @@
 api.json
 client_secret.json
 /src/dropTables.js
+data.sqlite
