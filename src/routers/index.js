@@ -12,15 +12,15 @@ import UploadFile from './_fileappload';
 
 const api = express();
 
-api.use('/api/user', User);
-api.use('/api/pharmacy', Pharmacy);
-api.use('/api/doctor', Doctor);
-api.use('/api/medicine', Medicine);
-api.use('/api/orders', Order);
-api.use('/api/appointments', Appointment);
-api.use('/api/patient', Patient);
-api.use('/api/healthtips', Tip);
-api.use('/api/file', UploadFile);
+api.use('/user', User);
+api.use('/pharmacy', Pharmacy);
+api.use('/doctor', Doctor);
+api.use('/medicine', Medicine);
+api.use('/orders', Order);
+api.use('/appointments', Appointment);
+api.use('/patient', Patient);
+api.use('/healthtips', Tip);
+api.use('/file', UploadFile);
 api.get('/', (req, res) => {
   res.status(200).send({
     status: 200,

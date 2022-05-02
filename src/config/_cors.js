@@ -1,12 +1,13 @@
 import 'regenerator-runtime';
+import origins from './_allowedOrigins';
 
-const origins = ['http://localhost:7890/', 'http://localhost:8000/', 'http://127.0.0.1:5501/'];
 export default {
   origin: (origin, callback) => {
-    if (origins.indexOf(origin) !== -1) {
+    if (origins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
-  }
+  },
+  optionsSuccessStatus: 200
 };

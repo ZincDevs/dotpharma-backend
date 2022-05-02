@@ -6,6 +6,7 @@ export const createUserTable = `CREATE TABLE IF NOT EXISTS users
     u_email text COLLATE pg_catalog."default",
     u_password text COLLATE pg_catalog."default",
     u_role text COLLATE pg_catalog."default",
+    reflesh_token text COLLATE pg_catalog."default",
     doneon text COLLATE pg_catalog."default",
     status text COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (u_id)

@@ -1,10 +1,11 @@
+/* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import dotenv from 'dotenv';
-import db from '../database/connection/_query';
-import { getByEmail } from '../database/queries/User';
-import { decodeToken } from '../utils/_auth';
+import bcrypt from 'bcrypt';
+import { decodeToken, getErrorMessage } from '../helpers';
+import { User } from '../db/models';
 
 dotenv.config();
 
@@ -13,31 +14,29 @@ const Auth = {
     const { token } = req.headers;
     if (!token) {
       return res.status(401).json({
-        status: 401,
         error: {
-          message: 'Token is missing',
+          message: 'Unauthorized!',
         },
       });
     }
     try {
-      const { email } = await decodeToken(token);
+      const { u_email } = await decodeToken(token);
       try {
-        const user = await db.query(getByEmail, [email]);
-        if (!user.rows[0]) {
-          return res.status(400).json({
-            status: 400,
+        let user = await User.findOne({ where: { u_email } });
+        user = user?.dataValues;
+        if (!user) {
+          return res.status(403).json({
             error: {
               message: 'Invalid token',
             },
           });
         }
-        req.token = token;
-        req.user = user.rows[0];
+        req.authUser = user;
         next();
       } catch (error) {
         return res.status(500).json({
           status: 500,
-          error
+          error,
         });
       }
     } catch (error) {
@@ -64,10 +63,11 @@ const Auth = {
       });
     }
     try {
-      const { email } = await decodeToken(token);
+      const { u_email } = await decodeToken(token);
       try {
-        const user = await db.query(getByEmail, [email]);
-        if (!user.rows[0]) {
+        let user = await User.findOne({ where: { u_email } });
+        user = user?.dataValues;
+        if (!user) {
           return res.status(400).json({
             status: 400,
             error: {
@@ -75,13 +75,12 @@ const Auth = {
             },
           });
         }
-        req.token = token;
-        req.user = user.rows[0];
+        req.authUser = user;
         next();
       } catch (error) {
         return res.status(500).json({
           status: 500,
-          error
+          error,
         });
       }
     } catch (error) {
@@ -96,7 +95,17 @@ const Auth = {
         error,
       });
     }
-  }
+  },
+  checkCredentials: async (req, res, next) => {
+    const { user, body: { password }, } = req;
+    const isCorrectPassword = bcrypt.compareSync(password, user.u_password);
+    if (!isCorrectPassword) {
+      return res.status(401).send({
+        error: getErrorMessage('password', 'Password is incorrect'),
+      });
+    }
+    next();
+  },
 };
 
 export default Auth;

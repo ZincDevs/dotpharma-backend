@@ -1,0 +1,1441 @@
+
+{
+	"info": {
+		"_postman_id": "2fdecf2a-6629-4710-b404-36275de364cb",
+		"name": "dotpharma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pharmacy",
+			"item": [
+				{
+					"name": "Update pharmacy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Berwa Nimpano pharmacy\",\n    \"email\":\"benshidanny11@gmail.com\",\n    \"website\":\"www.berwap.com\",\n    \"phone\":\"0712212929\",\n    \"address\":\"Kigali,Nyarugenge\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/pharmacy/updatepharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"pharmacy",
+								"updatepharmacy",
+								"5dfa595c-3d41-4461-8dce-418624d186b4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new pharmacy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lcyI6IkRhbm55IEJlbnNoaSIsImVtYWlsIjoiYmVuc2hpZGFubnkxMUBnbWFpbC5jb20iLCJwaG9uZW51bWJlciI6IjA3ODQ4NzE5NTgiLCJyb2xlIjoiRGFubnkgQmVuc2hpIiwidXNlcmlkIjoiM2QyY2E3ZmItMDYxNy00Zjc0LThhOWEtODZiMTJiODhmNTA5IiwiaWF0IjoxNjQ3Njc0OTI2LCJleHAiOjE2NTExMzA5MjZ9.11CeYi0-Y2xSMYvwSteyQlATrLZoihpmJz9UbXUBB0Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Pharmacy umutuzo\",\n    \"email\":\"umutuzo@gmail.com\",\n    \"website\":\"www.umutuzo.com\",\n    \"phone\":\"07893983983\",\n    \"address\":\"Kigali,Nyarugenge\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/pharmacy/createnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"pharmacy",
+								"createnew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all pharmaciec",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/pharmacy/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"pharmacy",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete pharmacy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/pharmacy/deletepharmacy/20f6ca53-8393-409e-bbe0-cd0e17600053",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"pharmacy",
+								"deletepharmacy",
+								"20f6ca53-8393-409e-bbe0-cd0e17600053"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Doctor",
+			"item": [
+				{
+					"name": "Create doctor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"Dr Benshi Christine\",\n  \"email\":\"benshi@gmail.com\",\n  \"phone\":\"0780213898\",\n  \"speciality\":\"Neurologist\",\n  \"clinic\":\"Grand regacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/doctor/createnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"doctor",
+								"createnew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update doctor",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"Bitama Danny\",\n  \"email\":\"chris12@gmail.com\",\n  \"phone\":\"07803323339\",\n  \"speciality\":\"Sociologist\",\n  \"clinic\":\"Grand legacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/doctor/updatedoctor/441b356c-3d35-40e0-afc0-336435129cd1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"doctor",
+								"updatedoctor",
+								"441b356c-3d35-40e0-afc0-336435129cd1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all doctors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/doctor/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"doctor",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete doctor",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/doctor/deletedoctor/d45c7233-bb92-415f-a1a8-73ca476a7722",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"doctor",
+								"deletedoctor",
+								"d45c7233-bb92-415f-a1a8-73ca476a7722"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medicine",
+			"item": [
+				{
+					"name": "Update medicine",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Amoxi ciline\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":20000,\n    \"type\":\"Antibiotic\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/medicine/updatemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"medicine",
+								"updatemedicine",
+								"0e032c9b-8915-4873-80db-df1f9d70185f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create medicine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Palacetamor\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":2000,\n    \"type\":\"Pain killer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/medicine/createnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"medicine",
+								"createnew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all medicines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/medicine/getallmedicines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"medicine",
+								"getallmedicines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete medicine",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/medicine/deletemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"medicine",
+								"deletemedicine",
+								"0e032c9b-8915-4873-80db-df1f9d70185f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add medicine to pharmacy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"phid\":\"5dfa595c-3d41-4461-8dce-418624d186b4\",\n \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/pharmacy/addmedtopharma",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"pharmacy",
+								"addmedtopharma"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get medicines in pharmacy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/medicine/medicinesinpharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"medicine",
+								"medicinesinpharmacy",
+								"5dfa595c-3d41-4461-8dce-418624d186b4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create new order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_patient}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/orders/createorder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"createorder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/orders/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find rejected",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/orders/findrejected",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"findrejected"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/orders/rejectorder/829e63f9-276f-4b2d-b402-3ddda86375ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"rejectorder",
+								"829e63f9-276f-4b2d-b402-3ddda86375ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/orders/approveorder/199cd688-1702-4711-b75c-cca6a17a4927",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"approveorder",
+								"199cd688-1702-4711-b75c-cca6a17a4927"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete order",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/orders/deleteorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"deleteorder",
+								"66e846ec-4a7c-4072-8e4a-c6d3981b2199"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "{{token_admin}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana Kimari\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/orders/updateorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"orders",
+								"updateorder",
+								"66e846ec-4a7c-4072-8e4a-c6d3981b2199"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"samia222@gmail.com\",\n    \"password\":\"COmu38YTrZ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"name\":\"benshi\",\n\"phone\":\"0788299119\",\n\"role\":\"DOCTOR\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/createuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"createuser"
+							]
+						},
+						"description": "User added by admin"
+					},
+					"response": []
+				},
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"samia222@gmail.com\",\n\"name\":\"Samila\",\n\"phone\":\"0783312277\",\n\"password\":\"Danny1111\",\n\"role\":\"PATIENT\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"signup"
+							]
+						},
+						"description": "User regiser them selves"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user/allusers?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"allusers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"samia@gmail.com\",\n\"name\":\"Samila kaka\",\n\"phone\":\"07899901000\",\n\"role\":\"DOCTOR\" \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/updateuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"updateuser",
+								"f699ea04-6b16-46a9-bb67-1a79ca537611"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/user/deleteuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"deleteuser",
+								"f699ea04-6b16-46a9-bb67-1a79ca537611"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Doctor login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"password\":\"vS7Oeq8dfU\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_doctor}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"newpassword\":\"Danny1234\",\n \"oldpassword\":\"vS7Oeq8dfU\",\n \"uid\":\"3ba07025-d01f-4769-9108-4ea6c485e249\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/user/resetpassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user",
+								"resetpassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patients",
+			"item": [
+				{
+					"name": "Update patients",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"Nalisa Malimba\",\n  \"email\":\"nalisa1@gmail.com\",\n  \"phone\":\"07892192902\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/patient/update/7d08316f-7b93-4544-b984-4228f33fa38a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"update",
+								"7d08316f-7b93-4544-b984-4228f33fa38a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\":\"Nalisa Kimari\",\n  \"email\":\"nalisa12@gmail.com\",\n  \"phone\":\"07892192921\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/patient/createnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"createnew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/patient/allpatients?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"allpatients"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete patient",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/patient/deletepatient/7d08316f-7b93-4544-b984-4228f33fa38a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"deletepatient",
+								"7d08316f-7b93-4544-b984-4228f33fa38a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/patient/getbyid/399b2b5f-597b-40fc-8756-e3654d33906f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"patient",
+								"getbyid",
+								"399b2b5f-597b-40fc-8756-e3654d33906f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Reject appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/rejectappointment/0484b585-817a-407b-9dff-40336af43309",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"rejectappointment",
+								"0484b585-817a-407b-9dff-40336af43309"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/approveappointment/50201ead-89f4-498e-9873-0f972d8f2d42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"approveappointment",
+								"50201ead-89f4-498e-9873-0f972d8f2d42"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_patient}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n \"docid\":\"1d4a9690-adc5-411b-b3cd-0c60a9114b27\",\n \"deasese\":\"dqwqw232\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/makeappointment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"makeappointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find rejected appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/findrejected",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"findrejected"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find approved appointments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/appointments/findapproved",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appointments",
+								"findapproved"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health tips",
+			"item": [
+				{
+					"name": "Create new",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health\",\n\"title\":\"Get better in think\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/healthtips/createnew",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"healthtips",
+								"createnew"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update tip",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health 22\",\n\"title\":\"Get better in think 2111\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/healthtips/updatetip/0e92fe80-dff6-474f-b690-054f8880a222",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"healthtips",
+								"updatetip",
+								"0e92fe80-dff6-474f-b690-054f8880a222"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find all tips",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/healthtips/getall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"healthtips",
+								"getall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete tip",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "{{token_admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/healthtips/deletetip/0e92fe80-dff6-474f-b690-054f8880a222",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"healthtips",
+								"deletetip",
+								"0e92fe80-dff6-474f-b690-054f8880a222"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "{{token_admin}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FInd one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/healthtips/getonetip/24e72f79-3f12-488d-9668-85a5ec8767f9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"healthtips",
+								"getonetip",
+								"24e72f79-3f12-488d-9668-85a5ec8767f9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

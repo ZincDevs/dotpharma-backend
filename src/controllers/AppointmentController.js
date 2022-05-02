@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 import moment from "moment";
 import Appointment from "../database/models/Appointment";
 import { STATUSES } from "../constants/ResponseStatuses";
-import { getPagination } from "../utils/appUtils";
+import { getPagination } from '../helpers';
 
 const AppointmentController = {
   createAppointment: async (req, res) => {

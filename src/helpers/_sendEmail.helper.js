@@ -1,6 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 /* eslint-disable max-len */
+// const path = require('path');
+// const mailer = require('nodemailer');
+// const { google } = require('googleapis');
+// const dotenv = require('dotenv');
 import 'regenerator-runtime';
 import mailer from 'nodemailer';
 import dotenv from 'dotenv';
@@ -50,5 +55,11 @@ const sentMail = async (emailTo, subject, template) => {
     return error;
   }
 };
+
+// sentMail('ericrukundo005@gmai.com', 'Email', '<h1>Hire here</h1>').then((res) => {
+//   console.log(res);
+// }).catch((error) => {
+//   console.log(error);
+// });
 
 export default sentMail;

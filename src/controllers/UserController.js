@@ -3,117 +3,104 @@
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import moment from 'moment';
+import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import User from '../database/models/User';
+import { Jwt } from 'jsonwebtoken';
 import { STATUSES } from '../constants/ResponseStatuses';
-import { genPass, getErrorMessage, getExpInMinutes } from '../utils/appUtils';
+import {
+  generatePassword, getErrorMessage, generateToken, decodeToken
+} from '../helpers';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { sendVerification } from '../services';
-import { generateToken } from '../utils/_auth';
+import { User, Doctor } from '../db/models';
+import { serverConfig } from '../config';
 
+const { httpOnlyCookieOptions: cookieOptions } = serverConfig;
 const UserController = {
   login: async (req, res) => {
-    const data = [req.body.email, req.body.password];
-    User.login(data)
-      .then((results) => {
-        if (results.user) {
-          res.status(200).send({
-            token: results.token,
-            status: 200,
-            message: results.message,
-            user: results.user[0],
-          });
-        } else {
-          res.status(401).send({
-            status: 401,
-            ...results,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(400).send({
-          status: 400,
-          error: err,
-        });
-      });
+    const { user: { u_id, u_email, u_role } } = req;
+    const userData = { u_id, u_email, u_role };
+    const access_token = await generateToken(userData);
+    const refresh_token = await generateToken(userData, '1d');
+    await User.update({ refresh_token }, { where: { u_email } });
+    res
+      .cookie('jwt', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .json({ access_token, userData });
+  },
+  refreshToken: async (req, res) => {
+    const { cookies } = req;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    const refresh_token = cookies.jwt;
+    let user = await User.findOne({ where: { refresh_token } });
+    user = user?.dataValues;
+    if (!user) return res.sendStatus(403);
+    const { u_id, u_email, u_role } = await decodeToken(refresh_token);
+    if (!u_email) return res.sendStatus(403);
+    const userData = { u_id, u_email, u_role };
+    const access_token = await generateToken(userData);
+    res.json({ access_token });
+  },
+  logout: async (req, res) => {
+    const { cookies } = req;
+    if (!cookies?.jwt) return res.sendStatus(204);
+    const refresh_token = cookies.jwt;
+    let result = await User.findOne({ where: { refresh_token } });
+    result = result?.dataValues;
+    const { u_email } = result;
+    if (!u_email) {
+      res.clearCookie('jwt', { ...cookieOptions });
+      return res.sendStatus(204);
+    }
+    await User.update({ refresh_token: null }, { where: { u_email } });
+    res
+      .clearCookie('jwt', { ...cookieOptions })
+      .sendStatus(204);
   },
   createUser: async (req, res) => {
-    const pass = genPass();
-    const data = [
-      uuid(),
-      req.body.email,
-      pass,
-      req.body.role,
-      moment(new Date()),
-      'valid',
-    ];
-    const doctorData = [
-      uuid(),
-      req.body.name,
-      req.body.email,
-      req.body.phone,
-      req.body.speciality,
-      req.body.clinic,
-      req.body.image,
-      '1',
-      moment(new Date()),
-      req.user.u_id,
-    ];
-
-    User.create(data, doctorData)
-      .then((results) => {
-        if (results.user) {
-          res.status(STATUSES.CREATED).send({
-            token: results.token,
-            status: STATUSES.CREATED,
-            user: results.user.rows,
-            doctor: results.doctor.data,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: results.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { authUser, body } = req;
+    const userObject = {
+      u_id: uuid(),
+      u_email: body.email,
+      u_password: generatePassword(),
+      u_role: body.role.toUpperCase(),
+      verified: false,
+      blocked: false,
+    };
+    let newUser = await User.create(userObject);
+    newUser = newUser?.dataValues;
+    if (!newUser) return res.sendStatus(500);
+    const doctorObject = {
+      d_id: uuid(),
+      d_name: body.name,
+      d_email: body.email,
+      d_phone: body.phone,
+      d_speciality: body.speciality,
+      d_clinic: body.clinic,
+      d_image: body.image,
+      u_id: newUser.u_id,
+      creator: authUser.u_id
+    };
+    let newDoctor = await Doctor.create(doctorObject);
+    newDoctor = newDoctor?.dataValues;
+    if (!newDoctor) return res.sendStatus(500);
+    res.sendStatus(201);
   },
   signup: async (req, res, next) => {
-    const data = [
-      uuid(),
-      req.body.email,
-      genPass(false, req.body.password),
-      req.body.role.toUpperCase(),
-      moment(new Date()),
-      'invalid',
-    ];
-    User.create(data)
-      .then(({ user, token, message }) => {
-        if (user) {
-          sendVerification({ email: req.body.email, token });
-          res.status(STATUSES.CREATED).send({
-            status: STATUSES.CREATED,
-            message,
-            token,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e,
-        });
-      });
+    const { body } = req;
+    const userObject = {
+      u_id: uuid(),
+      u_email: body.email,
+      u_password: generatePassword(false, body.password),
+      u_role: body.role.toUpperCase(),
+      verified: false,
+      blocked: false,
+    };
+    let newUser = await User.create(userObject);
+    newUser = newUser?.dataValues;
+    if (!newUser) return res.sendStatus(500);
+    const verify_token = await generateToken({ u_email: newUser.u_email }, '5m');
+    sendVerification({ email: req.body.email, token: verify_token });
+    res.sendStatus(201);
   },
   findAll: async (req, res) => {
     const data = [req.query.page ? req.query.page : 1, 20];
@@ -241,7 +228,7 @@ const UserController = {
     try {
       const token = await generateToken({
         email: req.body.email
-      }, getExpInMinutes(5));
+      }, '5m');
       sendVerification({ email: req.body.email, token });
       res.status(STATUSES.OK).send({
         status: STATUSES.OK,

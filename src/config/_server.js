@@ -6,5 +6,10 @@ dotenv.config();
 export default {
   port: process.env.PORT || 7890,
   env: process.env.NODE_ENV,
-  host: process.env.SERVER
+  host: process.env.SERVER,
+  httpOnlyCookieOptions: {
+    httpOnly: true,
+    sameSite: 'None',
+    secure: process.env.NODE_ENV !== 'development',
+  },
 };

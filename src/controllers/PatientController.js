@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import moment from "moment";
 import Patient from "../database/models/Patient";
 import { STATUSES } from "../constants/ResponseStatuses";
-import { getPagination } from "../utils/appUtils";
+import { getPagination } from '../helpers';
 import { result } from "lodash";
 
 const PatientController = {
