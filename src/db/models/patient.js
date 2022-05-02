@@ -25,7 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Patient.init({
-    p_id: DataTypes.STRING,
+    p_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     p_name: DataTypes.STRING,
     p_email: DataTypes.STRING,
     p_phonenumber: DataTypes.STRING,

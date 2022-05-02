@@ -6,10 +6,11 @@ import 'regenerator-runtime';
 import logger from 'morgan';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import api from './routers';
-import globlaMiddleWare from './middleware/_global_middle_ware';
+import credentials from './middleware/Credentials';
 import {
   corsConfig,
   serverConfig,
@@ -27,25 +28,24 @@ const {
   port,
 } = serverConfig;
 cloudConfigure();
-globlaMiddleWare(app);
 app
+  .use(express.json())
   .use(bodyParser.json())
-  .use(bodyParser.urlencoded({
-    extended: true
-  }))
-  .use(cors())
-  .use('/', api)
+  .use(bodyParser.urlencoded({ extended: false }))
+  .use(express.urlencoded({ extended: false }))
+  .use(credentials)
+  .use(cors(corsConfig))
   .use(logger('dev'))
+  .use(cookieParser())
+  .use('/', api)
   .set('port', port);
+
+dbCon.sync().then(() => {
   app.listen(port, () => {
     console.log(`Database succesfully connected ✅\nPID: ${process.pid} Server listening on port: ${port} in ${process.env.NODE_ENV} mode 😊`);
   });
-// dbCon.sync().then(() => {
-//   app.listen(port, () => {
-//     console.log(`Database succesfully connected ✅\nPID: ${process.pid} Server listening on port: ${port} in ${process.env.NODE_ENV} mode 😊`);
-//   });
-// }).catch((error) => {
-//   console.log(error);
-// });
+}).catch((error) => {
+  console.log(error);
+});
 
 export default app;

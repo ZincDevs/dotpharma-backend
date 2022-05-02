@@ -4,8 +4,6 @@
 const {
   Model
 } = require('sequelize');
-const Patient = require('./patient');
-const Doctor = require('./doctor');
 
 module.exports = (sequelize, DataTypes) => {
   class Appointment extends Model {
@@ -27,9 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Appointment.init({
-    a_id: DataTypes.STRING,
-    // p_id: DataTypes.STRING,
-    // d_id: DataTypes.STRING,
+    a_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     p_id: {
       type: DataTypes.STRING,
       references: {

@@ -32,7 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Doctor.init({
-    d_id: DataTypes.STRING,
+    d_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     d_name: DataTypes.STRING,
     d_email: DataTypes.STRING,
     d_phone: DataTypes.STRING,
@@ -40,8 +43,6 @@ module.exports = (sequelize, DataTypes) => {
     d_clinic: DataTypes.STRING,
     d_image: DataTypes.TEXT,
     d_status: DataTypes.STRING,
-    // u_id: DataTypes.STRING,
-    // creator: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,
       references: {

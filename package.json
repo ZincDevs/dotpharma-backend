@@ -6,11 +6,11 @@
   "scripts": {
     "heroku-postbuild": "npm install --production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node src/app.js",
+    "dev": "nodemon --exec babel-node src/index.js",
     "db:migrate": "babel-node src/database/migration/createTables.js",
     "db:migrate:reset": "babel-node src/database/migration/dropTables.js",
     "build": "babel src --out-dir dist",
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run build && node dist/index.js",
     "db:seeds": "babel-node src/database/seeds/Users.js"
   },
   "engines": {
@@ -22,8 +22,10 @@
   "dependencies": {
     "@hapi/joi": "*",
     "@sendgrid/mail": "^7.6.2",
+    "babel-minify-webpack-plugin": "^0.3.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.2",
+    "ckey": "^1.0.3",
     "cloudinary": "^1.29.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -48,16 +50,20 @@
     "worker-farm": "^1.7.0"
   },
   "devDependencies": {
-    "@babel/cli": "*",
-    "@babel/core": "*",
-    "@babel/node": "*",
-    "@babel/preset-env": "*",
-    "@babel/register": "*",
-    "@babel/runtime": "*",
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.17.10",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/register": "^7.17.7",
+    "@babel/runtime": "^7.17.9",
+    "babel-loader": "^8.2.5",
     "eslint": "^8.12.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4",
     "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }

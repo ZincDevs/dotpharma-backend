@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import db from '../connection/_query';
-import { generateToken } from '../../utils/_auth';
+import { generateToken } from '../../helpers';
 import {
   getByEmail,
   create,
@@ -12,32 +12,9 @@ import {
   actvateUser,
 } from '../queries/User';
 import { MESSAGES } from '../../constants/ResponceMessages';
-import { getPagination, genPass, getErrorMessage } from '../../utils/appUtils';
+import { getPagination, generatePassword } from '../../helpers';
 
 const User = {
-  login: async (data) => {
-    try {
-      const user = await db.query(getByEmail, [data[0]]);
-      if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
-        const payload = {
-          email: user.rows[0].u_email,
-          role: user.rows[0].u_name,
-          userid: user.rows[0].u_id,
-        };
-        const token = await generateToken(payload);
-        return {
-          token,
-          user: user.rows,
-          message: 'sussesfully logged in',
-        };
-      }
-      return {
-        error: getErrorMessage('password', 'password is incorrect'),
-      };
-    } catch (error) {
-      return error;
-    }
-  },
   findAll: async (data) => {
     const { limit, offset } = getPagination(data[0], data[1]);
     const users = await db.query(getAll, [limit, offset]);
@@ -140,7 +117,7 @@ const User = {
       if (bcrypt.compareSync(data[1], user.rows[0].u_password)) {
         const userReset = await db.query(updatePassword, [
           data[0],
-          genPass(false, data[2]),
+          generatePassword(false, data[2]),
         ]);
         if (userReset.rows.length > 0) {
           return {

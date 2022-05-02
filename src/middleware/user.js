@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 import 'regenerator-runtime';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
 import db from '../database/connection/_query';
+import { User } from '../db/models';
 import { getByEmail, checkExist, getById } from '../database/queries/User';
-import { getErrorMessage } from '../utils/appUtils';
+import { getErrorMessage } from '../helpers';
 
 export default {
   // Supper user
@@ -67,46 +70,38 @@ export default {
   },
   // check if user exists
   checkUserExists: async (req, res, next) => {
-    const { email } = req.body;
-    db.query(checkExist, [email])
-      .then(({ rows }) => {
-        if (rows.length === 0) {
-          next();
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            error: {
-              email: {
-                message: 'Account already exists'
-              }
-            }
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(STATUSES.BAD_REQUEST).send({
-          error: err.message,
+    const { email: u_email } = req.body;
+    try {
+      let user = await User.findOne({ where: { u_email } });
+      user = user?.dataValues;
+      if (!user) {
+        next();
+      } else {
+        res.status(409).send({
+          error: getErrorMessage('email', 'Account already exists'),
         });
-      });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
   checkUserExists2: async (req, res, next) => {
-    const { email } = req.body;
-    db.query(checkExist, [email])
-      .then(({ rows }) => {
-        if (rows.length > 0) {
-          next();
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            error: getErrorMessage('email', 'User email not exist'),
-          });
-        }
-      })
-      .catch((err) => {
+    const { email: u_email } = req.body;
+    try {
+      let user = await User.findOne({ where: { u_email } });
+      user = user?.dataValues;
+      if (user) {
+        req.user = user;
+        next();
+      } else {
         res.status(STATUSES.BAD_REQUEST).send({
-          error: err.message,
+          status: STATUSES.BAD_REQUEST,
+          error: getErrorMessage('email', 'User email not exist'),
         });
-      });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
   checkIsValidUser: async (req, res, next) => {
     const { u_id } = req.user;

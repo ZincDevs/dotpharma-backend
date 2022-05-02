@@ -7,59 +7,22 @@ import UserMiddle from '../middleware/user';
 
 const router = express.Router();
 // Here user is added by admin
-router.post(
-  '/createuser',
-  Validator('createuser'),
-  Auth.verifyToken,
-  UserMiddle.checkUserExists,
-  User.createUser
-);
+router.post('/createuser', Validator('createuser'), Auth.verifyToken, UserMiddle.checkUserExists, User.createUser);
 // Here register them selves
-router.post(
-  '/signup',
-  Validator('signup'),
-  UserMiddle.checkUserExists,
-  User.signup
-);
-
-router.put(
-  '/updateuser/:uid',
-  Validator('updateuser'),
-  Auth.verifyToken,
-  User.update
-);
-
-router.put(
-  '/resetpassword',
-  Validator('resetpass'),
-  Auth.verifyToken,
-  User.resetPassword
-);
-
-router.post(
-  '/resendverification',
-  UserMiddle.checkUserExists2,
-  User.resendVerification
-);
-
+router.post('/signup', Validator('signup'), UserMiddle.checkUserExists, User.signup);
+router.put('/updateuser/:uid', Validator('updateuser'), Auth.verifyToken, User.update);
+router.get('/allusers', Auth.verifyToken, User.findAll);
 router.delete('/deleteuser/:uid', Auth.verifyToken, User.destroy);
 
-router.get('/allusers', Auth.verifyToken, User.findAll);
-router.post(
-  '/login',
-  Validator('login'),
-  UserMiddle.checkUserExists2,
-  User.login
-);
-
-router.post(
-  '/admin/login',
-  Validator('login'),
-  UserMiddle.checkUserExists2,
-  UserMiddle.checkISAdmin,
-  User.login
-);
+router.put('/resetpassword', Validator('resetpass'), Auth.verifyToken, User.resetPassword);
 
 router.put('/activateuser/:token', Auth.verifyToken2, User.validateUserAccount);
+router.post('/resendverification', UserMiddle.checkUserExists2, User.resendVerification);
+
+// Authentication and authorization
+router.post('/login', UserMiddle.checkUserExists2, Auth.checkCredentials, User.login);
+router.get('/logout', User.logout);
+router.get('/refresh-token', User.refreshToken);
+router.post('/admin/login', UserMiddle.checkUserExists2, UserMiddle.checkISAdmin, User.login);
 
 export default router;

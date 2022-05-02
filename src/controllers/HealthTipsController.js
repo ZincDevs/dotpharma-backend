@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import moment from 'moment';
 import HealthTips from '../database/models/HealthTips';
 import { STATUSES } from '../constants/ResponseStatuses';
-import { getPagination } from '../utils/appUtils';
+import { getPagination } from '../helpers';
 
 const HealthTipController = {
   create: async (req, res) => {

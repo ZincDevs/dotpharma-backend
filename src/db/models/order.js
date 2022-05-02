@@ -36,7 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Order.init({
-    o_id: DataTypes.STRING,
+    o_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     // o_medicine: DataTypes.STRING,
     o_prescription: DataTypes.STRING,
     o_date: DataTypes.STRING,

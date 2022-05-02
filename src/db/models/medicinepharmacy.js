@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   MedicinePharmacy.init({
-    ph_id: DataTypes.STRING,
+    ph_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     m_id: DataTypes.STRING
   }, {
     sequelize,

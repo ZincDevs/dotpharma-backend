@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Medicine.init({
-    m_id: DataTypes.STRING,
+    m_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     m_name: DataTypes.STRING,
     m_properties: DataTypes.STRING,
     m_desciption: DataTypes.STRING,

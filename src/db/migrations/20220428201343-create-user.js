@@ -31,7 +31,7 @@ module.exports = {
       blocked: {
         type: Sequelize.BOOLEAN
       },
-      reflesh_token: {
+      refresh_token: {
         type: Sequelize.TEXT
       },
       createdAt: {

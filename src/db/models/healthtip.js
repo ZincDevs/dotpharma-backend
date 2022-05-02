@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   HealthTip.init({
-    h_id: DataTypes.STRING,
+    h_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     h_title: DataTypes.STRING,
     h_image: DataTypes.STRING,
     h_description: DataTypes.STRING,
