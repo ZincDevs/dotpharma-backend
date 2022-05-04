@@ -12,7 +12,7 @@ import {
 } from '../helpers';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { sendVerification } from '../services';
-import { User, Doctor } from '../db/models';
+import { User, Doctor, Patient } from '../db/models';
 import { serverConfig } from '../config';
 
 const { httpOnlyCookieOptions: cookieOptions } = serverConfig;
@@ -20,8 +20,8 @@ const UserController = {
   login: async (req, res) => {
     const { user: { u_id, u_email, u_role } } = req;
     const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken(userData);
-    const refresh_token = await generateToken(userData, '1d');
+    const access_token = await generateToken({ ...userData, isAccessToken: true });
+    const refresh_token = await generateToken({ ...userData, isRefreshToken: true }, '1d');
     await User.update({ refresh_token }, { where: { u_email } });
     res
       .cookie('jwt', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
@@ -98,32 +98,31 @@ const UserController = {
     let newUser = await User.create(userObject);
     newUser = newUser?.dataValues;
     if (!newUser) return res.sendStatus(500);
+    if (newUser.u_role === 'PATIENT') {
+      const patientObject = {
+        p_id: uuid(),
+        p_email: newUser.u_email,
+        u_id: newUser.u_id,
+      };
+      await Patient.create(patientObject);
+    }
     const verify_token = await generateToken({ u_email: newUser.u_email }, '5m');
     sendVerification({ email: req.body.email, token: verify_token });
     res.sendStatus(201);
   },
   findAll: async (req, res) => {
-    const data = [req.query.page ? req.query.page : 1, 20];
-    User.findAll(data)
-      .then((results) => {
-        if (results.users) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            users: results.users,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: MESSAGES.NOT_CONTENT,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const users = await User.findAll({
+      attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
+      include: [{ model: Patient, as: 'patients' }, { model: Doctor, as: 'doctors' }],
+      limit,
+      offset
+    });
+    res.json({
+      users,
+    });
   },
   update: async (req, res) => {
     const data = [
@@ -178,68 +177,54 @@ const UserController = {
         });
       });
   },
-  resetPassword: async (req, res) => {
-    const data = [req.body.uid, req.body.oldpassword, req.body.newpassword];
-    User.resetPassword(data)
-      .then((results) => {
-        if (results.user) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: results.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: results.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+  requestPasswordReset: async (req, res) => {
+    // const { email: u_email } = req.body;
+    // const verify_token = await generateToken({ u_email }, '5m');
+    // sendVerification({ email: req.body.email, token: verify_token });
+    // res.status(200).json({
+    //   message: 'Verification is sent',
+    // });
+    // const data = [req.body.uid, req.body.oldpassword, req.body.newpassword];
+    // User.resetPassword(data)
+    //   .then((results) => {
+    //     if (results.user) {
+    //       res.status(STATUSES.OK).send({
+    //         status: STATUSES.OK,
+    //         message: results.message,
+    //       });
+    //     } else {
+    //       res.status(STATUSES.BAD_REQUEST).send({
+    //         status: STATUSES.BAD_REQUEST,
+    //         message: results.message,
+    //       });
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     res.status(STATUSES.SERVERERROR).send({
+    //       status: STATUSES.SERVERERROR,
+    //       message: e.message,
+    //     });
+    //   });
   },
   validateUserAccount: async (req, res) => {
-    const { u_id } = req.user;
-    User.activateUser(u_id)
-      .then((results) => {
-        if (results.user) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: 'Account has been activated',
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            error: getErrorMessage('email', 'Account not activated')
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
-  },
-  resendVerification: async (req, res) => {
-    try {
-      const token = await generateToken({
-        email: req.body.email
-      }, '5m');
-      sendVerification({ email: req.body.email, token });
-      res.status(STATUSES.OK).send({
-        status: STATUSES.OK,
-        message: 'Verification is sent',
-      });
-    } catch (e) {
-      res.status(STATUSES.SERVERERROR).send({
-        status: STATUSES.SERVERERROR,
-        message: e.message,
+    const { u_id } = req.authUser;
+    const result = await User.update({ verified: true }, { where: { u_id } });
+    if (!result.include(1)) {
+      return res.status(200).json({
+        error: getErrorMessage('email', 'Account not activated')
       });
     }
+    res.status(200).json({
+      message: 'Account has been activated',
+    });
+  },
+  resendVerification: async (req, res) => {
+    const { email: u_email } = req.body;
+    const verify_token = await generateToken({ u_email }, '5m');
+    sendVerification({ email: req.body.email, token: verify_token });
+    res.status(200).json({
+      message: 'Verification is sent',
+    });
   },
 };
 

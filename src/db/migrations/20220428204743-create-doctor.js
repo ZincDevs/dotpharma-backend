@@ -16,8 +16,6 @@ module.exports = {
       },
       d_email: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
       d_phone: {
         type: Sequelize.STRING

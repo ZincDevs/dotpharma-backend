@@ -11,14 +11,10 @@ dotenv.config();
 
 const Auth = {
   verifyToken: async (req, res, next) => {
-    const { token } = req.headers;
-    if (!token) {
-      return res.status(401).json({
-        error: {
-          message: 'Unauthorized!',
-        },
-      });
-    }
+    const { authorization } = req.headers;
+    if (!authorization) return res.sendStatus(401);
+    const token = authorization.split(' ')[1];
+    if (!token) return res.sendStatus(401);
     try {
       const { u_email } = await decodeToken(token);
       try {
@@ -54,35 +50,21 @@ const Auth = {
   },
   verifyToken2: async (req, res, next) => {
     const { token } = req.params;
-    if (!token) {
-      return res.status(401).json({
-        status: 401,
-        error: {
-          message: 'Token is missing',
-        },
-      });
-    }
+    if (!token) return res.sendStatus(401);
     try {
       const { u_email } = await decodeToken(token);
-      try {
-        let user = await User.findOne({ where: { u_email } });
-        user = user?.dataValues;
-        if (!user) {
-          return res.status(400).json({
-            status: 400,
-            error: {
-              message: 'Invalid token',
-            },
-          });
-        }
-        req.authUser = user;
-        next();
-      } catch (error) {
-        return res.status(500).json({
-          status: 500,
-          error,
+      let user = await User.findOne({ where: { u_email } });
+      user = user?.dataValues;
+      if (!user) {
+        return res.status(400).json({
+          status: 400,
+          error: {
+            message: 'Invalid token',
+          },
         });
       }
+      req.authUser = user;
+      next();
     } catch (error) {
       if (error.name && error.name === 'TokenExpiredError') {
         return res.status(401).json({
