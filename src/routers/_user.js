@@ -4,6 +4,7 @@ import User from '../controllers/UserController';
 import Auth from '../middleware/Auth';
 import Validator from '../middleware/_validator';
 import UserMiddle from '../middleware/user';
+import Paginate from '../middleware/Paginate';
 
 const router = express.Router();
 // Here user is added by admin
@@ -11,10 +12,10 @@ router.post('/createuser', Validator('createuser'), Auth.verifyToken, UserMiddle
 // Here register them selves
 router.post('/signup', Validator('signup'), UserMiddle.checkUserExists, User.signup);
 router.put('/updateuser/:uid', Validator('updateuser'), Auth.verifyToken, User.update);
-router.get('/allusers', Auth.verifyToken, User.findAll);
+router.get('/allusers', Auth.verifyToken, Paginate, User.findAll);
 router.delete('/deleteuser/:uid', Auth.verifyToken, User.destroy);
 
-router.put('/resetpassword', Validator('resetpass'), Auth.verifyToken, User.resetPassword);
+router.put('/request-password-reset', Validator('resetpass'), Auth.verifyToken, User.requestPasswordReset);
 
 router.put('/activateuser/:token', Auth.verifyToken2, User.validateUserAccount);
 router.post('/resendverification', UserMiddle.checkUserExists2, User.resendVerification);

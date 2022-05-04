@@ -15,11 +15,9 @@ module.exports = {
       },
       p_name: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       p_email: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       p_phonenumber: {
         type: Sequelize.STRING,
