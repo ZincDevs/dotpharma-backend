@@ -14,38 +14,22 @@ const Auth = {
     const { authorization } = req.headers;
     if (!authorization) return res.sendStatus(401);
     const token = authorization.split(' ')[1];
-    if (!token) return res.sendStatus(401);
+    if (!token || token === 'undefined') return res.sendStatus(401);
     try {
       const { u_email } = await decodeToken(token);
-      try {
-        let user = await User.findOne({ where: { u_email } });
-        user = user?.dataValues;
-        if (!user) {
-          return res.status(403).json({
-            error: {
-              message: 'Invalid token',
-            },
-          });
-        }
-        req.authUser = user;
-        next();
-      } catch (error) {
-        return res.status(500).json({
-          status: 500,
-          error,
+      let user = await User.findOne({ where: { u_email } });
+      user = user?.dataValues;
+      if (!user) {
+        return res.status(403).json({
+          error: {
+            message: 'Invalid token',
+          },
         });
       }
+      req.authUser = user;
+      next();
     } catch (error) {
-      if (error.name && error.name === 'TokenExpiredError') {
-        return res.status(401).json({
-          status: 401,
-          message: error.message,
-        });
-      }
-      return res.status(500).json({
-        status: 500,
-        error,
-      });
+      return res.sendStatus(403);
     }
   },
   verifyToken2: async (req, res, next) => {

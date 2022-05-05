@@ -11,7 +11,9 @@ export const generateToken = async (payload, expiration = '15m') => {
   return token;
 };
 
-export const decodeToken = async (token) => {
-  const user = await jwt.verify(token, JWT_SECRET);
+export const decodeToken = async (token, callback) => {
+  const user = await jwt.verify(token, JWT_SECRET, callback);
   return user;
 };
+
+export const decodeJWT = (token, callback) => jwt.verify(token, JWT_SECRET, callback);

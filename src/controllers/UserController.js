@@ -5,10 +5,9 @@ import 'regenerator-runtime';
 import moment from 'moment';
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { Jwt } from 'jsonwebtoken';
 import { STATUSES } from '../constants/ResponseStatuses';
 import {
-  generatePassword, getErrorMessage, generateToken, decodeToken
+  generatePassword, getErrorMessage, generateToken, decodeToken, decodeJWT
 } from '../helpers';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { sendVerification } from '../services';
@@ -20,40 +19,50 @@ const UserController = {
   login: async (req, res) => {
     const { user: { u_id, u_email, u_role } } = req;
     const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken({ ...userData, isAccessToken: true });
-    const refresh_token = await generateToken({ ...userData, isRefreshToken: true }, '1d');
-    await User.update({ refresh_token }, { where: { u_email } });
+    const access_token = await generateToken({ ...userData, isAccessToken: true }, '10s');
+    const refresh_token = await generateToken({ ...userData, isRefreshToken: true }, '1h');
+    const result = await User.update({ refresh_token }, { where: { u_email } });
+    if (!result.includes(1)) {
+      return res.sendStatus(500);
+    }
     res
-      .cookie('jwt', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
       .json({ access_token, userData });
   },
   refreshToken: async (req, res) => {
     const { cookies } = req;
-    if (!cookies?.jwt) return res.sendStatus(401);
-    const refresh_token = cookies.jwt;
+    if (!cookies?.refresh_token) return res.sendStatus(401);
+    const refresh_token = cookies.refresh_token;
     let user = await User.findOne({ where: { refresh_token } });
     user = user?.dataValues;
     if (!user) return res.sendStatus(403);
-    const { u_id, u_email, u_role } = await decodeToken(refresh_token);
-    if (!u_email) return res.sendStatus(403);
-    const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken(userData);
-    res.json({ access_token });
+    decodeJWT(refresh_token, async (err, decoded) => {
+      if (err || !decoded?.u_email || decoded?.u_email !== user.u_email) return res.sendStatus(403);
+      const access_token = await generateToken({ u_email: decoded?.u_email }, '10s');
+      res.json({
+        access_token,
+        userData: {
+          u_id: user?.u_id,
+          u_email: user?.u_email,
+          u_role: user?.u_role,
+        }
+      });
+    });
   },
   logout: async (req, res) => {
     const { cookies } = req;
-    if (!cookies?.jwt) return res.sendStatus(204);
-    const refresh_token = cookies.jwt;
+    if (!cookies?.refresh_token) return res.sendStatus(204);
+    const refresh_token = cookies.refresh_token;
     let result = await User.findOne({ where: { refresh_token } });
     result = result?.dataValues;
     const { u_email } = result;
     if (!u_email) {
-      res.clearCookie('jwt', { ...cookieOptions });
+      res.clearCookie('refresh_token', { ...cookieOptions });
       return res.sendStatus(204);
     }
     await User.update({ refresh_token: null }, { where: { u_email } });
     res
-      .clearCookie('jwt', { ...cookieOptions })
+      .clearCookie('refresh_token', { ...cookieOptions })
       .sendStatus(204);
   },
   createUser: async (req, res) => {
@@ -120,7 +129,7 @@ const UserController = {
       limit,
       offset
     });
-    res.json({
+    res.status(200).json({
       users,
     });
   },
