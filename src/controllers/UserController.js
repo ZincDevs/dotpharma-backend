@@ -19,7 +19,7 @@ const UserController = {
   login: async (req, res) => {
     const { user: { u_id, u_email, u_role } } = req;
     const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken({ ...userData, isAccessToken: true }, '10s');
+    const access_token = await generateToken({ ...userData, isAccessToken: true });
     const refresh_token = await generateToken({ ...userData, isRefreshToken: true }, '1h');
     const result = await User.update({ refresh_token }, { where: { u_email } });
     if (!result.includes(1)) {
@@ -38,7 +38,7 @@ const UserController = {
     if (!user) return res.sendStatus(403);
     decodeJWT(refresh_token, async (err, decoded) => {
       if (err || !decoded?.u_email || decoded?.u_email !== user.u_email) return res.sendStatus(403);
-      const access_token = await generateToken({ u_email: decoded?.u_email }, '10s');
+      const access_token = await generateToken({ u_email: decoded?.u_email });
       res.json({
         access_token,
         userData: {
