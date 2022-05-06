@@ -13,16 +13,20 @@ const password = Joi.string()
   .min(8)
   .required()
   .label('Password is required,  it must have at least 8 letters');
-
-const oldpassword = Joi.string()
+const confirmpassord = Joi.string()
   .min(8)
   .required()
-  .label('Old password is required,  it must have at least 8 letters');
+  .label('Confirm password is required,  it must have at least 8 letters');
 
-const newpassword = Joi.string()
-  .min(8)
-  .required()
-  .label('New Password is required,  it must have at least 8 letters');
+// const oldpassword = Joi.string()
+//   .min(8)
+//   .required()
+//   .label('Old password is required,  it must have at least 8 letters');
+
+// const newpassword = Joi.string()
+//   .min(8)
+//   .required()
+//   .label('New Password is required,  it must have at least 8 letters');
 const name = Joi.string()
   .min(3)
   .required()
@@ -123,9 +127,8 @@ schemas.updateuser = Joi.object().keys({
 });
 
 schemas.resetpass = Joi.object().keys({
-  newpassword,
-  oldpassword,
-  uid,
+  password,
+  confirmpassord,
 });
 
 schemas.resetPassword = Joi.object().keys({
