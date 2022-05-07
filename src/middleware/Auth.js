@@ -43,13 +43,14 @@ const Auth = {
     const { token } = req.params;
     if (!token || token === 'undefined') return res.sendStatus(401);
     decodeJWT(token, async (err, decoded) => {
+      if (err || !decoded) return res.sendStatus(403);
       const u_email = decoded?.u_email;
       const type = decoded?.type;
-      if (err || !u_email || !type || type !== 'passwordReset') return res.sendStatus(403);
+      if (!u_email || !type || type !== 'passwordReset') return res.sendStatus(403);
       let user = await User.findOne({ where: { u_email } });
       user = user?.dataValues;
       if (!user) return res.sendStatus(403);
-      req.authUser = user;
+      req.user = user;
       next();
     });
   },

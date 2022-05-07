@@ -35,7 +35,7 @@ router.delete('/deleteuser/:uid', verifyAccessToken, User.destroy);
 
 // Password reset
 router.post('/request-password-reset', UserMiddle.checkUserExists2, User.requestPasswordReset);
-router.put('/apply-password-reset', Validator('resetpass'), verifyUPasswordResetToken, User.confirmPasswordReset);
+router.put('/apply-password-reset/:token', Validator('resetpass'), verifyUPasswordResetToken, User.confirmPasswordReset);
 router.post('/resend-password-reset', UserMiddle.checkUserExists2, User.resendPasswordReset);
 
 export default router;

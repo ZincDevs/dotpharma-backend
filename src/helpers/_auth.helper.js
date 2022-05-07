@@ -21,7 +21,7 @@ export const generateUserVerificationToken = async (payload, expiration = '5m') 
   return verifyToken;
 };
 
-export const generatePasswordResetToken = async (payload, expiration = '5m') => {
+export const generatePasswordResetToken = async (payload, expiration = '15m') => {
   const pswResetToken = await jwt.sign({ ...payload, type: 'passwordReset' }, JWT_SECRET, { expiresIn: expiration });
   return pswResetToken;
 };

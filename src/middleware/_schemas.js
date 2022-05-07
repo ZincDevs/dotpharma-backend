@@ -13,7 +13,7 @@ const password = Joi.string()
   .min(8)
   .required()
   .label('Password is required,  it must have at least 8 letters');
-const confirmpassord = Joi.string()
+const confirm = Joi.string()
   .min(8)
   .required()
   .label('Confirm password is required,  it must have at least 8 letters');
@@ -128,7 +128,7 @@ schemas.updateuser = Joi.object().keys({
 
 schemas.resetpass = Joi.object().keys({
   password,
-  confirmpassord,
+  confirm,
 });
 
 schemas.resetPassword = Joi.object().keys({
