@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
 import 'regenerator-runtime';
@@ -224,8 +225,9 @@ const UserController = {
   },
   confirmPasswordReset: async (req, res) => {
     const { u_email } = req.user;
-    const { password: u_password, confirm } = req.body;
-    if (u_password !== confirm) return res.sendStatus(404);
+    let { password: u_password, confirm } = req.body;
+    if (u_password !== confirm) return res.sendStatus(400);
+    u_password = generatePassword(false, u_password);
     const result = await User.update({ u_password }, { where: { u_email } });
     if (!result.includes(1)) {
       return res.sendStatus(500);
