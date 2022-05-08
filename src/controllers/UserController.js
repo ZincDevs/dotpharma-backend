@@ -1,59 +1,123 @@
+/* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
-/* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import moment from 'moment';
-import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import { Jwt } from 'jsonwebtoken';
+import dotenv from 'dotenv';
+import { OAuth2Client } from 'google-auth-library';
 import { STATUSES } from '../constants/ResponseStatuses';
 import {
-  generatePassword, getErrorMessage, generateToken, decodeToken
+  generatePassword,
+  getErrorMessage,
+  decodeJWT,
+  generateRefreshToken,
+  generateAccessToken,
+  generateUserVerificationToken,
+  generatePasswordResetToken,
 } from '../helpers';
-import { MESSAGES } from '../constants/ResponceMessages';
-import { sendVerification } from '../services';
+import { sendVerification, sendPasswordResetConfirmation } from '../services';
 import { User, Doctor, Patient } from '../db/models';
 import { serverConfig } from '../config';
 
 const { httpOnlyCookieOptions: cookieOptions } = serverConfig;
+dotenv.config();
 const UserController = {
   login: async (req, res) => {
     const { user: { u_id, u_email, u_role } } = req;
     const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken({ ...userData, isAccessToken: true });
-    const refresh_token = await generateToken({ ...userData, isRefreshToken: true }, '1d');
-    await User.update({ refresh_token }, { where: { u_email } });
+    const access_token = await generateAccessToken(userData);
+    const refresh_token = await generateRefreshToken(userData);
+    const result = await User.update({ refresh_token }, { where: { u_email } });
+    if (!result.includes(1)) {
+      return res.sendStatus(500);
+    }
     res
-      .cookie('jwt', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
       .json({ access_token, userData });
+  },
+  googleAuth: async (req, res) => {
+    const { token } = req.body;
+    if (!token) return res.sendStatus(401);
+    const client = new OAuth2Client(process.env.OAUTH2_CLIENT_ID);
+    client.verifyIdToken({
+      idToken: token,
+      audience: process.env.OAUTH2_CLIENT_ID
+    }, async (err, result) => {
+      if (err || !result) return res.senStatus(403);
+      const {
+        payload: {
+          email, email_verified, jti, name,
+        }
+      } = result;
+      // Check if user exist or not
+      let user = await User.findOne({ where: { u_email: email } });
+      user = user?.dataValues;
+      // If user does not exist, the create em
+      if (!user) {
+        const userObject = {
+          u_id: uuid(),
+          u_email: email,
+          u_password: jti,
+          u_role: 'PATIENT',
+          verified: email_verified,
+          blocked: false,
+        };
+        user = await User.create(userObject);
+        user = user?.dataValues;
+        if (!user) return res.sendStatus(500);
+        const patientObject = {
+          p_id: uuid(),
+          p_name: name,
+          p_email: user.u_email,
+          u_id: user.u_id,
+        };
+        await Patient.create(patientObject);
+      }
+      const { u_id, u_email, u_role } = user;
+      const userData = { u_id, u_email, u_role };
+      const access_token = await generateAccessToken(userData);
+      const refresh_token = await generateRefreshToken(userData);
+      await User.update({ refresh_token }, { where: { u_email } });
+      res
+        .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+        .json({ access_token, userData });
+    });
   },
   refreshToken: async (req, res) => {
     const { cookies } = req;
-    if (!cookies?.jwt) return res.sendStatus(401);
-    const refresh_token = cookies.jwt;
+    if (!cookies?.refresh_token) return res.sendStatus(401);
+    const refresh_token = cookies.refresh_token;
     let user = await User.findOne({ where: { refresh_token } });
     user = user?.dataValues;
     if (!user) return res.sendStatus(403);
-    const { u_id, u_email, u_role } = await decodeToken(refresh_token);
-    if (!u_email) return res.sendStatus(403);
-    const userData = { u_id, u_email, u_role };
-    const access_token = await generateToken(userData);
-    res.json({ access_token });
+    decodeJWT(refresh_token, async (err, decoded) => {
+      if (err || !decoded?.u_email || decoded?.u_email !== user.u_email) return res.sendStatus(403);
+      const access_token = await generateAccessToken({ u_email: decoded?.u_email });
+      res.json({
+        access_token,
+        userData: {
+          u_id: user?.u_id,
+          u_email: user?.u_email,
+          u_role: user?.u_role,
+        }
+      });
+    });
   },
   logout: async (req, res) => {
     const { cookies } = req;
-    if (!cookies?.jwt) return res.sendStatus(204);
-    const refresh_token = cookies.jwt;
+    if (!cookies?.refresh_token) return res.sendStatus(204);
+    const refresh_token = cookies.refresh_token;
     let result = await User.findOne({ where: { refresh_token } });
     result = result?.dataValues;
-    const { u_email } = result;
+    const u_email = result?.email;
     if (!u_email) {
-      res.clearCookie('jwt', { ...cookieOptions });
+      res.clearCookie('refresh_token', { ...cookieOptions });
       return res.sendStatus(204);
     }
     await User.update({ refresh_token: null }, { where: { u_email } });
     res
-      .clearCookie('jwt', { ...cookieOptions })
+      .clearCookie('refresh_token', { ...cookieOptions })
       .sendStatus(204);
   },
   createUser: async (req, res) => {
@@ -85,7 +149,7 @@ const UserController = {
     if (!newDoctor) return res.sendStatus(500);
     res.sendStatus(201);
   },
-  signup: async (req, res, next) => {
+  signup: async (req, res) => {
     const { body } = req;
     const userObject = {
       u_id: uuid(),
@@ -106,9 +170,32 @@ const UserController = {
       };
       await Patient.create(patientObject);
     }
-    const verify_token = await generateToken({ u_email: newUser.u_email }, '5m');
+    const verify_token = await generateUserVerificationToken({ u_email: newUser.u_email });
     sendVerification({ email: req.body.email, token: verify_token });
     res.sendStatus(201);
+  },
+  verifyUserAccount: async (req, res) => {
+    const { u_id, u_email, u_role } = req.authUser;
+    const result = await User.update({ verified: true }, { where: { u_id } });
+    if (!result.includes(1)) {
+      return res.status(500).json({
+        error: getErrorMessage('email', 'Account not activated')
+      });
+    }
+    const userData = { u_id, u_email, u_role };
+    const access_token = await generateAccessToken(userData);
+    const refresh_token = await generateRefreshToken(userData);
+    res
+      .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .json({ access_token, userData });
+  },
+  resendVerification: async (req, res) => {
+    const { email: u_email } = req.body;
+    const verify_token = await generateUserVerificationToken({ u_email });
+    sendVerification({ email: req.body.email, token: verify_token });
+    res.json({
+      message: 'Verification is sent',
+    });
   },
   findAll: async (req, res) => {
     const { paginate } = req;
@@ -120,7 +207,7 @@ const UserController = {
       limit,
       offset
     });
-    res.json({
+    res.status(200).json({
       users,
     });
   },
@@ -177,53 +264,33 @@ const UserController = {
         });
       });
   },
+
+  // Password reset
   requestPasswordReset: async (req, res) => {
-    // const { email: u_email } = req.body;
-    // const verify_token = await generateToken({ u_email }, '5m');
-    // sendVerification({ email: req.body.email, token: verify_token });
-    // res.status(200).json({
-    //   message: 'Verification is sent',
-    // });
-    // const data = [req.body.uid, req.body.oldpassword, req.body.newpassword];
-    // User.resetPassword(data)
-    //   .then((results) => {
-    //     if (results.user) {
-    //       res.status(STATUSES.OK).send({
-    //         status: STATUSES.OK,
-    //         message: results.message,
-    //       });
-    //     } else {
-    //       res.status(STATUSES.BAD_REQUEST).send({
-    //         status: STATUSES.BAD_REQUEST,
-    //         message: results.message,
-    //       });
-    //     }
-    //   })
-    //   .catch((e) => {
-    //     res.status(STATUSES.SERVERERROR).send({
-    //       status: STATUSES.SERVERERROR,
-    //       message: e.message,
-    //     });
-    //   });
-  },
-  validateUserAccount: async (req, res) => {
-    const { u_id } = req.authUser;
-    const result = await User.update({ verified: true }, { where: { u_id } });
-    if (!result.include(1)) {
-      return res.status(200).json({
-        error: getErrorMessage('email', 'Account not activated')
-      });
-    }
-    res.status(200).json({
-      message: 'Account has been activated',
+    const { u_email } = req.user;
+    const passoword_reset_token = await generatePasswordResetToken({ u_email });
+    sendPasswordResetConfirmation({ email: req.body.email, token: passoword_reset_token });
+    res.json({
+      message: 'Password reset confirmation is sent',
     });
   },
-  resendVerification: async (req, res) => {
-    const { email: u_email } = req.body;
-    const verify_token = await generateToken({ u_email }, '5m');
-    sendVerification({ email: req.body.email, token: verify_token });
-    res.status(200).json({
-      message: 'Verification is sent',
+  confirmPasswordReset: async (req, res) => {
+    const { u_email } = req.user;
+    let { password: u_password, confirm } = req.body;
+    if (u_password !== confirm) return res.sendStatus(400);
+    u_password = generatePassword(false, u_password);
+    const result = await User.update({ u_password }, { where: { u_email } });
+    if (!result.includes(1)) {
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  },
+  resendPasswordReset: async (req, res) => {
+    const { u_email } = req.user;
+    const passoword_reset_token = await generatePasswordResetToken({ u_email });
+    sendPasswordResetConfirmation({ email: req.body.email, token: passoword_reset_token });
+    res.json({
+      message: 'Password reset confirmation is sent',
     });
   },
 };

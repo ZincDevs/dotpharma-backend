@@ -132,19 +132,20 @@ export default (link) => `
       content: ".";
       font-family: dosis !important;
     }
+
     p {
-        font-family: dosis;
-        color:  #909090;
-      }
+      font-family: dosis;
+      color: #909090;
+    }
   </style>
 
 </head>
 
 <body style="background-color: #e9ecef;">
-  <div class="preheader"
+  <!-- <div class="preheader"
     style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-     Welcome to DotPharma. Here is your account verification link.
-  </div>
+    Welcome to DotPharma. Here is your account verification link.
+  </div> -->
   <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
       <td align="center" bgcolor="#e9ecef">
@@ -155,9 +156,9 @@ export default (link) => `
                 alt="Logo" border="0" width="48"
                 style="display: block; width: 48px; max-width: 48px; min-width: 48px;" />
                 <h3 align="center" style="align-self: center;">
-                DOT
-                <strong>PHARMA</strong>
-              </h3>
+                  DOT
+                  <strong>PHARMA</strong>
+                </h3>
             </td>
           </tr>
         </table>
@@ -171,7 +172,7 @@ export default (link) => `
               style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #2B8DD0;">
               <h1
                 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px; color: #797979;">
-                Verify Your Email Address</h1>
+                Confirm Password Reset</h1>
             </td>
           </tr>
         </table>
@@ -183,9 +184,8 @@ export default (link) => `
           <tr>
             <td align="left" bgcolor="#ffffff"
               style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Tap the button below to confirm your email address. If you didn't
-                create an account with DOTPHARMA, you can safely delete
-                this email.</p>
+              <p style="margin: 0;">You have requested to reset your password. Please tap the button below to confirm
+                your request. If you didn't request this action, you can simply ignore this message.</p>
             </td>
           </tr>
           <tr>
@@ -198,7 +198,7 @@ export default (link) => `
                         <td align="center" bgcolor="#1a82e2" style="border-radius: 6px;">
                           <a href="${link}" target="_blank"
                             style="display: inline-block; padding: 16px 36px; font-family: 'Dosis', sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px; background-color: #2B8DD0; border-radius: 0;">
-                            Verify Account
+                            Reset Password
                           </a>
                         </td>
                       </tr>
@@ -213,8 +213,8 @@ export default (link) => `
               style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
               <p style="margin: 0;">If that doesn't work, copy and paste the following link in your
                 browser:</p>
-                <p style="margin: 0;"><a href="${link}" style="text-decoration: none; color:#2B8DD0;"
-                target="_blank">${link}</a></p>
+              <p style="margin: 0;"><a href="${link}" style="text-decoration: none; color:#2B8DD0;"
+                  target="_blank">${link}</a></p>
             </td>
           </tr>
           <tr>
@@ -234,8 +234,8 @@ export default (link) => `
           <tr>
             <td align="center" bgcolor="#e9ecef"
               style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-              <p style="margin: 0;">You received this email because we received a request for
-                verifying your account. If you didn't request this action, you can safely
+              <p style="margin: 0;">You received this email because we received a request to reset your password. If you
+                didn't request this action, you can safely
                 delete this email.</p>
             </td>
           </tr>

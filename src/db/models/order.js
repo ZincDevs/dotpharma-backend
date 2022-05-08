@@ -40,13 +40,9 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.STRING
     },
-    // o_medicine: DataTypes.STRING,
     o_prescription: DataTypes.STRING,
     o_date: DataTypes.STRING,
     o_status: DataTypes.STRING,
-    // o_pharmacy: DataTypes.STRING,
-    // p_id: DataTypes.STRING,
-    // u_id: DataTypes.STRING
     o_medicine: {
       type: DataTypes.STRING,
       references: {
