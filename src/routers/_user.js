@@ -21,6 +21,7 @@ router.post('/login', UserMiddle.checkUserExists2, Auth.checkCredentials, User.l
 router.get('/logout', User.logout);
 router.get('/refresh-token', User.refreshToken);
 router.post('/admin/login', UserMiddle.checkUserExists2, UserMiddle.checkISAdmin, User.login);
+router.post('/googleauth', User.googleAuth);
 
 // User verirication and confirmation
 router.put('/activateuser/:token', verifyUserVerificationToken, User.verifyUserAccount);
