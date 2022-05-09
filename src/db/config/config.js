@@ -21,7 +21,7 @@ config.test = {
 };
 
 config.production = {
-  dbUrl: process.env.DATABASE_URL,
+  use_env_variable: 'DATABASE_URL',
   dialect: 'postgres',
   dialectOptions: {
     ssl: { require: true }
