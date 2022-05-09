@@ -21,9 +21,14 @@ config.test = {
 };
 
 config.production = {
-  use_env_variable: 'DATABASE_URL',
+  dbUrl: process.env.DATABASE_URL,
   dialect: 'postgres',
-  logging: false,
+  dialectOptions: {
+    ssl: { require: true }
+  },
+  ssl: {
+    rejectUnauthorized: false
+  }
 };
 
 module.exports = config;
