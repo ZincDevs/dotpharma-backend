@@ -24,10 +24,10 @@ config.production = {
   use_env_variable: 'DATABASE_URL',
   dialect: 'postgres',
   dialectOptions: {
-    ssl: { require: true }
-  },
-  ssl: {
-    rejectUnauthorized: false
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
   }
 };
 
