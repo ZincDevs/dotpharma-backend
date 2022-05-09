@@ -9,23 +9,19 @@ config.development = {
   logging: false,
 };
 
-// config.development = {
-//   host: './data.sqlite',
-//   dialect: 'sqlite',
-//   logging: false,
-// };
-
 config.staging = {
   use_env_variable: 'DATABASE_URL',
+  dialect: 'postgres',
 };
 
 config.test = {
   use_env_variable: 'DATABASE_TEST_URL',
   logging: false,
+  dialect: 'postgres',
 };
 
 config.production = {
-  dbUrl: process.env.PROD_DATABASE_URL,
+  dbUrl: process.env.DATABASE_URL,
   dialect: 'postgres',
 };
 
