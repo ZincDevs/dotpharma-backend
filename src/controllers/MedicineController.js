@@ -1,111 +1,77 @@
+/* eslint-disable camelcase */
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
-import moment from 'moment';
-import Medicine from '../database/models/Medicine';
-import { STATUSES } from '../constants/ResponseStatuses';
+import { Medicine, User } from '../db/models';
 
 const MedicineController = {
   createMedicine: async (req, res) => {
-    const data = [
-      uuid(),
-      req.body.name,
-      req.body.properties,
-      req.body.description,
-      req.body.image,
-      req.body.price,
-      '1',
-      req.body.type,
-      moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      req.user.u_id,
-    ];
-    Medicine.create(data)
-      .then((response) => {
-        res.status(response.status).send({
-          status: response.status,
-          message: response.message,
-          data: response.data,
-        });
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { authUser, body } = req;
+    const data = {
+      m_id: uuid(),
+      m_name: body.name,
+      m_properties: body.properties,
+      m_desciption: body.description,
+      m_image: body.image,
+      m_price: body.price,
+      m_status: '1',
+      m_type: body.type,
+      u_id: authUser.u_id,
+    };
+
+    const medicine = await Medicine.create(data);
+    if (!medicine) return res.sendStatus(500);
+    return res.sendStatus(201);
   },
   updateMedicine: async (req, res) => {
-    const data = [
-      req.body.name,
-      req.body.properties,
-      req.body.description,
-      req.body.image,
-      req.body.price,
-      req.body.type,
-      moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      req.user.u_id,
-      req.params.mid,
-    ];
-    Medicine.update(data)
-      .then((response) => {
-        res.status(response.status).send({
-          status: response.status,
-          message: response.message,
-          data: response.data,
-        });
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { body, authUser } = req;
+    const { m_id } = req.params;
+    const data = {
+
+      // req.params.mid,
+      m_name: body.name,
+      m_properties: body.properties,
+      m_desciption: body.description,
+      m_image: body.image,
+      m_price: body.price,
+      m_status: '1',
+      m_type: body.type,
+      u_id: authUser.u_id,
+    };
+    const medicine = await Medicine.update(data, { where: { m_id } });
+    if (medicine[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    Medicine.findAll()
-      .then((response) => {
-        res.status(response.status).send({
-          status: response.status,
-          message: response.message,
-          data: response.data,
-        });
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const medicines = await Medicine.findAll({
+      include: [{ model: User, as: 'user' }],
+      limit,
+      offset
+    });
+    res.json(medicines);
   },
   deleteMedicine: async (req, res) => {
-    Medicine.destroy(req.params.mid)
-      .then((response) => {
-        res.status(response.status).send({
-          status: response.status,
-          message: response.message,
-          data: response.data,
-        });
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-          data: null,
-        });
-      });
+    const { m_id } = req.params;
+    const medicine = await Medicine.findOne({ where: { m_id } });
+    if (!medicine) {
+      return res.sendStatus(400);
+    }
+    await medicine.destroy();
+    return res.sendStatus(200);
   },
-  getMedsInPharma: async (req, res) => {
-    Medicine.getMedicinesInPharmacy(req.params.phid).then((response) => {
-      res.status(response.status).send({
-        status: response.status,
-        message: response.message,
-        data: response.data,
-      });
-    }).catch((error) => {
-      res.status(STATUSES.SERVERERROR).send({
-        status: STATUSES.SERVERERROR,
-        message: error.message,
-      });
-    });
+  findById: async (req, res) => {
+    const { m_id } = req.params;
+    let medicine = await Medicine.findOne({ where: { m_id } });
+    medicine = medicine?.dataValues;
+    if (!medicine) {
+      res.sendStatus(204);
+    } else {
+      res.json(medicine);
+    }
   },
 };
 

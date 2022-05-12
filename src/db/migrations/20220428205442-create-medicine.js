@@ -37,7 +37,6 @@ module.exports = {
       // },
       u_id: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {

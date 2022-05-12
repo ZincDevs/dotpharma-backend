@@ -12,23 +12,31 @@ import { getErrorMessage } from '../helpers';
 export default {
   // Supper user
   checkISAdmin: async (req, res, next) => {
-    const { email } = req.body;
-    db.query(getByEmail, [email])
-      .then(({ rows }) => {
-        if (rows[0].u_role === 'SUPER_ADMIN') {
-          next();
-        } else {
-          res.status(STATUSES.UNAUTHORIZED).send({
-            status: STATUSES.UNAUTHORIZED,
-            error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(STATUSES.BAD_REQUEST).send({
-          error: err.message,
-        });
+    const { authUser } = req;
+    if (authUser?.u_role === 'SUPER_ADMIN') {
+      next();
+    } else {
+      res.status(STATUSES.UNAUTHORIZED).send({
+        status: STATUSES.UNAUTHORIZED,
+        error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
       });
+    }
+    // db.query(getByEmail, [email])
+    //   .then(({ rows }) => {
+    //     if (rows[0].u_role === 'SUPER_ADMIN') {
+    //       next();
+    //     } else {
+    //       res.status(STATUSES.UNAUTHORIZED).send({
+    //         status: STATUSES.UNAUTHORIZED,
+    //         error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
+    //       });
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     res.status(STATUSES.BAD_REQUEST).send({
+    //       error: err.message,
+    //     });
+    //   });
   },
   checkIsPatient: async (req, res, next) => {
     const { u_email } = req.user;

@@ -11,6 +11,7 @@ dotenv.config();
 const Auth = {
   verifyAccessToken: async (req, res, next) => {
     const { authorization } = req.headers;
+
     if (!authorization) return res.sendStatus(401);
     const token = authorization.split(' ')[1];
     if (!token || token === 'undefined') return res.sendStatus(401);

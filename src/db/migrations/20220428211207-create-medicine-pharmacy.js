@@ -15,7 +15,6 @@ module.exports = {
       },
       m_id: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
