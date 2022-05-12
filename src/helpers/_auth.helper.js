@@ -11,7 +11,7 @@ export const generateRefreshToken = async (payload, expiration = '1d') => {
   return refreshToken;
 };
 
-export const generateAccessToken = async (payload, expiration = '15m') => {
+export const generateAccessToken = async (payload, expiration = '2h') => {
   const accessToken = await jwt.sign({ ...payload, type: 'accessToken' }, JWT_SECRET, { expiresIn: expiration });
   return accessToken;
 };

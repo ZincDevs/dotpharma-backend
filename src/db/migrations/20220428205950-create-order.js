@@ -34,7 +34,6 @@ module.exports = {
       // },
       u_id: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
@@ -44,7 +43,6 @@ module.exports = {
       },
       p_id: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
@@ -54,7 +52,6 @@ module.exports = {
       },
       o_pharmacy: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
@@ -64,7 +61,6 @@ module.exports = {
       },
       o_medicine: {
         type: Sequelize.STRING,
-        unique: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
