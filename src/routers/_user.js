@@ -32,6 +32,9 @@ router.post('/createuser', Validator('createuser'), verifyAccessToken, UserMiddl
 router.post('/signup', Validator('signup'), UserMiddle.checkUserExists, User.signup);
 router.put('/updateuser/:uid', Validator('updateuser'), verifyAccessToken, User.update);
 router.get('/allusers', verifyAccessToken, Paginate, User.findAll);
+router.get('/profile/:u_id', verifyAccessToken, User.findOne);
+router.get('/myprofile', verifyAccessToken, User.getMyProfile);
+
 router.delete('/deleteuser/:uid', verifyAccessToken, User.destroy);
 
 // Password reset
