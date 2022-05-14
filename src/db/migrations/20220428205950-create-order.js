@@ -2,18 +2,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Orders', {
-      // id: {
-      //   autoIncrement: true,
-      //   type: Sequelize.INTEGER
-      // },
       o_id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
       },
-      // o_medicine: {
-      //   type: Sequelize.STRING
-      // },
       o_prescription: {
         type: Sequelize.STRING
       },
@@ -23,15 +16,6 @@ module.exports = {
       o_status: {
         type: Sequelize.STRING
       },
-      // o_pharmacy: {
-      //   type: Sequelize.STRING
-      // },
-      // p_id: {
-      //   type: Sequelize.STRING
-      // },
-      // u_id: {
-      //   type: Sequelize.STRING
-      // },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',
