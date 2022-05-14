@@ -2,10 +2,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Medicines', {
-      // id: {
-      //   autoIncrement: true,
-      //   type: Sequelize.INTEGER
-      // },
       m_id: {
         allowNull: false,
         primaryKey: true,
@@ -18,7 +14,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       m_desciption: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       m_image: {
         type: Sequelize.TEXT
@@ -32,9 +28,6 @@ module.exports = {
       m_type: {
         type: Sequelize.STRING
       },
-      // u_id: {
-      //   type: Sequelize.STRING
-      // },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',
