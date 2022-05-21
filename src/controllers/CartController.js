@@ -9,9 +9,9 @@ import { Cart } from '../db/models';
 dotenv.config();
 const UserController = {
   create: async (req, res) => {
-    const { authUser: { u_id }, body: { quantity }, params: { m_id } } = req;
+    const { authUser: { u_id }, body: { quantity: c_quantity }, params: { m_id } } = req;
     const cartObj = {
-      ca_id: uuid(), quantity, m_id, u_id
+      c_id: uuid(), c_quantity, m_id, u_id
     };
     let newCart = await Cart.create(cartObj);
     newCart = newCart?.dataValues;
@@ -20,16 +20,16 @@ const UserController = {
     res.sendStatus(201);
   },
   update: async (req, res) => {
-    const { body: { quantity }, params: { c_id } } = req;
-    let result = await Cart.update({ quantity }, { where: { c_id } });
-    if (!result.includes(1)) return res.sendStatus(500);
+    const { body: { quantity: c_quantity }, params: { c_id } } = req;
+    let result = await Cart.update({ c_quantity }, { where: { c_id } });
+    if (!result.includes(1)) return res.sendStatus(204);
 
     res.sendStatus(200);
   },
   destroy: async (req, res) => {
     const { params: { c_id } } = req;
     let result = await Cart.destroy({ where: { c_id } });
-    if (!result.includes(1)) return res.sendStatus(500);
+    if (result <= 0) return res.sendStatus(204);
     res.sendStatus(200);
   },
 };
