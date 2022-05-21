@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Cart.init({
-    c_id: DataTypes.STRING,
+    c_id: {
+      primaryKey: true,
+      type: DataTypes.STRING
+    },
     c_quantity: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,
