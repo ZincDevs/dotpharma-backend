@@ -17,7 +17,9 @@ import {
   generatePasswordResetToken,
 } from '../helpers';
 import { sendVerification, sendPasswordResetConfirmation } from '../services';
-import { User, Doctor, Patient } from '../db/models';
+import {
+  User, Doctor, Patient, Order, Cart
+} from '../db/models';
 import { serverConfig } from '../config';
 
 const { httpOnlyCookieOptions: cookieOptions } = serverConfig;
@@ -210,6 +212,45 @@ const UserController = {
     res.status(200).json({
       users,
     });
+  },
+  findOne: async (req, res) => {
+    const { params: { u_id } } = req;
+    console.log(u_id);
+    let user = await User.findOne({
+      where: { u_id },
+      attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
+      include: [
+        { model: Patient, as: 'patients' },
+        { model: Doctor, as: 'doctors' },
+      ],
+    });
+    user = user.dataValues;
+    if (!user) return res.sendStatus(204);
+    res.json({
+      user,
+    });
+  },
+  getMyProfile: async (req, res) => {
+    try {
+      const { authUser: { u_id } } = req;
+      let user = await User.findOne({
+        where: { u_id },
+        attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
+        include: [
+          { model: Cart, as: 'cart' },
+          { model: Patient, as: 'patients' },
+          { model: Doctor, as: 'doctors' },
+          { model: Order, as: 'orders' },
+        ],
+      });
+      user = user.dataValues;
+      if (!user) return res.sendStatus(204);
+      res.json({
+        user,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
   update: async (req, res) => {
     const data = [

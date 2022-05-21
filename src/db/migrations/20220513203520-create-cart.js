@@ -1,31 +1,13 @@
 /* eslint-disable no-unused-vars */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Medicines', {
-      m_id: {
+    await queryInterface.createTable('Carts', {
+      c_id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
       },
-      m_name: {
-        type: Sequelize.STRING
-      },
-      m_properties: {
-        type: Sequelize.STRING
-      },
-      m_desciption: {
-        type: Sequelize.TEXT
-      },
-      m_image: {
-        type: Sequelize.TEXT
-      },
-      m_price: {
-        type: Sequelize.STRING
-      },
-      m_status: {
-        type: Sequelize.STRING
-      },
-      m_type: {
+      c_quantity: {
         type: Sequelize.STRING
       },
       u_id: {
@@ -35,6 +17,15 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'u_id'
+        }
+      },
+      m_id: {
+        type: Sequelize.STRING,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Medicines',
+          key: 'm_id'
         }
       },
       createdAt: {
@@ -48,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Medicines');
+    await queryInterface.dropTable('Carts');
   }
 };

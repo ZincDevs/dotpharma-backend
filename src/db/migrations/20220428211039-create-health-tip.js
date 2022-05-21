@@ -2,12 +2,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('HealthTips', {
-      // id: {
-      //   allowNull: false,
-      //   autoIncrement: true,
-      //   primaryKey: true,
-      //   type: Sequelize.INTEGER
-      // },
       h_id: {
         allowNull: false,
         primaryKey: true,
@@ -20,14 +14,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       h_description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       h_category: {
         type: Sequelize.STRING
       },
-      // u_id: {
-      //   type: Sequelize.STRING
-      // },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',

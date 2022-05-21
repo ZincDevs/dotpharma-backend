@@ -43,14 +43,14 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
-      // this.hasMany(models.Appointment, {
-      //   as: 'user',
-      //   foreignKey: 'u_id',
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE'
-      // });
       this.hasMany(models.HealthTip, {
         as: 'healthTip',
+        foreignKey: 'u_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+      this.hasMany(models.Cart, {
+        as: 'cart',
         foreignKey: 'u_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

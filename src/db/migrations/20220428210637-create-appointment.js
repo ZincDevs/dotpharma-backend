@@ -2,21 +2,11 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Appointments', {
-      // id: {
-      //   autoIncrement: true,
-      //   type: Sequelize.INTEGER
-      // },
       a_id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING
       },
-      // p_id: {
-      //   type: Sequelize.STRING
-      // },
-      // d_id: {
-      //   type: Sequelize.STRING
-      // },
       p_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',
