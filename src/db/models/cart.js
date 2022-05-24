@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       });
-      // this.belongsTo(models.Pharmacy, {
-      //   as: 'pharmacy',
-      //   foreignKey: 'o_pharmacy',
-      //   targetKey: 'ph_id',
-      //   onUpdate: 'CASCADE',
-      //   onDelete: 'CASCADE'
-      // });
+      this.belongsTo(models.Medicine, {
+        as: 'medicine',
+        foreignKey: 'm_id',
+        targetKey: 'm_id',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      });
     }
   }
   Cart.init({
