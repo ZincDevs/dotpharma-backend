@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Pharmacy.init({
-    ph_id: { 
+    ph_id: {
       primaryKey: true,
       type: DataTypes.STRING
     },

@@ -1,132 +1,74 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import moment from 'moment';
-import {v4 as uuid} from 'uuid';
-import {MESSAGES} from '../constants/ResponceMessages';
-import {STATUSES} from '../constants/ResponseStatuses';
-import Pharmacy from '../database/models/Pharmacy';
+import { v4 as uuid } from 'uuid';
+import { MESSAGES } from '../constants/ResponceMessages';
+import { STATUSES } from '../constants/ResponseStatuses';
+
+import { Pharmacy, User } from '../db/models';
 
 const PharmacyController = {
   CreatePharmacy: async (req, res) => {
-    const payload = [
-      uuid(),
-      req.body.name,
-      req.body.email,
-      req.body.phone,
-      req.body.website,
-      req.body.address,
-      '1',
-      moment(new Date()),
-      req.user.u_id,
-    ];
-    Pharmacy.create(payload)
-      .then((response) => {
-        if (response.status === STATUSES.CREATED) {
-          res.status(STATUSES.CREATED).send({
-            status: STATUSES.CREATED,
-            message: response.message,
-            data: response.data,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const payload = {
+      ph_id: uuid(),
+      ph_name: req.body.name,
+      ph_email: req.body.email,
+      ph_phone: req.body.phone,
+      ph_website: req.body.website,
+      ph_address: req.body.address,
+      ph_status: '1',
+      u_id: req.authUser.u_id,
+    };
+    const medicine = await Pharmacy.create(payload);
+    if (!medicine) return res.sendStatus(500);
+    return res.sendStatus(201);
   },
   updatePharmacy: async (req, res) => {
-    const payload = [
-      req.body.name,
-      req.body.email,
-      req.body.phone,
-      req.body.website,
-      req.body.address,
-      moment(new Date()),
-      req.user.u_id,
-      req.params.phid,
-    ];
-    Pharmacy.update(payload)
-      .then((response) => {
-        if (response.status === STATUSES.OK) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            data: response.data,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const payload = {
+      ph_name: req.body.name,
+      ph_email: req.body.email,
+      ph_phone: req.body.phone,
+      ph_website: req.body.website,
+      ph_address: req.body.address,
+      ph_status: '1',
+      u_id: req.authUser.u_id,
+    };
+    const { ph_id } = req.params;
+
+    const medicine = await Pharmacy.update(payload, { where: { ph_id } });
+    if (medicine[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   deletePharmacy: async (req, res) => {
-    Pharmacy.destroy(req.params.pid)
-      .then((response) => {
-        if (response.status === STATUSES.OK) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { ph_id } = req.params;
+    const pharmacy = await Pharmacy.findOne({ where: { ph_id } });
+    if (!pharmacy) {
+      return res.sendStatus(400);
+    }
+    await pharmacy.destroy();
+    return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    Pharmacy.findAll()
-      .then((response) => {
-        if (response.status === STATUSES.OK) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            data: response.data,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-            data: response.data,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const pharmanies = await Pharmacy.findAll({
+      include: [{ model: User, as: 'user' }],
+      limit,
+      offset
+    });
+    res.json(pharmanies);
   },
   addMedicineToPharma: async (req, res) => {
-    Pharmacy.addMedicineToPharmacy([req.body.phid, req.body.mid]).then((response)=>{
+    Pharmacy.addMedicineToPharmacy([req.body.phid, req.body.mid]).then((response) => {
       res.status(response.status).send({
         status: response.status,
         message: response.message,
       });
-    }).catch((error)=>{
+    }).catch((error) => {
       res.status(STATUSES.SERVERERROR).send({
         status: STATUSES.SERVERERROR,
         message: error.message,

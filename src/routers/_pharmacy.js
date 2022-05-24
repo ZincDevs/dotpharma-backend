@@ -1,7 +1,7 @@
 import 'regenerator-runtime';
+import express from 'express';
 import Pharmacy from '../controllers/PharmacyController';
 import Validator from '../middleware/_validator';
-import express from 'express';
 import Auth from '../middleware/Auth';
 import AccessLevel from '../middleware/user';
 import DataExistsChecks from '../middleware/CheckDataExists';
@@ -11,24 +11,29 @@ const router = express.Router();
 router.post(
   '/createnew',
   Validator('pharmacy'),
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   Pharmacy.CreatePharmacy
 );
 router.put(
-  '/updatepharmacy/:phid',
+  '/updatepharmacy/:ph_id',
   Validator('pharmacy'),
   Auth.verifyToken,
   AccessLevel.checkISAdmin,
   Pharmacy.updatePharmacy
 );
 router.delete(
-  '/deletepharmacy/:pid',
-  Auth.verifyToken,
+  '/deletepharmacy/:ph_id',
+  Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   Pharmacy.deletePharmacy
 );
-router.get('/findall', Pharmacy.findAll);
+router.get(
+  '/findall',
+  Auth.verifyToken,
+  AccessLevel.checkISAdmin,
+  Pharmacy.findAll
+);
 router.post(
   '/addmedtopharma',
   Auth.verifyToken,
