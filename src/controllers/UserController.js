@@ -18,7 +18,7 @@ import {
 } from '../helpers';
 import { sendVerification, sendPasswordResetConfirmation } from '../services';
 import {
-  User, Doctor, Patient, Order, Cart
+  User, Doctor, Patient, Order, Cart, Medicine
 } from '../db/models';
 import { serverConfig } from '../config';
 
@@ -237,7 +237,7 @@ const UserController = {
         where: { u_id },
         attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
         include: [
-          { model: Cart, as: 'cart' },
+          { model: Cart, as: 'cart', include: [{ model: Medicine, as: 'medicine' }] },
           { model: Patient, as: 'patients' },
           { model: Doctor, as: 'doctors' },
           { model: Order, as: 'orders' },
