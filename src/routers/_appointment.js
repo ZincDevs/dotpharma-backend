@@ -5,6 +5,7 @@ import Validator from '../middleware/_validator';
 import Auth from '../middleware/Auth';
 import User from '../middleware/user';
 import Paginate from '../middleware/Paginate';
+import CheckDataExists from '../middleware/CheckDataExists';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post(
   Validator('appointment'),
   Auth.verifyAccessToken,
   User.checkIsPatient,
+  CheckDataExists.checkDoctorExists,
   AppointmentController.createAppointment
 );
 
@@ -25,7 +27,7 @@ router.get(
 );
 
 router.get(
-  '/doctorappointments',
+  '/doctorappointments/:d_id',
   Auth.verifyAccessToken,
   User.chekIsDoctor,
   Paginate,
@@ -47,14 +49,14 @@ router.get(
 );
 
 router.put(
-  '/rejectappointment/:aid',
+  '/rejectappointment/:a_id',
   Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.reject
 );
 
 router.put(
-  '/approveappointment/:aid',
+  '/approveappointment/:a_id',
   Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.approve

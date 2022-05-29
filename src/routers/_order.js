@@ -11,7 +11,7 @@ const router = express.Router();
 router.post(
   '/createorder',
   Validator('order'),
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkIsPatient,
   DataExistsChecks.checkPharmacyExists,
   DataExistsChecks.checkPatientExists,
@@ -19,7 +19,7 @@ router.post(
 );
 
 router.put(
-  '/updateorder/:oid',
+  '/updateorder/:o_id',
   Validator('order'),
   Auth.verifyToken,
   User.checkISAdmin,
@@ -29,7 +29,7 @@ router.put(
 );
 
 router.delete(
-  '/deleteorder/:oid',
+  '/deleteorder/:o_id',
   Auth.verifyToken,
   User.checkISAdmin,
   OrderController.deleteOrder
@@ -37,33 +37,33 @@ router.delete(
 
 router.get(
   '/findall',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   OrderController.findAll
 );
 router.get(
   '/findrejected',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   OrderController.findRejected
 );
 router.get(
   '/findapproved',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   OrderController.findApproved
 );
 
 router.put(
-  '/rejectorder/:oid',
-  Auth.verifyToken,
+  '/rejectorder/:o_id',
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   OrderController.reject
 );
 
 router.put(
-  '/approveorder/:oid',
-  Auth.verifyToken,
+  '/approveorder/:o_id',
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   OrderController.approve
 );

@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     o_prescription: DataTypes.STRING,
     o_date: DataTypes.STRING,
     o_status: DataTypes.STRING,
+    o_referencecode: DataTypes.STRING,
     o_medicine: {
       type: DataTypes.STRING,
       references: {
@@ -70,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'User',
         key: 'u_id'
       }
-    }
+    },
   }, {
     sequelize,
     modelName: 'Order',

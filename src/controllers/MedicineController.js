@@ -68,10 +68,9 @@ const MedicineController = {
     let medicine = await Medicine.findOne({ where: { m_id } });
     medicine = medicine?.dataValues;
     if (!medicine) {
-      res.sendStatus(204);
-    } else {
-      res.json(medicine);
+      return res.sendStatus(204);
     }
+    return res.json(medicine);
   },
 };
 

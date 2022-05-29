@@ -10,5 +10,6 @@ export const generatePassword = (autoGen = true, pass = null) => {
       numbers: true,
     })
     : pass;
-  return autoGen ? bcrypt.hashSync(passN, 10) : bcrypt.hashSync(passN, 10);
+  console.log(passN);
+  return bcrypt.hashSync(passN, 10);
 };

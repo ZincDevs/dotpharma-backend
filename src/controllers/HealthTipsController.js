@@ -1,148 +1,65 @@
+/* eslint-disable camelcase */
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
-import moment from 'moment';
-import HealthTips from '../database/models/HealthTips';
-import { STATUSES } from '../constants/ResponseStatuses';
-import { getPagination } from '../helpers';
+import { HealthTip, User } from '../db/models';
 
 const HealthTipController = {
   create: async (req, res) => {
-    const data = [
-      uuid(),
-      req.body.title,
-      req.body.image,
-      req.body.category,
-      req.body.content,
-      moment(new Date()),
-      req.body.uid,
-    ];
-    HealthTips.create(data)
-      .then((result) => {
-        if (result.tip) {
-          res.status(STATUSES.CREATED).send({
-            status: STATUSES.CREATED,
-            messages: result.message,
-            tip: result.tip,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            messages: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-          data: null,
-        });
-      });
+    const data = {
+      h_id: uuid(),
+      h_title: req.body.title,
+      h_image: req.body.image,
+      h_category: req.body.category,
+      h_description: req.body.content,
+      u_id: req.body.uid,
+    };
+    const healthTip = await HealthTip.create(data);
+    if (!healthTip) return res.sendStatus(500);
+    return res.sendStatus(201);
   },
   update: async (req, res) => {
-    const data = [
-      req.params.hid,
-      req.body.title,
-      req.body.image,
-      req.body.category,
-      moment(new Date()),
-      req.body.userid,
-      req.body.content,
-    ];
-    HealthTips.update(data)
-      .then((result) => {
-        if (result.tip) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            messages: result.message,
-            tip: result.tip,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            messages: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { h_id } = req.params;
+    const data = {
+      h_title: req.body.title,
+      h_image: req.body.image,
+      h_category: req.body.category,
+      h_description: req.body.content,
+      u_id: req.body.uid,
+    };
+    const healthTip = await HealthTip.update(data, { where: { h_id } });
+    if (healthTip[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   delete: async (req, res) => {
-    HealthTips.destroy(req.params.hid)
-      .then((result) => {
-        if (result.tip) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            messages: result.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            messages: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { m_id } = req.params;
+    const healthTip = await HealthTip.findOne({ where: { m_id } });
+    if (!healthTip) {
+      return res.sendStatus(400);
+    }
+    await healthTip.destroy();
+    return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    HealthTips.findAll([limit, offset])
-      .then((result) => {
-        if (result.tip) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            messages: result.message,
-            tips: result.tip,
-            page: { limit, offset },
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            messages: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const healthTips = await HealthTip.findAll({
+      include: [{ model: User, as: 'user' }],
+      limit,
+      offset
+    });
+    return res.json(healthTips);
   },
   findById: async (req, res) => {
-    HealthTips.findById(req.params.hid)
-      .then((result) => {
-        if (result.tip) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            messages: result.message,
-            tips: result.tip,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            messages: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { h_id } = req.params;
+    let healthTip = await HealthTip.findOne({ where: { h_id } });
+    healthTip = healthTip?.dataValues;
+    if (!healthTip) {
+      return res.sendStatus(204);
+    }
+    return res.json(healthTip);
   },
 };
 
