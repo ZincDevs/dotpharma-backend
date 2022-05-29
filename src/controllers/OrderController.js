@@ -1,228 +1,109 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
-import { MESSAGES } from '../constants/ResponceMessages';
-import { STATUSES } from '../constants/ResponseStatuses';
-import Order from '../database/models/Order';
-import { getPagination } from '../helpers';
-import { sendEmail } from '../helpers/index';
+import { Order } from '../db/models';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
-    try {
-      const orderPayload = [
-        uuid(),
-        req.body.patid,
-        req.body.phid,
-        req.body.mid,
-        req.body.prescription,
-        moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-        'Pending',
-      ];
-      const response = await Order.create(orderPayload);
-      res.status(STATUSES.CREATED).send({
-        status: STATUSES.CREATED,
-        message: `Order ${MESSAGES.CREATED}`,
-        data: response.data,
-      });
-      if (response.data) {
-        const [emailSent] = await Promise.all([
-          sendEmail(
-            response.pharmacyEmail,
-            'Dotpharma',
-            `A patient named ${req.body.pname} made an order!`,
-            'Medicine order from DotPharma'
-          ),
-        ]);
-      }
-    } catch (e) {
-      res.status(STATUSES.SERVERERROR).send({
-        status: STATUSES.SERVERERROR,
-        message: e.message,
-      });
+    const orderPayload = {
+      o_id: uuid(),
+      p_id: req.body.patid,
+      o_pharmacy: req.body.phid,
+      o_medicine: req.body.mid,
+      o_prescription: req.body.prescription,
+      o_date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      o_status: 'Pending',
+      o_referencecode: req.body.refcode
+    };
+
+    const order = await Order.create(orderPayload);
+    if (!order) {
+      return res.sendStatus(400);
     }
+    return res.sendStatus(201);
   },
   update: async (req, res) => {
-    const orderPayload = [
-      req.body.patid,
-      req.body.phid,
-      req.body.mid,
-      req.body.prescription,
-      moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-      req.params.oid,
-    ];
-    Order.update(orderPayload)
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            order: response.orders,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const orderPayload = {
+      p_id: req.body.patid,
+      o_pharmacy: req.body.phid,
+      o_medicine: req.body.mid,
+      o_prescription: req.body.prescription,
+      o_date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      o_status: 'Pending',
+    };
+    const { o_id } = req.params;
+    const order = await Order.update(orderPayload, { where: o_id });
+    if (order[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   deleteOrder: async (req, res) => {
-    Order.destroy(req.params.oid)
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { o_id } = req.params;
+    const order = await Order.findOne({ where: { o_id } });
+    if (!order) {
+      return res.sendStatus(400);
+    }
+    await order.destroy();
+    return res.sendStatus(200);
   },
   approve: async (req, res) => {
-    Order.approve(req.params.oid)
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const payload = {
+      o_status: 'approved'
+    };
+    const { o_id } = req.params;
+    const appointment = await Order.update(payload, { where: { o_id } });
+    if (appointment[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   reject: async (req, res) => {
-    Order.reject(req.params.oid)
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const payload = {
+      o_status: 'rejected'
+    };
+    const { o_id } = req.params;
+    const appointment = await Order.update(payload, { where: { o_id } });
+    if (appointment[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Order.findAll([limit, offset])
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            orders: response.orders,
-            page: { limit, offset },
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const orders = await Order.findAll({
+      limit,
+      offset
+    });
+    return res.json(orders);
   },
   findRejected: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Order.findrejectedOrders([limit, offset])
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            orders: response.orders,
-            page: { limit, offset },
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const o_status = 'rejected';
+    const orders = await Order.findAll({
+      limit,
+      offset,
+      where: { o_status }
+    });
+    return res.json(orders);
   },
   findApproved: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Order.findAprovedOrders([limit, offset])
-      .then((response) => {
-        if (response.orders) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            orders: response.orders,
-            page: { limit, offset },
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const o_status = 'approved';
+    const orders = await Order.findAll({
+      limit,
+      offset,
+      where: { o_status }
+    });
+    return res.json(orders);
   },
 };
 

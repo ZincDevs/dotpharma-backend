@@ -4,9 +4,7 @@
 import 'regenerator-runtime';
 import { MESSAGES } from '../constants/ResponceMessages';
 import { STATUSES } from '../constants/ResponseStatuses';
-import db from '../database/connection/_query';
 import { User } from '../db/models';
-import { getByEmail, checkExist, getById } from '../database/queries/User';
 import { getErrorMessage } from '../helpers';
 
 export default {
@@ -78,24 +76,5 @@ export default {
     } catch (error) {
       console.log(error);
     }
-  },
-  checkIsValidUser: async (req, res, next) => {
-    const { u_id } = req.user;
-    db.query(getById, [u_id])
-      .then(({ rows }) => {
-        if (rows[0].length > 0) {
-          next();
-        } else {
-          res.status(STATUSES.UNAUTHORIZED).send({
-            status: STATUSES.UNAUTHORIZED,
-            message: MESSAGES.UNAUTHORIZED,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(STATUSES.SERVERERROR).send({
-          error: err.message,
-        });
-      });
   },
 };

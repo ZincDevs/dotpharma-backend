@@ -27,7 +27,6 @@ module.exports = (sequelize, DataTypes) => {
     h_image: DataTypes.STRING,
     h_description: DataTypes.STRING,
     h_category: DataTypes.STRING,
-    // u_id: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,
       references: {

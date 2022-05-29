@@ -6,6 +6,7 @@ import { Appointment, User } from '../db/models';
 
 const AppointmentController = {
   createAppointment: async (req, res) => {
+    console.log(req.body.docid);
     const data = {
       a_id: uuid(),
       p_id: req.body.patid,

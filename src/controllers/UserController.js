@@ -124,10 +124,11 @@ const UserController = {
   },
   createUser: async (req, res) => {
     const { authUser, body } = req;
+    const password = generatePassword();
     const userObject = {
       u_id: uuid(),
       u_email: body.email,
-      u_password: generatePassword(),
+      u_password: password,
       u_role: body.role.toUpperCase(),
       verified: false,
       blocked: false,
@@ -215,7 +216,6 @@ const UserController = {
   },
   findOne: async (req, res) => {
     const { params: { u_id } } = req;
-    console.log(u_id);
     let user = await User.findOne({
       where: { u_id },
       attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],

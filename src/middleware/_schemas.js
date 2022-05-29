@@ -31,12 +31,6 @@ const name = Joi.string()
   .min(3)
   .required()
   .label('Name is required,  it must have at least 3 letters');
-
-const pname = Joi.string()
-  .min(3)
-  .required()
-  .label('Patient Name is required,  it must have at least 3 letters');
-
 const phone = Joi.string()
   .min(10)
   .required()
@@ -102,6 +96,10 @@ const category = Joi.string()
   .min(3)
   .required()
   .label('Health tip category is required');
+const refcode = Joi.string()
+  .min(3)
+  .required()
+  .label('Order reference code is required');
 
 schemas.login = Joi.object().keys({
   email,
@@ -183,8 +181,8 @@ schemas.order = Joi.object().keys({
   mid,
   phid,
   prescription,
-  pname,
   patid,
+  refcode
 });
 
 schemas.appointment = Joi.object().keys({

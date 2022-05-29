@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 import 'regenerator-runtime';
 import { Doctor } from '../db/models';
-import { STATUSES } from '../constants/ResponseStatuses';
 
 const DoctorController = {
   updateDoctor: async (req, res) => {
@@ -34,23 +33,13 @@ const DoctorController = {
     return res.json(doctors);
   },
   deleteDoctor: async (req, res) => {
-    Doctor.destroy(req.params.did).then((response) => {
-      res.status(response.status).send(
-        {
-          status: response.status,
-          message: response.message,
-          data: response.data,
-        },
-      );
-    }).catch((error) => {
-      res.status(STATUSES.SERVERERROR).send(
-        {
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-          data: null,
-        },
-      );
-    });
+    const { m_id } = req.params;
+    const doctor = await Doctor.findOne({ where: { m_id } });
+    if (!doctor) {
+      return res.sendStatus(400);
+    }
+    await doctor.destroy();
+    return res.sendStatus(200);
   },
 };
 
