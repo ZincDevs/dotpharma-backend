@@ -20,8 +20,8 @@ const PharmacyController = {
       ph_status: '1',
       u_id: req.authUser.u_id,
     };
-    const medicine = await Pharmacy.create(payload);
-    if (!medicine) return res.sendStatus(500);
+    const pharmacy = await Pharmacy.create(payload);
+    if (!pharmacy) return res.sendStatus(500);
     return res.sendStatus(201);
   },
   updatePharmacy: async (req, res) => {
@@ -36,8 +36,8 @@ const PharmacyController = {
     };
     const { ph_id } = req.params;
 
-    const medicine = await Pharmacy.update(payload, { where: { ph_id } });
-    if (medicine[0] === 0) {
+    const pharmacy = await Pharmacy.update(payload, { where: { ph_id } });
+    if (pharmacy[0] === 0) {
       return res.sendStatus(400);
     }
     return res.sendStatus(200);

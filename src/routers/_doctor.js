@@ -4,27 +4,21 @@ import Validator from '../middleware/_validator';
 import Auth from '../middleware/Auth';
 import AccessLevel from '../middleware/user';
 import DoctorController from '../controllers/DoctorController';
+import Paginate from '../middleware/Paginate';
 
 const router = express.Router();
 
-router.post(
-  '/createnew',
-  Validator('doctor'),
-  Auth.verifyToken,
-  AccessLevel.checkISAdmin,
-  DoctorController.createNew
-);
-
 router.put(
-  '/updatedoctor/:did',
+  '/updatedoctor/:d_id',
   Validator('doctor'),
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   DoctorController.updateDoctor
 );
 
 router.get(
   '/findall',
+  Paginate,
   DoctorController.findAll
 );
 router.delete(

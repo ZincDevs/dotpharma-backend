@@ -1,54 +1,61 @@
 import 'regenerator-runtime';
 import express from 'express';
-import DataExistsChecks from '../middleware/CheckDataExists';
 import AppointmentController from '../controllers/AppointmentController';
 import Validator from '../middleware/_validator';
 import Auth from '../middleware/Auth';
 import User from '../middleware/user';
+import Paginate from '../middleware/Paginate';
 
 const router = express.Router();
 
 router.post(
   '/makeappointment',
   Validator('appointment'),
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkIsPatient,
-  DataExistsChecks.checkDoctorExists,
-  DataExistsChecks.checkPatientExists,
   AppointmentController.createAppointment
 );
 
 router.get(
   '/findall',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
+  Paginate,
   AppointmentController.findAll
 );
 
 router.get(
+  '/doctorappointments',
+  Auth.verifyAccessToken,
+  User.chekIsDoctor,
+  Paginate,
+  AppointmentController.findDoctorAppointment
+);
+
+router.get(
   '/findrejected',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.findRejected
 );
 
 router.get(
   '/findapproved',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.findApproved
 );
 
 router.put(
   '/rejectappointment/:aid',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.reject
 );
 
 router.put(
   '/approveappointment/:aid',
-  Auth.verifyToken,
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   AppointmentController.approve
 );

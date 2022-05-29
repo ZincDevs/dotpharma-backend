@@ -21,60 +21,28 @@ export default {
         error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
       });
     }
-    // db.query(getByEmail, [email])
-    //   .then(({ rows }) => {
-    //     if (rows[0].u_role === 'SUPER_ADMIN') {
-    //       next();
-    //     } else {
-    //       res.status(STATUSES.UNAUTHORIZED).send({
-    //         status: STATUSES.UNAUTHORIZED,
-    //         error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
-    //       });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     res.status(STATUSES.BAD_REQUEST).send({
-    //       error: err.message,
-    //     });
-    //   });
   },
   checkIsPatient: async (req, res, next) => {
-    const { u_email } = req.user;
-    db.query(getByEmail, [u_email])
-      .then(({ rows }) => {
-        if (rows[0].u_role === 'PATIENT') {
-          next();
-        } else {
-          res.status(STATUSES.UNAUTHORIZED).send({
-            status: STATUSES.UNAUTHORIZED,
-            message: MESSAGES.UNAUTHORIZED,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(STATUSES.BAD_REQUEST).send({
-          error: err.message,
-        });
+    const { authUser } = req;
+    if (authUser?.u_role === 'PATIENT') {
+      next();
+    } else {
+      res.status(STATUSES.UNAUTHORIZED).send({
+        status: STATUSES.UNAUTHORIZED,
+        error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
       });
+    }
   },
   chekIsDoctor: async (req, res, next) => {
-    const { u_email } = req.user;
-    db.query(getByEmail, [u_email])
-      .then(({ rows }) => {
-        if (rows[0].u_role === 'DOCTOR') {
-          next();
-        } else {
-          res.status(STATUSES.UNAUTHORIZED).send({
-            status: STATUSES.UNAUTHORIZED,
-            message: MESSAGES.UNAUTHORIZED,
-          });
-        }
-      })
-      .catch((err) => {
-        res.status(STATUSES.BAD_REQUEST).send({
-          error: err.message,
-        });
+    const { authUser } = req;
+    if (authUser?.u_role === 'DOCTOR') {
+      next();
+    } else {
+      res.status(STATUSES.UNAUTHORIZED).send({
+        status: STATUSES.UNAUTHORIZED,
+        error: getErrorMessage('login', MESSAGES.UNAUTHORIZED),
       });
+    }
   },
   // check if user exists
   checkUserExists: async (req, res, next) => {

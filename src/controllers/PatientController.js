@@ -1,154 +1,53 @@
+/* eslint-disable camelcase */
 import 'regenerator-runtime';
-import { v4 as uuid } from "uuid";
-import moment from "moment";
-import Patient from "../database/models/Patient";
-import { STATUSES } from "../constants/ResponseStatuses";
-import { getPagination } from '../helpers';
-import { result } from "lodash";
+import { Patient } from '../db/models';
 
 const PatientController = {
-  createNew: async (req, res) => {
-    const patientPayload = [
-      uuid(),
-      req.body.name,
-      req.body.email,
-      req.body.phone,
-      req.body.address,
-      req.body.country,
-      req.body.town,
-      req.body.city,
-      req.body.street,
-      req.body.nid,
-      moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-    ];
-
-    Patient.create(patientPayload)
-      .then((response) => {
-        if (response.patient) {
-          res.status(STATUSES.CREATED).send({
-            status: STATUSES.CREATED,
-            message: response.message,
-            patient: response.patient,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
-  },
   update: async (req, res) => {
-    const patientPayload = [
-      req.params.pid,
-      req.body.name,
-      req.body.email,
-      req.body.phone,
-      req.body.address,
-      req.body.country,
-      req.body.town,
-      req.body.city,
-      req.body.street,
-      moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),
-    ];
-
-    Patient.update(patientPayload)
-      .then((response) => {
-        if (response.patient) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            patient: response.patient,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const patientPayload = {
+      p_name: req.body.name,
+      p_email: req.body.email,
+      p_phonenumber: req.body.phone,
+      p_address: req.body.address,
+      p_country: req.body.country,
+      p_town: req.body.town,
+      p_district: req.body.city,
+      p_streetnumber: req.body.street,
+      p_national_id: req.body.nid,
+    };
+    const { p_id } = req.params;
+    const patient = await Patient.update(patientPayload, { where: { p_id } });
+    if (patient[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Patient.findAll([limit, offset])
-      .then((result) => {
-        if (result.patients) {
-          res.status(STATUSES.OK).send({
-            message: result.message,
-            patient: result.patients,
-            page: { limit, offset },
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const patients = await Patient.findAll({
+      limit,
+      offset
+    });
+    res.json(patients);
   },
   deletePatient: async (req, res) => {
-    Patient.destroy(req.params.pid)
-      .then((result) => {
-        if (result.patient) {
-          res.status(STATUSES.OK).send({
-            message: result.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { p_id } = req.params;
+    const patient = await Patient.findOne({ where: { p_id } });
+    if (!patient) {
+      return res.sendStatus(400);
+    }
+    await patient.destroy();
+    return res.sendStatus(200);
   },
   findById: async (req, res) => {
-    Patient.findById(req.params.pid)
-      .then((result) => {
-        if (result.patient) {
-          res.status(STATUSES.OK).send({
-            patient: result.patient,
-            message: result.message,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: result.message,
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: error.message,
-        });
-      });
+    const { p_id } = req.params;
+    const patient = await Patient.findOne({ where: { p_id } });
+    if (!patient) {
+      return res.sendStatus(400);
+    }
+    return res.json(patient);
   },
 };
 
