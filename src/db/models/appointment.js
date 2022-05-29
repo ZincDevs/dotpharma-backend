@@ -44,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     a_desease: DataTypes.STRING,
-    a_date: DataTypes.STRING,
     a_status: DataTypes.STRING
   }, {
     sequelize,

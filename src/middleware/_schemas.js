@@ -93,6 +93,7 @@ const uid = Joi.string().min(3).required().label('User id is required');
 const docid = Joi.string().min(3).required().label('Doctor id is required');
 const deasese = Joi.string().min(3).required().label('Disease id is required');
 const content = Joi.string().min(10).required().label('Health tip content is required, atleast 10 characters');
+const district = Joi.string().min(5).required().label('District is required');
 const title = Joi.string()
   .min(3)
   .required()
@@ -175,6 +176,7 @@ schemas.patient = Joi.object().keys({
   town,
   street,
   nid,
+  district
 });
 
 schemas.order = Joi.object().keys({

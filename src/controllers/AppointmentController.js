@@ -1,167 +1,89 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
-import { v4 as uuid } from "uuid";
-import moment from "moment";
-import Appointment from "../database/models/Appointment";
-import { STATUSES } from "../constants/ResponseStatuses";
-import { getPagination } from '../helpers';
+import { v4 as uuid } from 'uuid';
+import { Appointment, User } from '../db/models';
 
 const AppointmentController = {
   createAppointment: async (req, res) => {
-    try {
-      const data = [
-        uuid(),
-        req.body.patid,
-        req.body.docid,
-        req.body.deasese,
-        moment(new Date()),
-        "pending",
-      ];
-      const createRes = await Appointment.create(data);
-      if(createRes.data){
-        res.status(STATUSES.CREATED).send({
-          status: STATUSES.CREATED,
-          message: createRes.message,
-          data: createRes.data,
-        });
-      }else {
-        res.status(STATUSES.BAD_REQUEST).send({
-          status: STATUSES.BAD_REQUEST,
-          message: createRes.message,
-        });
-      }
-    } catch (e) {
-      res.status(STATUSES.SERVERERROR).send({
-        status: STATUSES.SERVERERROR,
-        message: e.message,
-      });
-    }
+    const data = {
+      a_id: uuid(),
+      p_id: req.body.patid,
+      d_id: req.body.docid,
+      a_desease: req.body.deasese,
+      a_status: 'pending',
+    };
+    const appointment = await Appointment.create(data);
+    if (!appointment) return res.sendStatus(500);
+    return res.sendStatus(201);
   },
   findAll: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Appointment.findAll([limit, offset])
-      .then((response) => {
-        if (response.appointments) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            appointments: response.appointments,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const appointments = await Appointment.findAll({
+      limit,
+      offset
+    });
+    return res.json(appointments);
+  },
+  findDoctorAppointment: async (req, res) => {
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const { d_id } = req.params;
+    const appointments = await Appointment.findAll({
+      limit,
+      offset,
+      where: { d_id }
+    });
+    return res.json(appointments);
   },
   findApproved: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Appointment.findApproved([limit, offset])
-      .then((response) => {
-        if (response.appointments) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            appointments: response.appointments,
-          });
-        } else {
-          res.status(STATUSES.NOTFOUND).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const a_status = 'approved';
+    const appointments = await Appointment.findAll({
+      limit,
+      offset,
+      where: { a_status }
+    });
+    return res.json(appointments);
   },
   findRejected: async (req, res) => {
-    const { limit, offset } = getPagination(
-      req.query.page ? req.query.page : 1,
-      20
-    );
-    Appointment.findRejected([limit, offset])
-      .then((response) => {
-        if (response.appointments) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-            appointments: response.appointments,
-          });
-        } else {
-          res.status(STATUSES.NO_CONTENT).send({
-            status: STATUSES.NO_CONTENT,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const a_status = 'rejected';
+    const appointments = await Appointment.findAll({
+      limit,
+      offset,
+      where: { a_status }
+    });
+    return res.json(appointments);
   },
   reject: async (req, res) => {
-    Appointment.reject(req.params.aid)
-      .then((response) => {
-        console.log(response.appointments)
-        if (response.appointments) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const payload = {
+      a_status: 'rejected'
+    };
+    const { a_id } = req.params;
+    const appointment = await Appointment.update(payload, { where: { a_id } });
+    if (appointment[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
   approve: async (req, res) => {
-    Appointment.approve(req.params.aid)
-      .then((response) => {
-        if (response.appointments) {
-          res.status(STATUSES.OK).send({
-            status: STATUSES.OK,
-            message: response.message,
-          });
-        } else {
-          res.status(STATUSES.BAD_REQUEST).send({
-            status: STATUSES.BAD_REQUEST,
-            message: response.message,
-          });
-        }
-      })
-      .catch((e) => {
-        res.status(STATUSES.SERVERERROR).send({
-          status: STATUSES.SERVERERROR,
-          message: e.message,
-        });
-      });
+    const payload = {
+      a_status: 'approved'
+    };
+    const { a_id } = req.params;
+    const appointment = await Appointment.update(payload, { where: { a_id } });
+    if (appointment[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
   },
 };
 

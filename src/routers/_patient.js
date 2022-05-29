@@ -1,42 +1,37 @@
 import 'regenerator-runtime';
-import express from "express";
-import Validator from "../middleware/_validator";
-import Auth from "../middleware/Auth";
-import User from "../middleware/user";
-import CheckDataExists from "../middleware/CheckDataExists";
-import PatientController from "../controllers/PatientController";
+import express from 'express';
+import Validator from '../middleware/_validator';
+import Auth from '../middleware/Auth';
+import User from '../middleware/user';
+import PatientController from '../controllers/PatientController';
+import Paginate from '../middleware/Paginate';
 
 const router = express.Router();
 
-router.post(
-  "/createnew",
-  Validator("patient"),
-  CheckDataExists.checkPatientExistsForCreate,
-  PatientController.createNew
-);
-
 router.put(
-  "/update/:pid",
-  Validator("patient"),
-  Auth.verifyToken,
+  '/update/:p_id',
+  Validator('patient'),
+  Auth.verifyAccessToken,
+  User.checkIsPatient,
   PatientController.update
 );
 router.get(
-  "/allpatients",
-  Auth.verifyToken,
+  '/allpatients',
+  Auth.verifyAccessToken,
   User.checkISAdmin,
+  Paginate,
   PatientController.findAll
 );
 router.get(
-  "/getbyid/:pid",
-  Auth.verifyToken,
+  '/getbyid/:p_id',
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   PatientController.findById
 );
 
 router.delete(
-  "/deletepatient/:pid",
-  Auth.verifyToken,
+  '/deletepatient/:p_id',
+  Auth.verifyAccessToken,
   User.checkISAdmin,
   PatientController.deletePatient
 );
