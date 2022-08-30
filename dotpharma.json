@@ -1,1441 +1,1097 @@
-
 {
-	"info": {
-		"_postman_id": "2fdecf2a-6629-4710-b404-36275de364cb",
-		"name": "dotpharma",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
+	"client": "Thunder Client",
+	"collectionName": "dotpharma",
+	"dateExported": "2022-08-06T17:18:57.191Z",
+	"version": "1.1",
+	"folders": [
 		{
+			"_id": "5c9fe140-588d-43e7-930b-4c0a00d32c8b",
 			"name": "Pharmacy",
-			"item": [
-				{
-					"name": "Update pharmacy",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\":\"Berwa Nimpano pharmacy\",\n    \"email\":\"benshidanny11@gmail.com\",\n    \"website\":\"www.berwap.com\",\n    \"phone\":\"0712212929\",\n    \"address\":\"Kigali,Nyarugenge\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/pharmacy/updatepharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"pharmacy",
-								"updatepharmacy",
-								"5dfa595c-3d41-4461-8dce-418624d186b4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create new pharmacy",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lcyI6IkRhbm55IEJlbnNoaSIsImVtYWlsIjoiYmVuc2hpZGFubnkxMUBnbWFpbC5jb20iLCJwaG9uZW51bWJlciI6IjA3ODQ4NzE5NTgiLCJyb2xlIjoiRGFubnkgQmVuc2hpIiwidXNlcmlkIjoiM2QyY2E3ZmItMDYxNy00Zjc0LThhOWEtODZiMTJiODhmNTA5IiwiaWF0IjoxNjQ3Njc0OTI2LCJleHAiOjE2NTExMzA5MjZ9.11CeYi0-Y2xSMYvwSteyQlATrLZoihpmJz9UbXUBB0Y",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\":\"Pharmacy umutuzo\",\n    \"email\":\"umutuzo@gmail.com\",\n    \"website\":\"www.umutuzo.com\",\n    \"phone\":\"07893983983\",\n    \"address\":\"Kigali,Nyarugenge\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/pharmacy/createnew",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"pharmacy",
-								"createnew"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all pharmaciec",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/pharmacy/findall",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"pharmacy",
-								"findall"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete pharmacy",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/pharmacy/deletepharmacy/20f6ca53-8393-409e-bbe0-cd0e17600053",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"pharmacy",
-								"deletepharmacy",
-								"20f6ca53-8393-409e-bbe0-cd0e17600053"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.633Z",
+			"sortNum": 10000
 		},
 		{
+			"_id": "15ccf634-ce8b-4758-962c-1e2e1562f02b",
 			"name": "Doctor",
-			"item": [
-				{
-					"name": "Create doctor",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"Dr Benshi Christine\",\n  \"email\":\"benshi@gmail.com\",\n  \"phone\":\"0780213898\",\n  \"speciality\":\"Neurologist\",\n  \"clinic\":\"Grand regacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/doctor/createnew",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"doctor",
-								"createnew"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update doctor",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"Bitama Danny\",\n  \"email\":\"chris12@gmail.com\",\n  \"phone\":\"07803323339\",\n  \"speciality\":\"Sociologist\",\n  \"clinic\":\"Grand legacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/doctor/updatedoctor/441b356c-3d35-40e0-afc0-336435129cd1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"doctor",
-								"updatedoctor",
-								"441b356c-3d35-40e0-afc0-336435129cd1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all doctors",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/doctor/findall",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"doctor",
-								"findall"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete doctor",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/doctor/deletedoctor/d45c7233-bb92-415f-a1a8-73ca476a7722",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"doctor",
-								"deletedoctor",
-								"d45c7233-bb92-415f-a1a8-73ca476a7722"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.657Z",
+			"sortNum": 20000
 		},
 		{
+			"_id": "b89e53d7-36ed-45da-8c46-30ba63253a27",
 			"name": "Medicine",
-			"item": [
-				{
-					"name": "Update medicine",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\":\"Amoxi ciline\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":20000,\n    \"type\":\"Antibiotic\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/medicine/updatemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"medicine",
-								"updatemedicine",
-								"0e032c9b-8915-4873-80db-df1f9d70185f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create medicine",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\":\"Palacetamor\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":2000,\n    \"type\":\"Pain killer\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/medicine/createnew",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"medicine",
-								"createnew"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all medicines",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/medicine/getallmedicines",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"medicine",
-								"getallmedicines"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete medicine",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/medicine/deletemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"medicine",
-								"deletemedicine",
-								"0e032c9b-8915-4873-80db-df1f9d70185f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add medicine to pharmacy",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n \"phid\":\"5dfa595c-3d41-4461-8dce-418624d186b4\",\n \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/pharmacy/addmedtopharma",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"pharmacy",
-								"addmedtopharma"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get medicines in pharmacy",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/medicine/medicinesinpharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"medicine",
-								"medicinesinpharmacy",
-								"5dfa595c-3d41-4461-8dce-418624d186b4"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.658Z",
+			"sortNum": 30000
 		},
 		{
+			"_id": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
 			"name": "Orders",
-			"item": [
-				{
-					"name": "Create new order",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_patient}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/orders/createorder",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"createorder"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all orders",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/orders/findall",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"findall"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find rejected",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/orders/findrejected",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"findrejected"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Reject order",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/orders/rejectorder/829e63f9-276f-4b2d-b402-3ddda86375ac",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"rejectorder",
-								"829e63f9-276f-4b2d-b402-3ddda86375ac"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Approve order",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/orders/approveorder/199cd688-1702-4711-b75c-cca6a17a4927",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"approveorder",
-								"199cd688-1702-4711-b75c-cca6a17a4927"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete order",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/orders/deleteorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"deleteorder",
-								"66e846ec-4a7c-4072-8e4a-c6d3981b2199"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "{{token_admin}}",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update order",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana Kimari\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/orders/updateorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"orders",
-								"updateorder",
-								"66e846ec-4a7c-4072-8e4a-c6d3981b2199"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.659Z",
+			"sortNum": 40000
 		},
 		{
+			"_id": "1e744b75-ae30-42c0-be65-6c3e290d05da",
 			"name": "Users",
-			"item": [
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\":\"samia222@gmail.com\",\n    \"password\":\"COmu38YTrZ\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create user",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"name\":\"benshi\",\n\"phone\":\"0788299119\",\n\"role\":\"DOCTOR\" \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/createuser",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"createuser"
-							]
-						},
-						"description": "User added by admin"
-					},
-					"response": []
-				},
-				{
-					"name": "Signup",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"email\":\"samia222@gmail.com\",\n\"name\":\"Samila\",\n\"phone\":\"0783312277\",\n\"password\":\"Danny1111\",\n\"role\":\"PATIENT\" \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/signup",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"signup"
-							]
-						},
-						"description": "User regiser them selves"
-					},
-					"response": []
-				},
-				{
-					"name": "Get all users",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/user/allusers?page=1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"allusers"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update user",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"email\":\"samia@gmail.com\",\n\"name\":\"Samila kaka\",\n\"phone\":\"07899901000\",\n\"role\":\"DOCTOR\" \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/updateuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"updateuser",
-								"f699ea04-6b16-46a9-bb67-1a79ca537611"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete user",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/user/deleteuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"deleteuser",
-								"f699ea04-6b16-46a9-bb67-1a79ca537611"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Doctor login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"password\":\"vS7Oeq8dfU\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Reset password",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_doctor}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n \"newpassword\":\"Danny1234\",\n \"oldpassword\":\"vS7Oeq8dfU\",\n \"uid\":\"3ba07025-d01f-4769-9108-4ea6c485e249\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/user/resetpassword",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"user",
-								"resetpassword"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.660Z",
+			"sortNum": 50000
 		},
 		{
+			"_id": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
 			"name": "Patients",
-			"item": [
-				{
-					"name": "Update patients",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"Nalisa Malimba\",\n  \"email\":\"nalisa1@gmail.com\",\n  \"phone\":\"07892192902\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/patient/update/7d08316f-7b93-4544-b984-4228f33fa38a",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"patient",
-								"update",
-								"7d08316f-7b93-4544-b984-4228f33fa38a"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create patient",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\":\"Nalisa Kimari\",\n  \"email\":\"nalisa12@gmail.com\",\n  \"phone\":\"07892192921\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/patient/createnew",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"patient",
-								"createnew"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/patient/allpatients?page=1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"patient",
-								"allpatients"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete patient",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/patient/deletepatient/7d08316f-7b93-4544-b984-4228f33fa38a",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"patient",
-								"deletepatient",
-								"7d08316f-7b93-4544-b984-4228f33fa38a"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find by id",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/patient/getbyid/399b2b5f-597b-40fc-8756-e3654d33906f",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"patient",
-								"getbyid",
-								"399b2b5f-597b-40fc-8756-e3654d33906f"
-							]
-						}
-					},
-					"response": []
-				}
-			]
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.661Z",
+			"sortNum": 60000
 		},
 		{
+			"_id": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
 			"name": "Appointments",
-			"item": [
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.662Z",
+			"sortNum": 70000
+		},
+		{
+			"_id": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "Health tips",
+			"containerId": "",
+			"created": "2022-05-02T01:16:49.663Z",
+			"sortNum": 85000
+		},
+		{
+			"_id": "e24018d8-099d-4dbf-9b52-c1ba4f6382ee",
+			"name": "Cart",
+			"containerId": "",
+			"created": "2022-05-13T23:50:37.732Z",
+			"sortNum": 90000
+		}
+	],
+	"requests": [
+		{
+			"_id": "ba54f79a-aeb8-4195-92f1-5c62577a4e4d",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "5c9fe140-588d-43e7-930b-4c0a00d32c8b",
+			"name": "Update pharmacy",
+			"url": "http://localhost:8000/api/pharmacy/updatepharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
+			"method": "PUT",
+			"sortNum": 10000,
+			"created": "2022-05-02T01:16:49.658Z",
+			"modified": "2022-05-28T10:44:19.632Z",
+			"headers": [
 				{
-					"name": "Reject appointment",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/rejectappointment/0484b585-817a-407b-9dff-40336af43309",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"rejectappointment",
-								"0484b585-817a-407b-9dff-40336af43309"
-							]
-						}
-					},
-					"response": []
-				},
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n    \"name\":\"Berwa Nimpano pharmacy\",\n    \"email\":\"benshidanny11@gmail.com\",\n    \"website\":\"www.berwap.com\",\n    \"phone\":\"0712212929\",\n    \"address\":\"Kigali,Nyarugenge\"\n}",
+				"form": []
+			},
+			"tests": []
+		},
+		{
+			"_id": "2be61595-6059-4d1a-bcfc-c30a7f0d3bce",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "5c9fe140-588d-43e7-930b-4c0a00d32c8b",
+			"name": "Create new pharmacy",
+			"url": "http://localhost:8000/api/pharmacy/createnew",
+			"method": "POST",
+			"sortNum": 20000,
+			"created": "2022-05-02T01:16:49.660Z",
+			"modified": "2022-05-02T01:16:49.660Z",
+			"headers": [
 				{
-					"name": "Approve appointment",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/approveappointment/50201ead-89f4-498e-9873-0f972d8f2d42",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"approveappointment",
-								"50201ead-89f4-498e-9873-0f972d8f2d42"
-							]
-						}
-					},
-					"response": []
-				},
+					"name": "token",
+					"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lcyI6IkRhbm55IEJlbnNoaSIsImVtYWlsIjoiYmVuc2hpZGFubnkxMUBnbWFpbC5jb20iLCJwaG9uZW51bWJlciI6IjA3ODQ4NzE5NTgiLCJyb2xlIjoiRGFubnkgQmVuc2hpIiwidXNlcmlkIjoiM2QyY2E3ZmItMDYxNy00Zjc0LThhOWEtODZiMTJiODhmNTA5IiwiaWF0IjoxNjQ3Njc0OTI2LCJleHAiOjE2NTExMzA5MjZ9.11CeYi0-Y2xSMYvwSteyQlATrLZoihpmJz9UbXUBB0Y"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n    \"name\":\"Pharmacy umutuzo\",\n    \"email\":\"umutuzo@gmail.com\",\n    \"website\":\"www.umutuzo.com\",\n    \"phone\":\"07893983983\",\n    \"address\":\"Kigali,Nyarugenge\"\n}"
+			}
+		},
+		{
+			"_id": "e2475d08-036c-49a6-b6a9-950b7df0b073",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "5c9fe140-588d-43e7-930b-4c0a00d32c8b",
+			"name": "Find all pharmaciec",
+			"url": "http://localhost:8000/api/pharmacy/findall",
+			"method": "GET",
+			"sortNum": 30000,
+			"created": "2022-05-02T01:16:49.661Z",
+			"modified": "2022-05-02T01:16:49.661Z",
+			"headers": []
+		},
+		{
+			"_id": "a73528fd-ec3f-48f4-aebc-f00cb73fc420",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "5c9fe140-588d-43e7-930b-4c0a00d32c8b",
+			"name": "Delete pharmacy",
+			"url": "http://localhost:8000/api/pharmacy/deletepharmacy/20f6ca53-8393-409e-bbe0-cd0e17600053",
+			"method": "DELETE",
+			"sortNum": 40000,
+			"created": "2022-05-02T01:16:49.662Z",
+			"modified": "2022-05-02T01:16:49.662Z",
+			"headers": [
 				{
-					"name": "Create appointment",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_patient}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n \"docid\":\"1d4a9690-adc5-411b-b3cd-0c60a9114b27\",\n \"deasese\":\"dqwqw232\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/makeappointment",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"makeappointment"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find all appointments",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/findall",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"findall"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find rejected appointments",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/findrejected",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"findrejected"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Find approved appointments",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/appointments/findapproved",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"appointments",
-								"findapproved"
-							]
-						}
-					},
-					"response": []
+					"name": "token",
+					"value": "{{token_admin}}"
 				}
 			]
 		},
 		{
-			"name": "Health tips",
-			"item": [
+			"_id": "620b7da5-e730-4e67-9b77-2466bdecfb33",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "15ccf634-ce8b-4758-962c-1e2e1562f02b",
+			"name": "Create doctor",
+			"url": "http://localhost:8000/api/doctor/createnew",
+			"method": "POST",
+			"sortNum": 50000,
+			"created": "2022-05-02T01:16:49.663Z",
+			"modified": "2022-05-02T01:16:49.663Z",
+			"headers": [
 				{
-					"name": "Create new",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health\",\n\"title\":\"Get better in think\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/healthtips/createnew",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"healthtips",
-								"createnew"
-							]
-						}
-					},
-					"response": []
-				},
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"name\":\"Dr Benshi Christine\",\n  \"email\":\"benshi@gmail.com\",\n  \"phone\":\"0780213898\",\n  \"speciality\":\"Neurologist\",\n  \"clinic\":\"Grand regacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}"
+			}
+		},
+		{
+			"_id": "a406119c-721a-4cfb-83fa-85d682daaa2d",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "15ccf634-ce8b-4758-962c-1e2e1562f02b",
+			"name": "Update doctor",
+			"url": "http://localhost:8000/api/doctor/updatedoctor/441b356c-3d35-40e0-afc0-336435129cd1",
+			"method": "PUT",
+			"sortNum": 60000,
+			"created": "2022-05-02T01:16:49.664Z",
+			"modified": "2022-05-02T01:16:49.664Z",
+			"headers": [
 				{
-					"name": "Update tip",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health 22\",\n\"title\":\"Get better in think 2111\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/healthtips/updatetip/0e92fe80-dff6-474f-b690-054f8880a222",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"healthtips",
-								"updatetip",
-								"0e92fe80-dff6-474f-b690-054f8880a222"
-							]
-						}
-					},
-					"response": []
-				},
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"name\":\"Bitama Danny\",\n  \"email\":\"chris12@gmail.com\",\n  \"phone\":\"07803323339\",\n  \"speciality\":\"Sociologist\",\n  \"clinic\":\"Grand legacy\",\n  \"image\":\"https://www.irishtimes.com/polopoly_fs/1.3641208.1537895677!/image/image.jpg_gen/derivatives/ratio_4x3_w1200/image.jpg\"\n}"
+			}
+		},
+		{
+			"_id": "2df27ee4-112f-49bb-a140-e941a3a4b1a3",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "15ccf634-ce8b-4758-962c-1e2e1562f02b",
+			"name": "Find all doctors",
+			"url": "http://localhost:8000/api/doctor/findall",
+			"method": "GET",
+			"sortNum": 70000,
+			"created": "2022-05-02T01:16:49.665Z",
+			"modified": "2022-05-02T01:16:49.665Z",
+			"headers": []
+		},
+		{
+			"_id": "d3bad94a-b8f2-4697-8310-0a41c1f272c5",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "15ccf634-ce8b-4758-962c-1e2e1562f02b",
+			"name": "Delete doctor",
+			"url": "http://localhost:8000/api/doctor/deletedoctor/d45c7233-bb92-415f-a1a8-73ca476a7722",
+			"method": "DELETE",
+			"sortNum": 80000,
+			"created": "2022-05-02T01:16:49.666Z",
+			"modified": "2022-05-02T01:16:49.666Z",
+			"headers": [
 				{
-					"name": "Find all tips",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/healthtips/getall",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"healthtips",
-								"getall"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete tip",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "{{token_admin}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/healthtips/deletetip/0e92fe80-dff6-474f-b690-054f8880a222",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"healthtips",
-								"deletetip",
-								"0e92fe80-dff6-474f-b690-054f8880a222"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "{{token_admin}}",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "FInd one",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/healthtips/getonetip/24e72f79-3f12-488d-9668-85a5ec8767f9",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"healthtips",
-								"getonetip",
-								"24e72f79-3f12-488d-9668-85a5ec8767f9"
-							]
-						}
-					},
-					"response": []
+					"name": "token",
+					"value": "{{token_admin}}"
 				}
 			]
+		},
+		{
+			"_id": "61f56d7e-1604-414f-84dc-7a349ac83db5",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Update medicine",
+			"url": "http://localhost:8000/api/medicine/updatemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
+			"method": "PUT",
+			"sortNum": 90000,
+			"created": "2022-05-02T01:16:49.667Z",
+			"modified": "2022-05-02T01:16:49.667Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n    \"name\":\"Amoxi ciline\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":20000,\n    \"type\":\"Antibiotic\"\n}"
+			}
+		},
+		{
+			"_id": "ef50fc5b-3256-4e14-a369-4b2fd4060ed8",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Create medicine",
+			"url": "http://localhost:8000/api/medicine/createnew",
+			"method": "POST",
+			"sortNum": 100000,
+			"created": "2022-05-02T01:16:49.668Z",
+			"modified": "2022-05-02T01:16:49.668Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n    \"name\":\"Palacetamor\",\n    \"properties\":\"Dozage\",\n    \"decription\":\"Good medicine aver made\",\n    \"image\":\"https://c8.alamy.com/comp/2D6K0YE/colorful-capsule-pills-pharmaceutical-industry-healthcare-and-medicine-background-pharmaceutics-concept-antibiotic-drug-resistance-pink-white-2D6K0YE.jpg\",\n    \"price\":2000,\n    \"type\":\"Pain killer\"\n}"
+			}
+		},
+		{
+			"_id": "aa492eae-7277-47ca-8b49-2af24dd973ba",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Get all medicines",
+			"url": "{{local}}/medicine/getallmedicines?page=2&limit=2",
+			"method": "GET",
+			"sortNum": 110000,
+			"created": "2022-05-02T01:16:49.669Z",
+			"modified": "2022-05-14T18:24:23.105Z",
+			"headers": [],
+			"params": [
+				{
+					"name": "page",
+					"value": "2",
+					"isPath": false
+				},
+				{
+					"name": "limit",
+					"value": "2",
+					"isPath": false
+				}
+			],
+			"tests": []
+		},
+		{
+			"_id": "ffb5d3ce-c731-4402-9cf8-6e71df8b51be",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Delete medicine",
+			"url": "http://localhost:8000/api/medicine/deletemedicine/0e032c9b-8915-4873-80db-df1f9d70185f",
+			"method": "DELETE",
+			"sortNum": 120000,
+			"created": "2022-05-02T01:16:49.670Z",
+			"modified": "2022-05-02T01:16:49.670Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "f41d9bda-8ada-43a7-b2e0-4a5fb8c378d6",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Add medicine to pharmacy",
+			"url": "http://localhost:8000/api/pharmacy/addmedtopharma",
+			"method": "POST",
+			"sortNum": 130000,
+			"created": "2022-05-02T01:16:49.671Z",
+			"modified": "2022-05-02T01:16:49.671Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n \"phid\":\"5dfa595c-3d41-4461-8dce-418624d186b4\",\n \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\"\n}"
+			}
+		},
+		{
+			"_id": "29809de4-ad2a-4ca8-a4b2-d7f6173a6b21",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b89e53d7-36ed-45da-8c46-30ba63253a27",
+			"name": "Get medicines in pharmacy",
+			"url": "http://localhost:8000/api/medicine/medicinesinpharmacy/5dfa595c-3d41-4461-8dce-418624d186b4",
+			"method": "GET",
+			"sortNum": 140000,
+			"created": "2022-05-02T01:16:49.672Z",
+			"modified": "2022-05-02T01:16:49.672Z",
+			"headers": []
+		},
+		{
+			"_id": "0a13f591-117d-422c-bdb7-f8c754acbc39",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Create new order",
+			"url": "http://localhost:8000/api/orders/createorder",
+			"method": "POST",
+			"sortNum": 150000,
+			"created": "2022-05-02T01:16:49.673Z",
+			"modified": "2022-05-02T01:16:49.673Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_patient}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana\"\n}"
+			}
+		},
+		{
+			"_id": "c206265b-3292-4644-9875-e82ce1f9c8b8",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Find all orders",
+			"url": "http://localhost:8000/api/orders/findall",
+			"method": "GET",
+			"sortNum": 160000,
+			"created": "2022-05-02T01:16:49.674Z",
+			"modified": "2022-05-02T01:16:49.674Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "5d85e4ba-0091-4722-a8a0-569d32bc83a2",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Find rejected",
+			"url": "http://localhost:8000/api/orders/findrejected",
+			"method": "GET",
+			"sortNum": 170000,
+			"created": "2022-05-02T01:16:49.675Z",
+			"modified": "2022-05-02T01:16:49.675Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "3b5d5613-3c5b-4db6-8865-43d139a092ca",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Reject order",
+			"url": "http://localhost:8000/api/orders/rejectorder/829e63f9-276f-4b2d-b402-3ddda86375ac",
+			"method": "PUT",
+			"sortNum": 180000,
+			"created": "2022-05-02T01:16:49.676Z",
+			"modified": "2022-05-02T01:16:49.676Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "01f942e8-bd80-43d4-bc46-32c3175caf78",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Approve order",
+			"url": "http://localhost:8000/api/orders/approveorder/199cd688-1702-4711-b75c-cca6a17a4927",
+			"method": "PUT",
+			"sortNum": 190000,
+			"created": "2022-05-02T01:16:49.677Z",
+			"modified": "2022-05-02T01:16:49.677Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "c9d0ab37-e99e-4fb5-858d-5030cab3ce6d",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Delete order",
+			"url": "http://localhost:8000/api/orders/deleteorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
+			"method": "DELETE",
+			"sortNum": 200000,
+			"created": "2022-05-02T01:16:49.678Z",
+			"modified": "2022-05-02T01:16:49.678Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"params": [
+				{
+					"name": "",
+					"value": "{{token_admin}}",
+					"isDisabled": true
+				}
+			]
+		},
+		{
+			"_id": "66eafcbc-4dd7-4d78-b60e-90b75ae7058b",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e8c78f6b-9d84-43ca-aef0-02fc54fa2e01",
+			"name": "Update order",
+			"url": "http://localhost:8000/api/orders/updateorder/66e846ec-4a7c-4072-8e4a-c6d3981b2199",
+			"method": "PUT",
+			"sortNum": 210000,
+			"created": "2022-05-02T01:16:49.679Z",
+			"modified": "2022-05-02T01:16:49.679Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"mid\":\"cc1c16e8-6c4f-4f67-ac6a-c11a680cbfb8\",\n  \"phid\":\"16af3d2a-9b52-4e46-819b-17e004ce8605\",\n  \"prescription\":\"msmsm/file.pdf\",\n  \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n  \"pname\":\"Nyarubwana Kimari\"\n}"
+			}
+		},
+		{
+			"_id": "623ccbde-4df3-435a-b900-4e8219f38077",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Login",
+			"url": "{{local}}/user/login",
+			"method": "POST",
+			"sortNum": 220000,
+			"created": "2022-05-02T01:16:49.681Z",
+			"modified": "2022-05-04T02:55:17.841Z",
+			"headers": [],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"email\":\"ericprestein005@gmail.com\",\n\"password\":\"password@2344\"\n}",
+				"form": []
+			},
+			"tests": []
+		},
+		{
+			"_id": "4367ae08-d986-4145-b80d-7f351bb3f85b",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Create user",
+			"url": "{{local}}/user/createuser",
+			"method": "POST",
+			"sortNum": 230000,
+			"created": "2022-05-02T01:16:49.682Z",
+			"modified": "2022-05-02T11:51:06.246Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token}}"
+				}
+			],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"name\":\"benshi\",\n\"phone\":\"0788299119\",\n\"role\":\"DOCTOR\",\n\"speciality\": \"some ting\",\n\"clinic\": \"something\"\n}",
+				"form": []
+			},
+			"tests": []
+		},
+		{
+			"_id": "0e085b03-a7d1-4ee1-95a6-add5565cd8e5",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Signup",
+			"url": "{{local}}/user/signup",
+			"method": "POST",
+			"sortNum": 240000,
+			"created": "2022-05-02T01:16:49.683Z",
+			"modified": "2022-05-03T18:32:39.383Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}",
+					"isDisabled": true
+				}
+			],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"email\":\"gprestein055@gmail.com\",\n\"password\":\"Danny1111\",\n\"role\":\"PATIENT\" \n}",
+				"form": []
+			},
+			"tests": []
+		},
+		{
+			"_id": "81dab3cb-612e-4380-ab5f-49211495e48e",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Get all users",
+			"url": "{{local}}/user/allusers?page=1&limit=2",
+			"method": "GET",
+			"sortNum": 250000,
+			"created": "2022-05-02T01:16:49.684Z",
+			"modified": "2022-05-11T22:53:11.489Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"params": [
+				{
+					"name": "page",
+					"value": "1",
+					"isPath": false
+				},
+				{
+					"name": "limit",
+					"value": "2",
+					"isPath": false
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": "Bearer {{token}}"
+			},
+			"tests": []
+		},
+		{
+			"_id": "d4eba7b1-677f-4164-84b7-476cbef75d86",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Update user",
+			"url": "http://localhost:8000/api/user/updateuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
+			"method": "PUT",
+			"sortNum": 260000,
+			"created": "2022-05-02T01:16:49.685Z",
+			"modified": "2022-05-02T01:16:49.685Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"email\":\"samia@gmail.com\",\n\"name\":\"Samila kaka\",\n\"phone\":\"07899901000\",\n\"role\":\"DOCTOR\" \n}"
+			}
+		},
+		{
+			"_id": "02afdf25-175f-4281-8c6f-f81043ea8e9b",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Delete user",
+			"url": "http://localhost:8000/api/user/deleteuser/f699ea04-6b16-46a9-bb67-1a79ca537611",
+			"method": "DELETE",
+			"sortNum": 270000,
+			"created": "2022-05-02T01:16:49.686Z",
+			"modified": "2022-05-02T01:16:49.686Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "dc14d690-2e1e-4617-beaa-0ae39eaa7607",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Doctor login",
+			"url": "http://localhost:8000/api/user/login",
+			"method": "POST",
+			"sortNum": 280000,
+			"created": "2022-05-02T01:16:49.687Z",
+			"modified": "2022-05-02T01:16:49.687Z",
+			"headers": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"email\":\"benshi11@gmail.com\",\n\"password\":\"vS7Oeq8dfU\"\n}"
+			}
+		},
+		{
+			"_id": "5e7b1811-0191-4431-9a1e-3c961fc0a4b5",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Reset password",
+			"url": "http://localhost:8000/api/user/resetpassword",
+			"method": "PUT",
+			"sortNum": 290000,
+			"created": "2022-05-02T01:16:49.688Z",
+			"modified": "2022-05-02T01:16:49.688Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_doctor}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n \"newpassword\":\"Danny1234\",\n \"oldpassword\":\"vS7Oeq8dfU\",\n \"uid\":\"3ba07025-d01f-4769-9108-4ea6c485e249\"\n}"
+			}
+		},
+		{
+			"_id": "a7ffdca6-d6dd-4fa9-96c1-264a753955c7",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
+			"name": "Update patients",
+			"url": "http://localhost:8000/api/patient/update/7d08316f-7b93-4544-b984-4228f33fa38a",
+			"method": "PUT",
+			"sortNum": 300000,
+			"created": "2022-05-02T01:16:49.689Z",
+			"modified": "2022-05-02T01:16:49.689Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"name\":\"Nalisa Malimba\",\n  \"email\":\"nalisa1@gmail.com\",\n  \"phone\":\"07892192902\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}"
+			}
+		},
+		{
+			"_id": "fd89aa50-1b0d-4178-bcaa-bbb6b7cdafd6",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
+			"name": "Create patient",
+			"url": "http://localhost:8000/api/patient/createnew",
+			"method": "POST",
+			"sortNum": 310000,
+			"created": "2022-05-02T01:16:49.690Z",
+			"modified": "2022-05-02T01:16:49.690Z",
+			"headers": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"name\":\"Nalisa Kimari\",\n  \"email\":\"nalisa12@gmail.com\",\n  \"phone\":\"07892192921\",\n  \"address\":\"Kigali\",\n  \"country\":\"Rwanda\",\n  \"town\":\"Gasabo\",\n  \"street\":\"KN 2020 ST\"\n}"
+			}
+		},
+		{
+			"_id": "ef691a91-6e59-4d68-aefd-9843bd3926b6",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
+			"name": "Find all",
+			"url": "http://localhost:8000/api/patient/allpatients?page=1",
+			"method": "GET",
+			"sortNum": 320000,
+			"created": "2022-05-02T01:16:49.691Z",
+			"modified": "2022-05-02T01:16:49.691Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"params": [
+				{
+					"name": "page",
+					"value": "1"
+				}
+			]
+		},
+		{
+			"_id": "3802ab56-de6f-40be-b271-fcc306c04e6f",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
+			"name": "Delete patient",
+			"url": "http://localhost:8000/api/patient/deletepatient/7d08316f-7b93-4544-b984-4228f33fa38a",
+			"method": "DELETE",
+			"sortNum": 330000,
+			"created": "2022-05-02T01:16:49.692Z",
+			"modified": "2022-05-02T01:16:49.692Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "4bdec6bb-fed1-4633-9a43-4ac0d013e1af",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "b85e02ba-a6e4-453e-a02b-085206c9c1de",
+			"name": "Find by id",
+			"url": "http://localhost:8000/api/patient/getbyid/399b2b5f-597b-40fc-8756-e3654d33906f",
+			"method": "GET",
+			"sortNum": 340000,
+			"created": "2022-05-02T01:16:49.693Z",
+			"modified": "2022-05-02T01:16:49.693Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "e7b42e79-5fc6-4065-a30e-ac3ed3391ad8",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Reject appointment",
+			"url": "http://localhost:8000/api/appointments/rejectappointment/0484b585-817a-407b-9dff-40336af43309",
+			"method": "PUT",
+			"sortNum": 350000,
+			"created": "2022-05-02T01:16:49.694Z",
+			"modified": "2022-05-02T01:16:49.694Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "90eafee0-a7be-44a9-8baa-471363dfc4b9",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Approve appointment",
+			"url": "http://localhost:8000/api/appointments/approveappointment/50201ead-89f4-498e-9873-0f972d8f2d42",
+			"method": "PUT",
+			"sortNum": 360000,
+			"created": "2022-05-02T01:16:49.695Z",
+			"modified": "2022-05-02T01:16:49.695Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "819aadda-bb10-4f4b-8f68-77d67ab4c3b0",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Create appointment",
+			"url": "http://localhost:8000/api/appointments/makeappointment",
+			"method": "POST",
+			"sortNum": 370000,
+			"created": "2022-05-02T01:16:49.696Z",
+			"modified": "2022-05-02T01:16:49.696Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_patient}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n \"patid\":\"d4abdebf-1f44-4d9a-bcaf-74b9dfc9259b\",\n \"docid\":\"1d4a9690-adc5-411b-b3cd-0c60a9114b27\",\n \"deasese\":\"dqwqw232\"\n}"
+			}
+		},
+		{
+			"_id": "231e4252-2668-48a6-91b8-d6a6ee88d49b",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Find all appointments",
+			"url": "http://localhost:8000/api/appointments/findall",
+			"method": "GET",
+			"sortNum": 380000,
+			"created": "2022-05-02T01:16:49.697Z",
+			"modified": "2022-05-02T01:16:49.697Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "ba311839-6bcc-49ae-82d7-03a063309e6e",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Find rejected appointments",
+			"url": "http://localhost:8000/api/appointments/findrejected",
+			"method": "GET",
+			"sortNum": 390000,
+			"created": "2022-05-02T01:16:49.698Z",
+			"modified": "2022-05-02T01:16:49.698Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "c79f23de-736e-4de2-b4af-65e13e05133c",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "7291aebd-d0d4-4a73-ba7e-242b66891f57",
+			"name": "Find approved appointments",
+			"url": "http://localhost:8000/api/appointments/findapproved",
+			"method": "GET",
+			"sortNum": 400000,
+			"created": "2022-05-02T01:16:49.699Z",
+			"modified": "2022-05-02T01:16:49.699Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			]
+		},
+		{
+			"_id": "f46abaae-ee63-4b59-b00f-0646c3c46ec9",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "Create new",
+			"url": "http://localhost:8000/api/healthtips/createnew",
+			"method": "POST",
+			"sortNum": 410000,
+			"created": "2022-05-02T01:16:49.700Z",
+			"modified": "2022-05-02T01:16:49.700Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health\",\n\"title\":\"Get better in think\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}"
+			}
+		},
+		{
+			"_id": "79f60ca5-4d19-4e42-9889-d04f4fd05d14",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "Update tip",
+			"url": "http://localhost:8000/api/healthtips/updatetip/0e92fe80-dff6-474f-b690-054f8880a222",
+			"method": "PUT",
+			"sortNum": 420000,
+			"created": "2022-05-02T01:16:49.701Z",
+			"modified": "2022-05-02T01:16:49.701Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"body": {
+				"type": "json",
+				"raw": "{\n\"uid\":\"3d2ca7fb-0617-4f74-8a9a-86b12b88f509\",\n\"category\":\"Mental health 22\",\n\"title\":\"Get better in think 2111\",\n\"content\":\"aslkdjsajdo,sij\",\n\"image\":\"kjhlasij skadljaslj=\"\n}"
+			}
+		},
+		{
+			"_id": "e2d7d561-7fa1-4763-844e-f9a287b61625",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "Find all tips",
+			"url": "http://localhost:8000/api/healthtips/getall",
+			"method": "GET",
+			"sortNum": 430000,
+			"created": "2022-05-02T01:16:49.702Z",
+			"modified": "2022-05-02T01:16:49.702Z",
+			"headers": []
+		},
+		{
+			"_id": "ee13c6ee-1bc5-4377-9b2c-90ab0f0cb451",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "Delete tip",
+			"url": "http://localhost:8000/api/healthtips/deletetip/0e92fe80-dff6-474f-b690-054f8880a222",
+			"method": "DELETE",
+			"sortNum": 440000,
+			"created": "2022-05-02T01:16:49.703Z",
+			"modified": "2022-05-02T01:16:49.703Z",
+			"headers": [
+				{
+					"name": "token",
+					"value": "{{token_admin}}"
+				}
+			],
+			"params": [
+				{
+					"name": "",
+					"value": "{{token_admin}}",
+					"isDisabled": true
+				}
+			]
+		},
+		{
+			"_id": "f8b73045-5067-4185-a74c-6611045dc722",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "588e1e06-df96-45d8-aab9-4b35e2a35ee2",
+			"name": "FInd one",
+			"url": "http://localhost:8000/api/healthtips/getonetip/24e72f79-3f12-488d-9668-85a5ec8767f9",
+			"method": "GET",
+			"sortNum": 450000,
+			"created": "2022-05-02T01:16:49.704Z",
+			"modified": "2022-05-02T01:16:49.704Z",
+			"headers": []
+		},
+		{
+			"_id": "f1fc9625-859d-4196-be72-9a9c20cf74cb",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Refresh Token",
+			"url": "{{local}}/user/refresh-token",
+			"method": "GET",
+			"sortNum": 460000,
+			"created": "2022-05-02T08:25:04.228Z",
+			"modified": "2022-05-02T08:25:24.705Z",
+			"headers": [],
+			"params": [],
+			"tests": []
+		},
+		{
+			"_id": "f1707504-46df-445f-8d80-f9df9238bde7",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Logout",
+			"url": "{{local}}/user/logout",
+			"method": "GET",
+			"sortNum": 470000,
+			"created": "2022-05-02T08:54:55.553Z",
+			"modified": "2022-05-02T09:25:07.046Z",
+			"headers": [],
+			"params": [],
+			"tests": []
+		},
+		{
+			"_id": "7a748671-450e-48c8-b006-43ad1c0d0262",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Resent Verification",
+			"url": "{{local}}/user/resendverification",
+			"method": "POST",
+			"sortNum": 480000,
+			"created": "2022-05-03T19:17:28.667Z",
+			"modified": "2022-05-03T19:25:26.348Z",
+			"headers": [],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n    \"email\":\"gprestein055@gmail.com\"\n}",
+				"form": []
+			},
+			"tests": []
+		},
+		{
+			"_id": "a13a8fb2-ca32-429f-bdc3-4e021499e88e",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Verify User",
+			"url": "{{local}}/user/activateuser/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1X2VtYWlsIjoiZ3ByZXN0ZWluMDU1QGdtYWlsLmNvbSIsImlhdCI6MTY1MTYwODQ5MywiZXhwIjoxNjUxNjEyMDkzfQ.bPBrmSE97xcj9DLYVGVEglvArof9OZlSisKQrl4gixQ",
+			"method": "PUT",
+			"sortNum": 490000,
+			"created": "2022-05-03T19:22:39.325Z",
+			"modified": "2022-05-03T20:09:55.084Z",
+			"headers": [],
+			"params": [],
+			"tests": []
+		},
+		{
+			"_id": "dec464ff-dc49-40b7-bc91-566c9873d3f9",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Get One User",
+			"url": "{{local}}/user/profile/a349c76a-b65a-4a86-aa50-86a9d6fa69b2",
+			"method": "GET",
+			"sortNum": 500000,
+			"created": "2022-05-13T18:56:50.809Z",
+			"modified": "2022-05-14T00:23:27.106Z",
+			"headers": [],
+			"params": [],
+			"auth": {
+				"type": "bearer",
+				"bearer": "{{token}}"
+			},
+			"tests": []
+		},
+		{
+			"_id": "2303ccd3-9bb0-47b8-958f-76cf27e50af2",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "1e744b75-ae30-42c0-be65-6c3e290d05da",
+			"name": "Get My Profile",
+			"url": "{{local}}/user/myprofile",
+			"method": "GET",
+			"sortNum": 510000,
+			"created": "2022-05-13T18:57:07.011Z",
+			"modified": "2022-05-17T01:46:58.230Z",
+			"headers": [],
+			"params": [],
+			"auth": {
+				"type": "bearer",
+				"bearer": "{{token}}"
+			},
+			"tests": []
+		},
+		{
+			"_id": "1351f2fd-1a0a-4821-bdea-70066c67ae22",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e24018d8-099d-4dbf-9b52-c1ba4f6382ee",
+			"name": "Add to cart",
+			"url": "{{local}}/cart/3c6a8763-e32a-40cd-81c6-346b28cc986f",
+			"method": "POST",
+			"sortNum": 530000,
+			"created": "2022-05-14T00:33:24.065Z",
+			"modified": "2022-05-15T07:12:31.285Z",
+			"headers": [],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"quantity\": \"2\"\n}",
+				"form": []
+			},
+			"auth": {
+				"type": "bearer",
+				"bearer": "{{token}}"
+			},
+			"tests": []
+		},
+		{
+			"_id": "57ac2db6-0559-460b-a1ed-f1ebc8337658",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e24018d8-099d-4dbf-9b52-c1ba4f6382ee",
+			"name": "Update cart",
+			"url": "{{local}}/cart/26715e82-f41b-476e-a25d-9bff881fec0f",
+			"method": "PUT",
+			"sortNum": 540000,
+			"created": "2022-05-14T00:33:37.117Z",
+			"modified": "2022-05-14T13:11:05.086Z",
+			"headers": [],
+			"params": [],
+			"body": {
+				"type": "json",
+				"raw": "{\n  \"quantity\": \"3\"\n}",
+				"form": []
+			},
+			"auth": {
+				"type": "bearer",
+				"bearer": "{{token}}"
+			},
+			"tests": []
+		},
+		{
+			"_id": "aa4169a9-f35c-4008-a74d-52c32515f46e",
+			"colId": "3d9da4d3-e143-4534-95ec-c2911460b937",
+			"containerId": "e24018d8-099d-4dbf-9b52-c1ba4f6382ee",
+			"name": "Remove Cart",
+			"url": "{{local}}/cart/307e6bf5-9fc3-419d-9b38-e039d6fe75d6",
+			"method": "DELETE",
+			"sortNum": 550000,
+			"created": "2022-05-14T00:33:48.567Z",
+			"modified": "2022-05-14T13:15:55.164Z",
+			"headers": [],
+			"params": [],
+			"auth": {
+				"type": "bearer",
+				"bearer": "{{token}}"
+			},
+			"tests": []
 		}
 	]
 }
