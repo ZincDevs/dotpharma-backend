@@ -28,6 +28,8 @@ module.exports = {
       m_type: {
         type: Sequelize.STRING
       },
+      m_short_descripption: { type: Sequelize.STRING },
+      m_discount: { type: Sequelize.STRING },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',

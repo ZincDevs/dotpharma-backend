@@ -14,7 +14,9 @@ const MedicineController = {
       m_image: body.image,
       m_price: body.price,
       m_status: '1',
-      m_type: body.type,
+      m_short_descripption: body.shortdescription,
+      m_type: body.category,
+      m_discount: body.discount || 0,
       u_id: authUser.u_id,
     };
 
@@ -33,8 +35,10 @@ const MedicineController = {
       m_desciption: body.description,
       m_image: body.image,
       m_price: body.price,
+      m_short_descripption: body.shortdescription,
+      m_type: body.category,
+      m_discount: body.discount || 0,
       m_status: '1',
-      m_type: body.type,
       u_id: authUser.u_id,
     };
     const medicine = await Medicine.update(data, { where: { m_id } });

@@ -16,6 +16,9 @@ module.exports = {
       o_status: {
         type: Sequelize.STRING
       },
+      o_address: {
+        type: Sequelize.STRING
+      },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',

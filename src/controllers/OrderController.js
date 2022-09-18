@@ -4,6 +4,7 @@ import 'regenerator-runtime';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
 import { Order } from '../db/models';
+import { sendOrderRequestEmail } from '../services';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
@@ -15,6 +16,7 @@ const OrderController = {
       o_prescription: req.body.prescription,
       o_date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       o_status: 'Pending',
+      o_address: req.body.address,
       o_referencecode: req.body.refcode
     };
 
@@ -22,6 +24,9 @@ const OrderController = {
     if (!order) {
       return res.sendStatus(400);
     }
+    sendOrderRequestEmail({
+      email: 'benshidanny11@gmail.com', orderid: order.o_id, name: req.body.name, phonenumber: req.body.address.split(',')[0]
+    });
     return res.sendStatus(201);
   },
   update: async (req, res) => {

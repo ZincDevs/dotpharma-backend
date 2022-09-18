@@ -1,20 +1,20 @@
 import 'regenerator-runtime';
 import express from 'express';
 import AppointmentController from '../controllers/AppointmentController';
-import Validator from '../middleware/_validator';
+// import Validator from '../middleware/_validator';
 import Auth from '../middleware/Auth';
 import User from '../middleware/user';
 import Paginate from '../middleware/Paginate';
-import CheckDataExists from '../middleware/CheckDataExists';
+// import CheckDataExists from '../middleware/CheckDataExists';
 
 const router = express.Router();
 
 router.post(
   '/makeappointment',
-  Validator('appointment'),
+  // Validator('appointment'),
   Auth.verifyAccessToken,
-  User.checkIsPatient,
-  CheckDataExists.checkDoctorExists,
+  // User.checkIsPatient,
+  // CheckDataExists.checkDoctorExists,
   AppointmentController.createAppointment
 );
 

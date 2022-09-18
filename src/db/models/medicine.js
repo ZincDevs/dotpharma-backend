@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     m_price: DataTypes.STRING,
     m_status: DataTypes.STRING,
     m_type: DataTypes.STRING,
+    m_short_descripption: DataTypes.STRING,
+    m_discount: DataTypes.NUMBER,
     u_id: {
       type: DataTypes.STRING,
       references: {

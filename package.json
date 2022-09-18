@@ -11,7 +11,7 @@
     "db:migrate:reset": "npx sequelize db:migrate:undo:all",
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/index.js",
-    "db:seeds": "babel-node src/database/seeds/Users.js"
+    "db:seeds": "sequelize db:seed:all"
   },
   "engines": {
     "npm": "7.11.1",
