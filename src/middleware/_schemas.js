@@ -18,15 +18,6 @@ const confirm = Joi.string()
   .required()
   .label('Confirm password is required,  it must have at least 8 letters');
 
-// const oldpassword = Joi.string()
-//   .min(8)
-//   .required()
-//   .label('Old password is required,  it must have at least 8 letters');
-
-// const newpassword = Joi.string()
-//   .min(8)
-//   .required()
-//   .label('New Password is required,  it must have at least 8 letters');
 const name = Joi.string()
   .min(3)
   .required()
@@ -69,8 +60,6 @@ const price = Joi.number()
   .required()
   .label('Medicine price is required');
 
-const type = Joi.string().min(3).required().label('Medicine type is required');
-
 const country = Joi.string().min(3).required().label('Country is required');
 const town = Joi.string().min(3).required().label('Town is required');
 const street = Joi.string()
@@ -79,7 +68,7 @@ const street = Joi.string()
   .label('Street number is required');
 const nid = Joi.string().min(16);
 const mid = Joi.string().min(3).required().label('Medicine id is required');
-const phid = Joi.string().min(3).required().label('Pharmacy id is required');
+// const phid = Joi.string().min(3).required().label('Pharmacy id is required');
 const patid = Joi.string().min(3).required().label('Patient id is required');
 const prescription = Joi.string().min(3).label('Prescription is required');
 const role = Joi.string().min(3).required().label('Role is required');
@@ -95,7 +84,14 @@ const title = Joi.string()
 const category = Joi.string()
   .min(3)
   .required()
-  .label('Health tip category is required');
+  .label('Category is required');
+const discount = Joi.number()
+  .min(3);
+
+const shortdescription = Joi.string()
+  .min(3)
+  .label('Short  description is required');
+
 const refcode = Joi.string()
   .min(3)
   .required()
@@ -162,7 +158,9 @@ schemas.medicine = Joi.object().keys({
   decription,
   image,
   price,
-  type,
+  category,
+  discount,
+  shortdescription
 });
 
 schemas.patient = Joi.object().keys({
@@ -179,7 +177,6 @@ schemas.patient = Joi.object().keys({
 
 schemas.order = Joi.object().keys({
   mid,
-  phid,
   prescription,
   patid,
   refcode

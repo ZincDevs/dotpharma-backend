@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     o_date: DataTypes.STRING,
     o_status: DataTypes.STRING,
     o_referencecode: DataTypes.STRING,
+    o_address: DataTypes.STRING,
     o_medicine: {
       type: DataTypes.STRING,
       references: {

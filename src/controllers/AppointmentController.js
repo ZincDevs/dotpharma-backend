@@ -3,10 +3,10 @@
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
 import { Appointment, User } from '../db/models';
+import { sendAppointmentEmail } from '../services';
 
 const AppointmentController = {
   createAppointment: async (req, res) => {
-    console.log(req.body.docid);
     const data = {
       a_id: uuid(),
       p_id: req.body.patid,
@@ -16,6 +16,10 @@ const AppointmentController = {
     };
     const appointment = await Appointment.create(data);
     if (!appointment) return res.sendStatus(500);
+
+    sendAppointmentEmail({
+      email: 'benshidanny11@gmail.com', appointment: appointment.a_id, name: req.body.name, phonenumber: req.body.phone
+    });
     return res.sendStatus(201);
   },
   findAll: async (req, res) => {

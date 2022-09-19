@@ -21,6 +21,16 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          u_id: uuidv4(),
+          u_email: process.env.PATIENT_EMAIL,
+          u_password: bcrypt.hashSync(process.env.PATIENT_PASSWORD, 10),
+          u_role: 'PATIENT',
+          verified: true,
+          blocked: false,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

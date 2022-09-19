@@ -1,3 +1,6 @@
+import 'regenerator-runtime';
+
+export default (link, name, phoneNumber) => `
 <!DOCTYPE html>
 <html>
 
@@ -167,7 +170,7 @@
               style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #2B8DD0;">
               <h1
                 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px; color: #797979;">
-                 Someone requested appointment
+                 Someone requested an appointment
                 </h1>
             </td>
           </tr>
@@ -191,12 +194,12 @@
                     <table border="0" cellpadding="0" cellspacing="0">
                       <tr>
                         <td align="center" style="border-radius: 6px;">
-                         <p> A patient called Daniel requested appointment</p>
+                         <p> A patient called ${name}, with phone number ${phoneNumber} requested an appointment</p>
                         </td>
                       </tr>
                       <tr>
                         <td align="center" style="border-radius: 6px;">
-                          <a href="" target="_blank"
+                          <a href="${link}" target="_blank"
                             style="display: inline-block; padding: 16px 36px; font-family: 'Dosis', sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px; background-color: #2B8DD0; border-radius: 0;">
                             Click here to open an appointment
                           </a>
@@ -227,3 +230,4 @@
   </table>
 </body>
 </html>
+`;

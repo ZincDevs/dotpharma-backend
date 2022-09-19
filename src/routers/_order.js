@@ -10,11 +10,11 @@ const router = express.Router();
 
 router.post(
   '/createorder',
-  Validator('order'),
+  // Validator('order'),
   Auth.verifyAccessToken,
-  User.checkIsPatient,
-  DataExistsChecks.checkPharmacyExists,
-  DataExistsChecks.checkPatientExists,
+  // User.checkIsPatient,
+  // DataExistsChecks.checkPharmacyExists,
+  // DataExistsChecks.checkPatientExists,
   OrderController.createNewOrder
 );
 
