@@ -48,13 +48,13 @@ const MedicineController = {
     return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    const { paginate } = req;
-    const limit = paginate?.limit;
-    const offset = paginate?.offset;
+    // const { paginate } = req;
+    // const limit = paginate?.limit;
+    // const offset = paginate?.offset;
     const medicines = await Medicine.findAll({
       include: [{ model: User, as: 'user' }],
-      limit,
-      offset
+      // limit,
+      // offset
     });
     res.json(medicines);
   },
