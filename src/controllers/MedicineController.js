@@ -18,6 +18,7 @@ const MedicineController = {
       m_type: body.category,
       m_discount: body.discount || 0,
       u_id: authUser.u_id,
+      m_tags: req.body.tags || []
     };
 
     const medicine = await Medicine.create(data);

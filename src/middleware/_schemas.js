@@ -50,7 +50,7 @@ const properties = Joi.string()
   .min(3)
   .label('Medicine properties are required, must be atleast 3 letters');
 
-const decription = Joi.string()
+const description = Joi.string()
   .required()
   .min(3)
   .label('Medicine decription is required, must be atleast 10 letters');
@@ -93,6 +93,11 @@ const shortdescription = Joi.string()
   .label('Short  description is required');
 
 const refcode = Joi.string()
+  .min(3)
+  .required()
+  .label('Order reference code is required');
+
+const tags = Joi.array()
   .min(3)
   .required()
   .label('Order reference code is required');
@@ -155,12 +160,13 @@ schemas.doctor = Joi.object().keys({
 schemas.medicine = Joi.object().keys({
   name,
   properties,
-  decription,
+  description,
   image,
   price,
   category,
   discount,
-  shortdescription
+  shortdescription,
+  tags,
 });
 
 schemas.patient = Joi.object().keys({

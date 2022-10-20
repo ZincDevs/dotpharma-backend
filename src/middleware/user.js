@@ -10,8 +10,9 @@ import { getErrorMessage } from '../helpers';
 export default {
   // Supper user
   checkISAdmin: async (req, res, next) => {
-    const { authUser } = req;
-    if (authUser?.u_role === 'SUPER_ADMIN') {
+    const user = req.user || req.authUser;
+    console.log(user);
+    if (user?.u_role === 'SUPER_ADMIN') {
       next();
     } else {
       res.status(STATUSES.UNAUTHORIZED).send({

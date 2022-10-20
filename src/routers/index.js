@@ -10,6 +10,7 @@ import Patient from './_patient';
 import Tip from './_healthtips';
 import UploadFile from './_fileappload';
 import Cart from './_cart';
+import Tag from './_tags';
 
 const api = express();
 
@@ -21,6 +22,7 @@ api.use('/orders', Order);
 api.use('/appointments', Appointment);
 api.use('/patient', Patient);
 api.use('/healthtips', Tip);
+api.use('/tags', Tag);
 api.use('/cart', Cart);
 api.use('/file', UploadFile);
 api.get('/', (req, res) => {
