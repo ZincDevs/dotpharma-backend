@@ -28,6 +28,9 @@ module.exports = {
       m_type: {
         type: Sequelize.STRING
       },
+      m_tags: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
       m_short_descripption: { type: Sequelize.STRING },
       m_discount: { type: Sequelize.STRING },
       u_id: {

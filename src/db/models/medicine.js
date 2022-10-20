@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     m_type: DataTypes.STRING,
     m_short_descripption: DataTypes.STRING,
     m_discount: DataTypes.NUMBER,
+    m_tags: DataTypes.ARRAY(DataTypes.STRING),
     u_id: {
       type: DataTypes.STRING,
       references: {

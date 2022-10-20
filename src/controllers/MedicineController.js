@@ -18,6 +18,7 @@ const MedicineController = {
       m_type: body.category,
       m_discount: body.discount || 0,
       u_id: authUser.u_id,
+      m_tags: req.body.tags || []
     };
 
     const medicine = await Medicine.create(data);
@@ -48,13 +49,13 @@ const MedicineController = {
     return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    const { paginate } = req;
-    const limit = paginate?.limit;
-    const offset = paginate?.offset;
+    // const { paginate } = req;
+    // const limit = paginate?.limit;
+    // const offset = paginate?.offset;
     const medicines = await Medicine.findAll({
       include: [{ model: User, as: 'user' }],
-      limit,
-      offset
+      // limit,
+      // offset
     });
     res.json(medicines);
   },
