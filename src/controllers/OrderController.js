@@ -12,12 +12,15 @@ const OrderController = {
       o_id: uuid(),
       p_id: req.body.patid,
       o_pharmacy: req.body.phid,
-      o_medicine: req.body.mid,
+      o_medicines: req.body.medicines,
       o_prescription: req.body.prescription,
       o_date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       o_status: 'Pending',
       o_address: req.body.address,
-      o_referencecode: req.body.refcode
+      o_referencecode: req.body.refcode,
+      o_paymentamout: req.body.totalamount,
+      o_paid: false,
+      o_type: req.body.type
     };
 
     const order = await Order.create(orderPayload);

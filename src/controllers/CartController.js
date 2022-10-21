@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
 import { Cart } from '../db/models';
 
 dotenv.config();
-const UserController = {
+const CartController = {
   create: async (req, res) => {
     const { authUser: { u_id }, body: { quantity: c_quantity }, params: { m_id } } = req;
     const cartObj = {
@@ -32,6 +32,11 @@ const UserController = {
     if (result <= 0) return res.sendStatus(204);
     res.sendStatus(200);
   },
+  emptyCart: async (req, res) => {
+    let result = await Cart.destroy({ where: { } });
+    if (result <= 0) return res.sendStatus(204);
+    res.sendStatus(200);
+  },
 };
 
-export default UserController;
+export default CartController;

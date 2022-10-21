@@ -41,31 +41,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     o_prescription: DataTypes.STRING,
-    o_date: DataTypes.STRING,
     o_status: DataTypes.STRING,
     o_referencecode: DataTypes.STRING,
     o_address: DataTypes.STRING,
-    o_medicine: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'Medicine',
-        key: 'm_id'
-      }
-    },
-    o_pharmacy: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'Pharmacy',
-        key: 'ph_id'
-      }
-    },
-    p_id: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'Patient',
-        key: 'p_id'
-      }
-    },
+    o_paymentamout: DataTypes.DOUBLE,
+    o_medicines: DataTypes.ARRAY(DataTypes.STRING),
+    o_type: DataTypes.STRING,
+    o_pharmacy: DataTypes.STRING,
+    o_paid: DataTypes.BOOLEAN,
+    p_id: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,
       references: {

@@ -25,6 +25,9 @@ module.exports = {
       ph_status: {
         type: Sequelize.STRING
       },
+      ph_logo: {
+        type: Sequelize.STRING
+      },
       // u_id: {
       //   type: Sequelize.STRING
       // },
