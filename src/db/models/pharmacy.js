@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     ph_website: DataTypes.STRING,
     ph_address: DataTypes.STRING,
     ph_status: DataTypes.STRING,
+    ph_logo: DataTypes.STRING,
     // u_id: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,

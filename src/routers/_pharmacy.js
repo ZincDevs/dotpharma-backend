@@ -30,8 +30,8 @@ router.delete(
 );
 router.get(
   '/findall',
-  Auth.verifyToken,
-  AccessLevel.checkISAdmin,
+  // Auth.verifyToken,
+  // AccessLevel.checkISAdmin,
   Pharmacy.findAll
 );
 router.post(

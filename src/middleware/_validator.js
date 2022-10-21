@@ -21,6 +21,7 @@ export default (schema) => (req, res, next) => {
           allErrors.push(errors.context.label);
         }
       });
+      console.log(allErrors);
       return res.status(400).send({
         status: 400,
         error: { message: allErrors },

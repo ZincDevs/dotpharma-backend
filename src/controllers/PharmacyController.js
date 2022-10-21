@@ -18,6 +18,7 @@ const PharmacyController = {
       ph_website: req.body.website,
       ph_address: req.body.address,
       ph_status: '1',
+      ph_logo: req.body.logo,
       u_id: req.authUser.u_id,
     };
     const pharmacy = await Pharmacy.create(payload);
