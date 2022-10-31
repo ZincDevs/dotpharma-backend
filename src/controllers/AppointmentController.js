@@ -12,6 +12,8 @@ const AppointmentController = {
       p_id: req.body.patid,
       d_id: req.body.docid,
       a_desease: req.body.deasese,
+      a_type: req.body.atype,
+      cl_id: req.body.clid,
       a_status: 'pending',
     };
     const appointment = await Appointment.create(data);

@@ -18,7 +18,7 @@ router.post(
 
 router.put(
   '/updatemedicine/:m_id',
-  Validator('medicine'),
+  // Validator('medicine'),
   Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   MedicineController.updateMedicine
