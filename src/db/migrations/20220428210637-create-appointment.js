@@ -29,13 +29,6 @@ module.exports = {
       },
       cl_id: {
         type: Sequelize.STRING,
-        allowNull: true,
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Clinics',
-          key: 'c_id'
-        }
       },
       a_desease: {
         type: Sequelize.STRING

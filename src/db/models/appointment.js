@@ -45,14 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'd_id'
       }
     },
-    cl_id: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      references: {
-        model: 'Clinic',
-        key: 'c_id'
-      }
-    },
+    cl_id: DataTypes.STRING,
     a_desease: DataTypes.STRING,
     a_status: DataTypes.STRING,
     a_type: DataTypes.STRING
