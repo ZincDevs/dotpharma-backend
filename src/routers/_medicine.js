@@ -1,6 +1,6 @@
 import 'regenerator-runtime';
 import express from 'express';
-import Validator from '../middleware/_validator';
+// import Validator from '../middleware/_validator';
 import Auth from '../middleware/Auth';
 import AccessLevel from '../middleware/user';
 import MedicineController from '../controllers/MedicineController';
@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post(
   '/createnew',
-  Validator('medicine'),
+  // Validator('medicine'),
   Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   MedicineController.createMedicine
