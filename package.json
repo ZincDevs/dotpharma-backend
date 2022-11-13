@@ -11,7 +11,8 @@
     "db:migrate:reset": "npx sequelize db:migrate:undo:all",
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/index.js",
-    "db:seeds": "sequelize db:seed:all"
+    "db:seeds": "sequelize db:seed:all",
+    "db:undo:appointment":"sequelize db:migrate:undo --name 20220428210637-create-appointment.js"
   },
   "engines": {
     "npm": "7.11.1",

@@ -11,6 +11,7 @@ import Tip from './_healthtips';
 import UploadFile from './_fileappload';
 import Cart from './_cart';
 import Tag from './_tags';
+import Clinic from './_clinic';
 
 const api = express();
 
@@ -24,6 +25,7 @@ api.use('/patient', Patient);
 api.use('/healthtips', Tip);
 api.use('/tags', Tag);
 api.use('/cart', Cart);
+api.use('/clinics', Clinic);
 api.use('/file', UploadFile);
 api.get('/', (req, res) => {
   res.status(200).send({

@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     p_id: {
       type: DataTypes.STRING,
+      allowNull: true,
       references: {
         model: 'Patient',
         key: 'p_id'
@@ -38,13 +39,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     d_id: {
       type: DataTypes.STRING,
+      allowNull: true,
       references: {
         model: 'Doctor',
         key: 'd_id'
       }
     },
+    cl_id: DataTypes.STRING,
     a_desease: DataTypes.STRING,
-    a_status: DataTypes.STRING
+    a_status: DataTypes.STRING,
+    a_type: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Appointment',

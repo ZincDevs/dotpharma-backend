@@ -9,6 +9,7 @@ module.exports = {
       },
       p_id: {
         type: Sequelize.STRING,
+        allowNull: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
@@ -18,12 +19,16 @@ module.exports = {
       },
       d_id: {
         type: Sequelize.STRING,
+        allowNull: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         references: {
           model: 'Doctors',
           key: 'd_id'
         }
+      },
+      cl_id: {
+        type: Sequelize.STRING,
       },
       a_desease: {
         type: Sequelize.STRING
@@ -32,6 +37,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       a_status: {
+        type: Sequelize.STRING
+      },
+      a_type: {
         type: Sequelize.STRING
       },
       createdAt: {

@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post(
   '/createnew',
-  Validator('pharmacy'),
+  // Validator('pharmacy'),
   Auth.verifyAccessToken,
   AccessLevel.checkISAdmin,
   Pharmacy.CreatePharmacy

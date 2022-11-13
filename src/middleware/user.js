@@ -11,7 +11,6 @@ export default {
   // Supper user
   checkISAdmin: async (req, res, next) => {
     const user = req.user || req.authUser;
-    console.log(user);
     if (user?.u_role === 'SUPER_ADMIN') {
       next();
     } else {
