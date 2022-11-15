@@ -11,7 +11,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import api from './routers';
 import credentials from './middleware/Credentials';
-import { corsConfig, serverConfig, cloudConfigure } from './config';
+import { allowCORS, serverConfig, cloudConfigure } from './config';
 import db from './db/models/index';
 
 dotenv.config();
@@ -26,7 +26,7 @@ app
   .use(express.urlencoded({ limit: '25mb', extended: true }))
   .use(express.urlencoded({ extended: false }))
   .use(credentials)
-  .use(cors())
+  .use(allowCORS)
   .use(logger('dev'))
   .use(cookieParser())
   .use('/', api)
