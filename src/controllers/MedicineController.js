@@ -57,6 +57,7 @@ const MedicineController = {
       // limit,
       // offset
     });
+    console.log(medicines);
     res.json(medicines);
   },
   deleteMedicine: async (req, res) => {
