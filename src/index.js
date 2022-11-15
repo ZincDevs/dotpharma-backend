@@ -26,7 +26,7 @@ app
   .use(express.urlencoded({ limit: '25mb', extended: true }))
   .use(express.urlencoded({ extended: false }))
   .use(credentials)
-  .use(cors(corsConfig))
+  .use(cors())
   .use(logger('dev'))
   .use(cookieParser())
   .use('/', api)
