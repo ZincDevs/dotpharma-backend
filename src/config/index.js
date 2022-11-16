@@ -1,5 +1,5 @@
 import 'regenerator-runtime';
-import corsConfig, { allowCORS } from './_cors';
+import corsConfig from './_cors';
 import serverConfig from './_server';
 import databaseConfig from './_database';
 import cloudConfigure from './_cloudnary';
@@ -12,6 +12,5 @@ export {
   serverConfig,
   databaseConfig,
   cloudConfigure,
-  constants,
-  allowCORS
+  constants
 };
