@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
-import { Appointment, User } from '../db/models';
+import { Appointment } from '../db/models';
 import { sendAppointmentEmail } from '../services';
 
 const AppointmentController = {
@@ -13,6 +13,7 @@ const AppointmentController = {
       d_id: req.body.docid,
       a_desease: req.body.deasese,
       a_type: req.body.atype,
+      a_date: req.body.adate,
       cl_id: req.body.clid,
       a_status: 'pending',
     };
