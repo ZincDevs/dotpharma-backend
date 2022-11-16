@@ -10,4 +10,6 @@ export default [
   'http://localhost:8000',
   'http://localhost:3000',
   'http://localhost:3001',
+  'https://dotpharma.herokuapp.com',
+  'http://www.dotpharma.net'
 ];
