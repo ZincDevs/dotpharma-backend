@@ -11,9 +11,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import api from './routers';
 import credentials from './middleware/Credentials';
-import {
-  corsConfig, serverConfig, cloudConfigure
-} from './config';
+import { corsConfig, serverConfig, cloudConfigure } from './config';
 import db from './db/models/index';
 
 dotenv.config();
@@ -27,15 +25,15 @@ app
   .use(express.json({ limit: '25mb' }))
   .use(express.urlencoded({ limit: '25mb', extended: true }))
   .use(express.urlencoded({ extended: false }))
-  // .use(cors(corsConfig))
-  .use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  })
+  .use(
+    cors({
+      origin: '*',
+      methods: [],
+      allowedHeaders: [],
+      exposedHeaders: [],
+      credentials: true,
+    })
+  )
   .use(logger('dev'))
   .use(cookieParser())
   .use('/', api)
