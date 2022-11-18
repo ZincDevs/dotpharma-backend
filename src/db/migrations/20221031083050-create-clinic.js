@@ -19,6 +19,9 @@ module.exports = {
       c_phonenumber: {
         type: Sequelize.STRING
       },
+      specialized: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -34,7 +34,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       a_date: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE,
+        allowNull: false
       },
       a_status: {
         type: Sequelize.STRING

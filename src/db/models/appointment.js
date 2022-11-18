@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
         key: 'p_id'
       }
     },
+    a_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
     d_id: {
       type: DataTypes.STRING,
       allowNull: true,
