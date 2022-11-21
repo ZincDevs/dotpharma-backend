@@ -13,11 +13,12 @@ import { google } from 'googleapis';
 
 dotenv.config();
 const {
-  OAUTH2_USER,
+  EMAIL_SENDER,
   OAUTH2_CLIENT_ID,
   OAUTH2_CLIENT_SECRET,
   OAUTH2_REDIRECT_URI,
-  OAUTH2_REFRESH_TOKEN
+  OAUTH2_REFRESH_TOKEN,
+  PASSWORD_EMAIL_SENDER
 } = process.env;
 const oAuth2Client = new google.auth.OAuth2(OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI);
 oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
@@ -25,16 +26,15 @@ oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
 const sentMail = async (emailTo, subject, template) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
   try {
-    const OAUTH2_ACCESS_TOKEN = await oAuth2Client.getAccessToken();
-    const transport = mailer.createTransport({
-      service: 'Gmail',
+    const transporter = mailer.createTransport({
+      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: false,
+      pool: true,
       auth: {
-        type: 'OAuth2',
-        user: OAUTH2_USER,
-        clientId: OAUTH2_CLIENT_ID,
-        clientSecret: OAUTH2_CLIENT_SECRET,
-        refreshToken: OAUTH2_REFRESH_TOKEN,
-        accessToken: OAUTH2_ACCESS_TOKEN,
+        user: EMAIL_SENDER,
+        pass: PASSWORD_EMAIL_SENDER,
       }
     });
 
@@ -46,11 +46,16 @@ const sentMail = async (emailTo, subject, template) => {
       generateTextFromHTML: true,
     };
 
-    const res = await transport.sendMail(mailOptions);
-    res.accepted ? console.log(`PID: ${process.pid} === EMAIL SENT ===`)
-      : console.log(`PID: ${process.pid} === EMAIL NOT SENT ===`);
-
-    return res;
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(`Email sent: ${info.response}`);
+      }
+    });
+    // const res = await transport.sendMail(mailOptions);
+    // res.accepted ? console.log(`PID: ${process.pid} === EMAIL SENT ===`)
+    //   : console.log(`PID: ${process.pid} === EMAIL NOT SENT ===`);
   } catch (error) {
     return error;
   }
