@@ -28,10 +28,6 @@ const sentMail = async (emailTo, subject, template) => {
   try {
     const transporter = mailer.createTransport({
       service: 'gmail',
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: false,
-      pool: true,
       auth: {
         user: EMAIL_SENDER,
         pass: PASSWORD_EMAIL_SENDER,
@@ -53,18 +49,9 @@ const sentMail = async (emailTo, subject, template) => {
         console.log(`Email sent: ${info.response}`);
       }
     });
-    // const res = await transport.sendMail(mailOptions);
-    // res.accepted ? console.log(`PID: ${process.pid} === EMAIL SENT ===`)
-    //   : console.log(`PID: ${process.pid} === EMAIL NOT SENT ===`);
   } catch (error) {
     return error;
   }
 };
-
-// sentMail('ericrukundo005@gmai.com', 'Email', '<h1>Hire here</h1>').then((res) => {
-//   console.log(res);
-// }).catch((error) => {
-//   console.log(error);
-// });
 
 export default sentMail;
