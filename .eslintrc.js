@@ -29,7 +29,8 @@ module.exports = {
         MethodDefinition: true,
         ClassDeclaration: true
       }
-    }]
+    }],
+    'linebreak-style': 0
   },
   parser: '@babel/eslint-parser',
   parserOptions: {
