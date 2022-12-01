@@ -12,19 +12,41 @@ const ClinicsController = {
       c_email: req.body.cemail,
       c_phonenumber: req.body.cphone,
       c_logo: req.body.clogo,
+      specialized: req.body.specialized,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     const createClinic = await Clinic.create(data);
     if (!createClinic) return res.sendStatus(500);
-    return res.sendStatus(201);
+    return res.status(201).send(createClinic);
   },
   findAll: async (req, res) => {
-    const { paginate } = req;
-    // const limit = paginate?.limit;
-    // const offset = paginate?.offset;
     const clinics = await Clinic.findAll();
     return res.json(clinics);
+  },
+  updatePharmacy: async (req, res) => {
+    const payload = {
+      c_name: req.body.name,
+      c_email: req.body.email,
+      c_phonenumber: req.body.phone,
+      specialized: req.body.specialized
+    };
+    const { c_id } = req.params;
+
+    const clinic = await Clinic.update(payload, { where: { c_id } });
+    if (clinic[0] === 0) {
+      return res.sendStatus(400);
+    }
+    return res.sendStatus(200);
+  },
+  deletePharmacy: async (req, res) => {
+    const { c_id } = req.params;
+    const clinic = await Clinic.findOne({ where: { c_id } });
+    if (!clinic) {
+      return res.sendStatus(400);
+    }
+    await clinic.destroy();
+    return res.sendStatus(200);
   },
 };
 

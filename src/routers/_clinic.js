@@ -11,16 +11,13 @@ const router = express.Router();
 
 router.post(
   '/createclinic',
-  // Validator('appointment'),
   Auth.verifyAccessToken,
-  // User.checkIsPatient,
-  // CheckDataExists.checkDoctorExists,
   ClinicsController.createClinic
 );
-
 router.get(
   '/findall',
   ClinicsController.findAll
 );
-
+router.put('/updateclinic/:c_id', ClinicsController.updatePharmacy);
+router.delete('/deleteclinic/:c_id', ClinicsController.deletePharmacy);
 export default router;
