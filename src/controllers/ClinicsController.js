@@ -16,9 +16,9 @@ const ClinicsController = {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    const createClinic = await Clinic.create(data);
-    if (!createClinic) return res.sendStatus(500);
-    return res.status(201).send(createClinic);
+    const clinic = await Clinic.create(data);
+    if (!clinic) return res.sendStatus(500);
+    return res.status(201).send(clinic);
   },
   findAll: async (req, res) => {
     const clinics = await Clinic.findAll();
