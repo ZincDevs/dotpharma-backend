@@ -7,6 +7,12 @@ import DoctorController from '../controllers/DoctorController';
 import Paginate from '../middleware/Paginate';
 
 const router = express.Router();
+router.post(
+  '/createdoctor',
+  Auth.verifyAccessToken,
+  AccessLevel.checkISAdmin,
+  DoctorController.createDoctor
+);
 
 router.put(
   '/updatedoctor/:d_id',
@@ -22,7 +28,7 @@ router.get(
   DoctorController.findAll
 );
 router.delete(
-  '/deletedoctor/:did',
+  '/deletedoctor/:d_id',
   Auth.verifyToken,
   AccessLevel.checkISAdmin,
   DoctorController.deleteDoctor

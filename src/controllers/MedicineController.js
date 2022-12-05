@@ -29,8 +29,6 @@ const MedicineController = {
     const { body, authUser } = req;
     const { m_id } = req.params;
     const data = {
-
-      // req.params.mid,
       m_name: body.name,
       m_properties: body.properties,
       m_desciption: body.description,
@@ -41,6 +39,7 @@ const MedicineController = {
       m_discount: body.discount || 0,
       m_status: '1',
       u_id: authUser.u_id,
+      m_tags: body.m_tags
     };
     const medicine = await Medicine.update(data, { where: { m_id } });
     if (medicine[0] === 0) {
