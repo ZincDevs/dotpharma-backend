@@ -9,6 +9,7 @@ import { sendOrderRequestEmail } from '../services';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
+    console.log(req.body.ref);
     const orderPayload = {
       o_id: uuid(),
       p_id: req.body.patid,
@@ -20,6 +21,7 @@ const OrderController = {
       o_address: req.body.address,
       o_referencecode: req.body.refcode,
       o_paymentamout: req.body.totalamount,
+      o_payment_ref: req.body.ref,
       o_paid: true,
       o_type: req.body.type
     };

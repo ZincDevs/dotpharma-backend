@@ -21,6 +21,9 @@ module.exports = {
       o_address: {
         type: Sequelize.STRING
       },
+      o_payment_ref: {
+        type: Sequelize.STRING
+      },
       u_id: {
         type: Sequelize.STRING,
         onUpdate: 'CASCADE',

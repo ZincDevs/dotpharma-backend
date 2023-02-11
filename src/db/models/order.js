@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     o_type: DataTypes.STRING,
     o_pharmacy: DataTypes.STRING,
     o_paid: DataTypes.BOOLEAN,
+    o_payment_ref: DataTypes.STRING,
     p_id: DataTypes.STRING,
     u_id: {
       type: DataTypes.STRING,
