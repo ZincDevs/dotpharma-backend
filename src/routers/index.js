@@ -12,6 +12,7 @@ import UploadFile from './_fileappload';
 import Cart from './_cart';
 import Tag from './_tags';
 import Clinic from './_clinic';
+import Payment from './_payment';
 
 const api = express();
 
@@ -27,6 +28,7 @@ api.use('/tags', Tag);
 api.use('/cart', Cart);
 api.use('/clinics', Clinic);
 api.use('/file', UploadFile);
+api.use('/payment', Payment);
 api.get('/', (req, res) => {
   res.status(200).send({
     status: 200,

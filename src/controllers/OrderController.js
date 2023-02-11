@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
@@ -19,7 +20,7 @@ const OrderController = {
       o_address: req.body.address,
       o_referencecode: req.body.refcode,
       o_paymentamout: req.body.totalamount,
-      o_paid: false,
+      o_paid: true,
       o_type: req.body.type
     };
 
@@ -27,9 +28,9 @@ const OrderController = {
     if (!order) {
       return res.sendStatus(400);
     }
-    sendOrderRequestEmail({
-      email: 'benshidanny11@gmail.com', orderid: order.o_id, name: req.body.name, phonenumber: req.body.address.split(',')[0]
-    });
+    // sendOrderRequestEmail({
+    //   email: 'benshidanny11@gmail.com', orderid: order.o_id, name: req.body.name, phonenumber: req.body.address.split(',')[0]
+    // });
     return res.sendStatus(201);
   },
   update: async (req, res) => {

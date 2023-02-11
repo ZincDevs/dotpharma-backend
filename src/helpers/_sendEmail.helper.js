@@ -18,19 +18,28 @@ const {
   OAUTH2_CLIENT_SECRET,
   OAUTH2_REDIRECT_URI,
   OAUTH2_REFRESH_TOKEN,
-  PASSWORD_EMAIL_SENDER
+  PASSWORD_EMAIL_SENDER,
+  MAIL_SENDER_HOST,
+  MAIL_SENDER_PORT
 } = process.env;
-const oAuth2Client = new google.auth.OAuth2(OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI);
-oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
+// const oAuth2Client = new google.auth.OAuth2(OAUTH2_CLIENT_ID, OAUTH2_CLIENT_SECRET, OAUTH2_REDIRECT_URI);
+// oAuth2Client.setCredentials({ refresh_token: OAUTH2_REFRESH_TOKEN });
 
 const sentMail = async (emailTo, subject, template) => {
   console.log(`PID: ${process.pid} === SENDING EMAIL ===`);
   try {
     const transporter = mailer.createTransport({
-      service: 'gmail',
+      name: 'dotpharma.rw',
+      host: MAIL_SENDER_HOST,
+      port: MAIL_SENDER_PORT,
+      secure: false,
       auth: {
         user: EMAIL_SENDER,
         pass: PASSWORD_EMAIL_SENDER,
+      },
+      tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false
       }
     });
 

@@ -12,6 +12,7 @@ import {
 import { generatePassword } from './_password.helper';
 import { getErrorMessage } from './_errorHandler.helper';
 import { getPagination } from './_pagination.helper';
+import { getAccessToken } from './_paymentAccessToken';
 
 export {
   sendEmail,
@@ -23,5 +24,6 @@ export {
   generateAccessToken,
   generateUserVerificationToken,
   generateRefreshToken,
-  generatePasswordResetToken
+  generatePasswordResetToken,
+  getAccessToken
 };

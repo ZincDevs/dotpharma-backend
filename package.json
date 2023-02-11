@@ -12,7 +12,7 @@
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/index.js",
     "db:seeds": "sequelize db:seed:all",
-    "db:undo:appointment":"sequelize db:migrate:undo --name 20220428210637-create-appointment.js"
+    "db:undo:appointment": "sequelize db:migrate:undo --name 20220428210637-create-appointment.js"
   },
   "engines": {
     "npm": "7.11.1",
@@ -30,6 +30,7 @@
     "@babel/runtime": "^7.17.9",
     "@hapi/joi": "*",
     "@sendgrid/mail": "^7.6.2",
+    "axios": "^1.3.2",
     "babel-loader": "^8.2.5",
     "babel-minify-webpack-plugin": "^0.3.1",
     "bcrypt": "^5.0.1",
@@ -54,6 +55,7 @@
     "nodemailer-sendgrid-transport": "^0.2.0",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "randomstring": "^1.2.3",
     "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.19.0",
     "sequelize-cli": "^6.4.1",
