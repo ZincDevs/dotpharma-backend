@@ -27,7 +27,9 @@ const { httpOnlyCookieOptions: cookieOptions } = serverConfig;
 dotenv.config();
 const UserController = {
   login: async (req, res) => {
-    const { user: { u_id, u_email, u_role } } = req;
+    const {
+      user: { u_id, u_email, u_role },
+    } = req;
     const userData = { u_id, u_email, u_role };
     const access_token = await generateAccessToken(userData);
     const refresh_token = await generateRefreshToken(userData);
@@ -36,56 +38,65 @@ const UserController = {
       return res.sendStatus(500);
     }
     res
-      .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .cookie('refresh_token', refresh_token, {
+        ...cookieOptions,
+        maxAge: 24 * 60 * 60 * 1000,
+      })
       .json({ access_token, userData });
   },
   googleAuth: async (req, res) => {
     const { token } = req.body;
     if (!token) return res.sendStatus(401);
     const client = new OAuth2Client(process.env.OAUTH2_CLIENT_ID);
-    client.verifyIdToken({
-      idToken: token,
-      audience: process.env.OAUTH2_CLIENT_ID
-    }, async (err, result) => {
-      if (err || !result) return res.senStatus(403);
-      const {
-        payload: {
-          email, email_verified, jti, name,
-        }
-      } = result;
-      // Check if user exist or not
-      let user = await User.findOne({ where: { u_email: email } });
-      user = user?.dataValues;
-      // If user does not exist, the create em
-      if (!user) {
-        const userObject = {
-          u_id: uuid(),
-          u_email: email,
-          u_password: jti,
-          u_role: 'PATIENT',
-          verified: email_verified,
-          blocked: false,
-        };
-        user = await User.create(userObject);
+    client.verifyIdToken(
+      {
+        idToken: token,
+        audience: process.env.OAUTH2_CLIENT_ID,
+      },
+      async (err, result) => {
+        if (err || !result) return res.status(403);
+        const {
+          payload: {
+            email, email_verified, jti, name
+          },
+        } = result;
+        // Check if user exist or not
+        let user = await User.findOne({ where: { u_email: email } });
         user = user?.dataValues;
-        if (!user) return res.sendStatus(500);
-        const patientObject = {
-          p_id: uuid(),
-          p_name: name,
-          p_email: user.u_email,
-          u_id: user.u_id,
-        };
-        await Patient.create(patientObject);
+        // If user does not exist, the create em
+        if (!user) {
+          const userObject = {
+            u_id: uuid(),
+            u_email: email,
+            u_password: jti,
+            u_role: 'PATIENT',
+            verified: email_verified,
+            blocked: false,
+          };
+          user = await User.create(userObject);
+          user = user?.dataValues;
+          if (!user) return res.sendStatus(500);
+          const patientObject = {
+            p_id: uuid(),
+            p_name: name,
+            p_email: user.u_email,
+            u_id: user.u_id,
+          };
+          await Patient.create(patientObject);
+        }
+        const { u_id, u_email, u_role } = user;
+        const userData = { u_id, u_email, u_role };
+        const access_token = await generateAccessToken(userData);
+        const refresh_token = await generateRefreshToken(userData);
+        await User.update({ refresh_token }, { where: { u_email } });
+        res
+          .cookie('refresh_token', refresh_token, {
+            ...cookieOptions,
+            maxAge: 24 * 60 * 60 * 1000,
+          })
+          .json({ access_token, userData });
       }
-      const { u_id, u_email, u_role } = user;
-      const userData = { u_id, u_email, u_role };
-      const access_token = await generateAccessToken(userData);
-      const refresh_token = await generateRefreshToken(userData);
-      await User.update({ refresh_token }, { where: { u_email } });
-      res
-        .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
-        .json({ access_token, userData });
-    });
+    );
   },
   refreshToken: async (req, res) => {
     const { cookies } = req;
@@ -95,15 +106,17 @@ const UserController = {
     user = user?.dataValues;
     if (!user) return res.sendStatus(403);
     decodeJWT(refresh_token, async (err, decoded) => {
-      if (err || !decoded?.u_email || decoded?.u_email !== user.u_email) return res.sendStatus(403);
-      const access_token = await generateAccessToken({ u_email: decoded?.u_email });
+      if (err || !decoded?.u_email || decoded?.u_email !== user.u_email) { return res.sendStatus(403); }
+      const access_token = await generateAccessToken({
+        u_email: decoded?.u_email,
+      });
       res.json({
         access_token,
         userData: {
           u_id: user?.u_id,
           u_email: user?.u_email,
           u_role: user?.u_role,
-        }
+        },
       });
     });
   },
@@ -119,9 +132,7 @@ const UserController = {
       return res.sendStatus(204);
     }
     await User.update({ refresh_token: null }, { where: { u_email } });
-    res
-      .clearCookie('refresh_token', { ...cookieOptions })
-      .sendStatus(204);
+    res.clearCookie('refresh_token', { ...cookieOptions }).sendStatus(204);
   },
   createUser: async (req, res) => {
     const { authUser, body } = req;
@@ -146,7 +157,7 @@ const UserController = {
       d_clinic: body.clinic,
       d_image: body.image,
       u_id: newUser.u_id,
-      creator: authUser.u_id
+      creator: authUser.u_id,
     };
     let newDoctor = await Doctor.create(doctorObject);
     newDoctor = newDoctor?.dataValues;
@@ -174,7 +185,9 @@ const UserController = {
       };
       await Patient.create(patientObject);
     }
-    const verify_token = await generateUserVerificationToken({ u_email: newUser.u_email });
+    const verify_token = await generateUserVerificationToken({
+      u_email: newUser.u_email,
+    });
     sendVerification({ email: req.body.email, token: verify_token });
     res.sendStatus(201);
   },
@@ -183,14 +196,17 @@ const UserController = {
     const result = await User.update({ verified: true }, { where: { u_id } });
     if (!result.includes(1)) {
       return res.status(500).json({
-        error: getErrorMessage('email', 'Account not activated')
+        error: getErrorMessage('email', 'Account not activated'),
       });
     }
     const userData = { u_id, u_email, u_role };
     const access_token = await generateAccessToken(userData);
     const refresh_token = await generateRefreshToken(userData);
     res
-      .cookie('refresh_token', refresh_token, { ...cookieOptions, maxAge: 24 * 60 * 60 * 1000 })
+      .cookie('refresh_token', refresh_token, {
+        ...cookieOptions,
+        maxAge: 24 * 60 * 60 * 1000,
+      })
       .json({ access_token, userData });
   },
   resendVerification: async (req, res) => {
@@ -206,20 +222,41 @@ const UserController = {
     const limit = paginate?.limit;
     const offset = paginate?.offset;
     const users = await User.findAll({
-      attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
-      include: [{ model: Patient, as: 'patients' }, { model: Doctor, as: 'doctors' }],
+      attributes: [
+        'u_id',
+        'u_email',
+        'u_role',
+        'verified',
+        'blocked',
+        'updatedAt',
+        'createdAt',
+      ],
+      include: [
+        { model: Patient, as: 'patients' },
+        { model: Doctor, as: 'doctors' },
+      ],
       limit,
-      offset
+      offset,
     });
     res.status(200).json({
       users,
     });
   },
   findOne: async (req, res) => {
-    const { params: { u_id } } = req;
+    const {
+      params: { u_id },
+    } = req;
     let user = await User.findOne({
       where: { u_id },
-      attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
+      attributes: [
+        'u_id',
+        'u_email',
+        'u_role',
+        'verified',
+        'blocked',
+        'updatedAt',
+        'createdAt',
+      ],
       include: [
         { model: Patient, as: 'patients' },
         { model: Doctor, as: 'doctors' },
@@ -233,12 +270,26 @@ const UserController = {
   },
   getMyProfile: async (req, res) => {
     try {
-      const { authUser: { u_id } } = req;
+      const {
+        authUser: { u_id },
+      } = req;
       let user = await User.findOne({
         where: { u_id },
-        attributes: ['u_id', 'u_email', 'u_role', 'verified', 'blocked', 'updatedAt', 'createdAt'],
+        attributes: [
+          'u_id',
+          'u_email',
+          'u_role',
+          'verified',
+          'blocked',
+          'updatedAt',
+          'createdAt',
+        ],
         include: [
-          { model: Cart, as: 'cart', include: [{ model: Medicine, as: 'medicine' }] },
+          {
+            model: Cart,
+            as: 'cart',
+            include: [{ model: Medicine, as: 'medicine' }],
+          },
           { model: Patient, as: 'patients' },
           { model: Doctor, as: 'doctors' },
           { model: Order, as: 'orders' },
@@ -247,9 +298,13 @@ const UserController = {
       user = user.dataValues;
       let totalCartAmount = 0;
       user.cart.forEach((c) => {
-        totalCartAmount += (Number(c.dataValues.c_quantity) * Number(c.dataValues.medicine.dataValues.m_price));
+        totalCartAmount
+          += Number(c.dataValues.c_quantity)
+          * Number(c.dataValues.medicine.dataValues.m_price);
       });
-      user.cart.push({ totalCartAmount });
+      if (totalCartAmount > 0) {
+        user.cart.push({ totalCartAmount });
+      }
       if (!user) return res.sendStatus(204);
       res.json({
         user,
@@ -316,7 +371,10 @@ const UserController = {
   requestPasswordReset: async (req, res) => {
     const { u_email } = req.user;
     const passoword_reset_token = await generatePasswordResetToken({ u_email });
-    sendPasswordResetConfirmation({ email: req.body.email, token: passoword_reset_token });
+    sendPasswordResetConfirmation({
+      email: req.body.email,
+      token: passoword_reset_token,
+    });
     res.json({
       message: 'Password reset confirmation is sent',
     });
@@ -335,7 +393,10 @@ const UserController = {
   resendPasswordReset: async (req, res) => {
     const { u_email } = req.user;
     const passoword_reset_token = await generatePasswordResetToken({ u_email });
-    sendPasswordResetConfirmation({ email: req.body.email, token: passoword_reset_token });
+    sendPasswordResetConfirmation({
+      email: req.body.email,
+      token: passoword_reset_token,
+    });
     res.json({
       message: 'Password reset confirmation is sent',
     });

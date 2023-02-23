@@ -6,5 +6,6 @@ dotenv.config();
 const { PAY_PACK_REFRESH_TOKEN, PAY_PACK_API_LINK } = process.env;
 export const getAccessToken = async () => {
   const response = await axios.get(`${PAY_PACK_API_LINK}/auth/refresh/${PAY_PACK_REFRESH_TOKEN}`);
+  console.log(response.data.access);
   return response.data.access;
 };

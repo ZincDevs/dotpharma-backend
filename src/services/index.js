@@ -5,11 +5,13 @@ import {
   sendPasswordResetConfirmationService as sendPasswordResetConfirmation,
   sendOrderRequestEmail,
   sendAppointmentEmail,
+  sendOrderSucccesToPatientEmail
 } from './_sendMail.service';
 
 export {
   sendVerification,
   sendPasswordResetConfirmation,
   sendOrderRequestEmail,
-  sendAppointmentEmail
+  sendAppointmentEmail,
+  sendOrderSucccesToPatientEmail
 };

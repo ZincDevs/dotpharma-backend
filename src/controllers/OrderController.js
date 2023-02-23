@@ -4,8 +4,14 @@
 import 'regenerator-runtime';
 import moment from 'moment';
 import { v4 as uuid } from 'uuid';
-import { Order } from '../db/models';
-import { sendOrderRequestEmail } from '../services';
+import dotev from 'dotenv';
+import { sendOrderRequestEmail, sendOrderSucccesToPatientEmail } from '../services';
+import { User, Order } from '../db/models';
+import { productList } from '../helpers/_products.helper';
+
+dotev.config();
+
+const { DOPHARMA_EMAIL } = process.env;
 
 const OrderController = {
   createNewOrder: async (req, res) => {
@@ -22,16 +28,24 @@ const OrderController = {
       o_paymentamout: req.body.totalamount,
       o_payment_ref: req.body.ref,
       o_paid: true,
-      o_type: req.body.type
+      o_type: req.body.type,
     };
 
     const order = await Order.create(orderPayload);
+
     if (!order) {
       return res.sendStatus(400);
     }
-    // sendOrderRequestEmail({
-    //   email: 'benshidanny11@gmail.com', orderid: order.o_id, name: req.body.name, phonenumber: req.body.address.split(',')[0]
-    // });
+    sendOrderRequestEmail({
+      email: DOPHARMA_EMAIL,
+      orderid: order.o_id,
+      name: req.body.name,
+      phonenumber: req.body.address.split(',')[0],
+    });
+    const products = await productList(req.body.medicines);
+    sendOrderSucccesToPatientEmail({
+      email: req.body.p_email, orderid: req.body.refcode, products, totalamount: req.body.totalamount
+    });
     return res.sendStatus(201);
   },
   update: async (req, res) => {
@@ -61,7 +75,7 @@ const OrderController = {
   },
   approve: async (req, res) => {
     const payload = {
-      o_status: 'approved'
+      o_status: 'approved',
     };
     const { o_id } = req.params;
     const appointment = await Order.update(payload, { where: { o_id } });
@@ -72,7 +86,7 @@ const OrderController = {
   },
   reject: async (req, res) => {
     const payload = {
-      o_status: 'rejected'
+      o_status: 'rejected',
     };
     const { o_id } = req.params;
     const appointment = await Order.update(payload, { where: { o_id } });
@@ -87,7 +101,7 @@ const OrderController = {
     const offset = paginate?.offset;
     const orders = await Order.findAll({
       limit,
-      offset
+      offset,
     });
     return res.json(orders);
   },
@@ -99,7 +113,7 @@ const OrderController = {
     const orders = await Order.findAll({
       limit,
       offset,
-      where: { o_status }
+      where: { o_status },
     });
     return res.json(orders);
   },
@@ -111,7 +125,7 @@ const OrderController = {
     const orders = await Order.findAll({
       limit,
       offset,
-      where: { o_status }
+      where: { o_status },
     });
     return res.json(orders);
   },

@@ -33,6 +33,7 @@ const PaymentController = {
         response.data
       );
     } catch (e) {
+      console.log(e);
       res.status(500).send({ message: 'Unknown error occured' });
     }
   },

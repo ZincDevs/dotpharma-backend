@@ -1,7 +1,6 @@
 import 'regenerator-runtime';
 
-export default (link, phoneNumber) => `
-<!DOCTYPE html>
+export default (orderId, products, totalamount) => `<!DOCTYPE html>
 <html>
 
 <head>
@@ -140,10 +139,6 @@ export default (link, phoneNumber) => `
 </head>
 
 <body style="background-color: #e9ecef;">
-  <!-- <div class="preheader"
-    style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    Welcome to DotPharma. Here is your account verification link.
-  </div> -->
   <table border="0" cellpadding="0" cellspacing="0" width="100%">
     <tr>
       <td align="center" bgcolor="#e9ecef">
@@ -167,11 +162,11 @@ export default (link, phoneNumber) => `
         <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
             <td align="left" bgcolor="#ffffff"
-              style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #2B8DD0;">
-              <h1
-                style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px; color: #797979;">
-                 Someone ordered dotpharma
-                </h1>
+              style="padding:  10px 24px 10px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #2B8DD0;">
+              <h2
+                style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: -1px; line-height: 48px; color: #797979;">
+                 You successfully paid for order ${orderId}
+                </h2>
             </td>
           </tr>
         </table>
@@ -179,42 +174,35 @@ export default (link, phoneNumber) => `
     </tr>
     <tr>
       <td align="center" bgcolor="#e9ecef">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
-          <tr>
-            <td align="left" bgcolor="#ffffff"
-              style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;"></p>
+        <table border="1" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+          <thead>
+           <tr style="height: 45px;">
+            <th>No</th><th>Product name</th><th>Product price</th>
+           </tr>
+          </thead>
+          ${products.map((product, index) => `<tr>
+            <td bgcolor="#ffffff" style=" padding: 9px;">
+             ${index + 1}
             </td>
-          </tr>
-          <tr>
-            <td align="left" bgcolor="#ffffff">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                  <td align="center" bgcolor="#ffffff" style="padding: 12px;">
-                    <table border="0" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td align="center" style="border-radius: 6px;">
-                         <p> A patient with phone number: ${phoneNumber} Ordered products</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td align="center" style="border-radius: 6px;">
-                          <a href="${link}" target="_blank"
-                            style="display: inline-block; padding: 16px 36px; font-family: 'Dosis', sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px; background-color: #2B8DD0; border-radius: 0;">
-                            Click here to open order
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
+            <td bgcolor="#ffffff" style=" padding: 12px;">
+              ${product.dataValues.m_name}
+             </td>
+             <td bgcolor="#ffffff" style=" padding: 12px; text-align: end;">
+              ${product.dataValues.m_price} RWF
+             </td>
+          </tr>`)}
+          <tr style="background-color: #2B8DD0; color: #ffffff;">
+            <td colspan="2">
+             <strong style="color: #ffffff;">Total paid:</Strong>
             </td>
+            <td style="text-align: end; padding: 12px;">
+              ${totalamount} RWF
+             </td>
           </tr>
           <tr>
             <td align="left" bgcolor="#ffffff"
-              style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #2B8DD0">
-              <p style="margin: 0;">Cheers,<br> DotPharma</p>
+              style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-bottom: 3px solid #2B8DD0" colspan="3">
+              <p style="margin: 0;">Cheers, DotPharma</p>
             </td>
           </tr>
         </table>
