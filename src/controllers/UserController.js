@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 /* eslint-disable prefer-destructuring */
@@ -244,6 +245,11 @@ const UserController = {
         ],
       });
       user = user.dataValues;
+      let totalCartAmount = 0;
+      user.cart.forEach((c) => {
+        totalCartAmount += (Number(c.dataValues.c_quantity) * Number(c.dataValues.medicine.dataValues.m_price));
+      });
+      user.cart.push({ totalCartAmount });
       if (!user) return res.sendStatus(204);
       res.json({
         user,

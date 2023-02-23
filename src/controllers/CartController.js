@@ -21,7 +21,7 @@ const CartController = {
   },
   update: async (req, res) => {
     const { body: { quantity: c_quantity }, params: { c_id } } = req;
-    let result = await Cart.update({ c_quantity }, { where: { m_id: c_id } });
+    let result = await Cart.update({ c_quantity }, { where: { c_id } });
     if (!result.includes(1)) return res.sendStatus(204);
 
     res.sendStatus(200);

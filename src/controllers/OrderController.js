@@ -9,7 +9,6 @@ import { sendOrderRequestEmail } from '../services';
 
 const OrderController = {
   createNewOrder: async (req, res) => {
-    console.log(req.body.ref);
     const orderPayload = {
       o_id: uuid(),
       p_id: req.body.patid,
