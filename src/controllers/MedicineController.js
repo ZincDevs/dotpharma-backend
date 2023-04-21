@@ -28,6 +28,7 @@ const MedicineController = {
   updateMedicine: async (req, res) => {
     const { body, authUser } = req;
     const { m_id } = req.params;
+    console.log(body.image);
     const data = {
       m_name: body.name,
       m_properties: body.properties,
