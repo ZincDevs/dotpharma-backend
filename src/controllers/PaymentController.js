@@ -14,7 +14,6 @@ const PaymentController = {
 
       const { number, amount } = req.body;
       const indepontencyKey = randomstring.generate(32);
-
       const response = await axios.post(
         `${PAY_PACK_API_LINK}/transactions/cashin?Idempotency-Key=${indepontencyKey}`,
         {
@@ -29,6 +28,7 @@ const PaymentController = {
           }
         }
       );
+
       res.status(201).send(
         response.data
       );
