@@ -52,7 +52,7 @@ export const sendOrderRequestEmail = (data) => {
     process.env.FRONTEND_HOST_LOCAL
       ? process.env.FRONTEND_HOST_LOCAL
       : process.env.FRONTEND_HOST
-  }/admin/orders/`;
+  }/admin/orders?oid=${data.orderid}`;
   sendMailWorker(
     data,
     'Order request ',

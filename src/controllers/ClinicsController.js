@@ -29,7 +29,8 @@ const ClinicsController = {
       c_name: req.body.name,
       c_email: req.body.email,
       c_phonenumber: req.body.phone,
-      specialized: req.body.specialized
+      specialized: req.body.specialized,
+      c_logo: req.body.logo,
     };
     const { c_id } = req.params;
 
