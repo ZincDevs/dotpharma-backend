@@ -17,4 +17,7 @@ router.get(
 );
 router.put('/updateclinic/:c_id', Auth.verifyAccessToken, AccessLevel.checkISAdmin, ClinicsController.updatePharmacy);
 router.delete('/deleteclinic/:c_id', Auth.verifyAccessToken, AccessLevel.checkISAdmin, ClinicsController.deletePharmacy);
+router.put('/addinsurancetoclinic', Auth.verifyAccessToken, AccessLevel.checkISAdmin, ClinicsController.createInurance);
+router.get('/findclinicinsuraces/:cid', ClinicsController.findClinicInsurances);
+router.get('/findallinsurances', ClinicsController.findAllInsurances);
 export default router;
