@@ -49,15 +49,16 @@ const MedicineController = {
     return res.sendStatus(200);
   },
   findAll: async (req, res) => {
-    // const { paginate } = req;
-    // const limit = paginate?.limit;
-    // const offset = paginate?.offset;
+    const { paginate } = req;
+    const limit = paginate?.limit;
+    const offset = paginate?.offset;
+    const count = await Medicine.count();
     const medicines = await Medicine.findAll({
       include: [{ model: User, as: 'user' }],
-      // limit,
-      // offset
+      limit,
+      offset
     });
-    res.json(medicines);
+    res.json({ medicines, count });
   },
   deleteMedicine: async (req, res) => {
     const { m_id } = req.params;
