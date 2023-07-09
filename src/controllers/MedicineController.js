@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
+import Sequelize from 'sequelize';
 import { Medicine, User } from '../db/models';
 
 const MedicineController = {
@@ -54,6 +55,9 @@ const MedicineController = {
     const offset = paginate?.offset;
     const count = await Medicine.count();
     const medicines = await Medicine.findAll({
+      order: [
+        Sequelize.literal("m_tags @> ARRAY['Popular']::varchar[] DESC"),
+      ],
       include: [{ model: User, as: 'user' }],
       limit,
       offset
