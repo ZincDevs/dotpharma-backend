@@ -33,8 +33,8 @@ const HealthTipController = {
     return res.sendStatus(200);
   },
   delete: async (req, res) => {
-    const { m_id } = req.params;
-    const healthTip = await HealthTip.findOne({ where: { m_id } });
+    const { hid } = req.params;
+    const healthTip = await HealthTip.findOne({ where: { h_id: hid } });
     if (!healthTip) {
       return res.sendStatus(400);
     }
