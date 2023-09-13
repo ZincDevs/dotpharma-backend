@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import dotev from 'dotenv';
 import { Appointment } from '../db/models';
 import { sendAppointmentEmail } from '../services';
+import { sendSms } from '../helpers/_sendSMS';
 
 dotev.config();
 
@@ -32,6 +33,10 @@ const AppointmentController = {
       appointment: appointment.a_id,
       name: req.body.name,
       phonenumber: req.body.phone
+    });
+    await sendSms({
+      sender: 'Dotpharma',
+      body: `${req.body.name} with phone number ${req.body.phone}, has made a ${req.body.atype}. Check in dashboard.`
     });
     return res.sendStatus(201);
   },

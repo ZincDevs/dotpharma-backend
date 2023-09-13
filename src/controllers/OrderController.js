@@ -8,6 +8,7 @@ import dotev from 'dotenv';
 import { sendOrderRequestEmail, sendOrderSucccesToPatientEmail } from '../services';
 import { User, Order } from '../db/models';
 import { productList } from '../helpers/_products.helper';
+import { sendSms } from '../helpers/_sendSMS';
 
 dotev.config();
 
@@ -45,6 +46,10 @@ const OrderController = {
     const products = await productList(req.body.medicines);
     sendOrderSucccesToPatientEmail({
       email: req.body.p_email, orderid: req.body.refcode, products, totalamount: req.body.totalamount
+    });
+    await sendSms({
+      sender: 'DotpharmaOrder',
+      body: `${req.body.name} with phone number ${req.body.address.split(',')[0]}, has ordered products. Chek`
     });
     return res.sendStatus(201);
   },
