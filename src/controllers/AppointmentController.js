@@ -1,9 +1,13 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import 'regenerator-runtime';
 import { v4 as uuid } from 'uuid';
+import dotev from 'dotenv';
 import { Appointment } from '../db/models';
 import { sendAppointmentEmail } from '../services';
+
+dotev.config();
 
 const AppointmentController = {
   createAppointment: async (req, res) => {
@@ -15,13 +19,19 @@ const AppointmentController = {
       a_type: req.body.atype,
       a_date: req.body.adate,
       cl_id: req.body.clid,
+      p_phone: req.body.phone,
+      p_email: req.body.email,
+      p_name: req.body.name,
       a_status: 'pending',
     };
     const appointment = await Appointment.create(data);
     if (!appointment) return res.sendStatus(500);
 
     sendAppointmentEmail({
-      email: 'benshidanny11@gmail.com', appointment: appointment.a_id, name: req.body.name, phonenumber: req.body.phone
+      email: process.env.DOTPHARMA_EMAL_FORWARD_TO,
+      appointment: appointment.a_id,
+      name: req.body.name,
+      phonenumber: req.body.phone
     });
     return res.sendStatus(201);
   },

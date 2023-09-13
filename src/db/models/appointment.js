@@ -49,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
         key: 'd_id'
       }
     },
+    p_phone: DataTypes.STRING,
+    p_email: DataTypes.STRING,
+    p_name: DataTypes.STRING,
     cl_id: DataTypes.STRING,
     a_desease: DataTypes.STRING,
     a_status: DataTypes.STRING,

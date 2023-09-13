@@ -43,6 +43,15 @@ module.exports = {
       a_type: {
         type: Sequelize.STRING
       },
+      p_name: {
+        type: Sequelize.STRING
+      },
+      p_phone: {
+        type: Sequelize.STRING
+      },
+      p_email: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
